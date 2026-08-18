@@ -1,3 +1,5 @@
+import { supabase, getSession } from './supabase-client.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   // State
   let activities = [];
@@ -263,24 +265,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 350);
   }
 
-  function recordSwipe(activity, direction) {
-    // Persist so we don't show the same card again
+  async function recordSwipe(activity, direction) {
+    // Persist so we don't show the same card again (keep local fallback)
     const swiped = JSON.parse(localStorage.getItem('fallow_browse_swiped') || '{}');
     swiped[activity.id] = { direction, date: new Date().toISOString() };
     localStorage.setItem('fallow_browse_swiped', JSON.stringify(swiped));
 
-    // If liked/saved, also add to statuses
+    // If liked/saved, also add to local statuses
+    const statusMap = {
+      'like': 'interested',
+      'save': 'saved',
+      'pass': 'pass'
+    };
+    
     if (direction === 'like' || direction === 'save') {
       const statuses = JSON.parse(localStorage.getItem('fallow_statuses') || '{}');
       statuses[activity.id] = {
-        status: direction === 'like' ? 'interested' : 'saved',
+        status: statusMap[direction],
         date: new Date().toISOString()
       };
       localStorage.setItem('fallow_statuses', JSON.stringify(statuses));
     }
+    
+    // Save to Supabase
+    try {
+      const session = await getSession();
+      if (session && session.user) {
+        await supabase.from('interactions').upsert({
+          user_id: session.user.id,
+          activity_id: activity.id,
+          status: statusMap[direction],
+          created_at: new Date().toISOString()
+        }, { onConflict: 'user_id,activity_id' });
+      }
+    } catch (err) {
+      console.error("Failed to save swipe to Supabase:", err);
+    }
   }
 
-  function updateDNA(activity, direction) {
+  async function updateDNA(activity, direction) {
     let profileData = JSON.parse(localStorage.getItem('fallow_profile'));
     if (!profileData || !profileData.scores) return;
 
@@ -303,6 +326,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     profileData.scores = scores;
     localStorage.setItem('fallow_profile', JSON.stringify(profileData));
+    
+    // Update in Supabase
+    try {
+      const session = await getSession();
+      if (session && session.user) {
+        await supabase.from('profiles').upsert({
+          id: session.user.id,
+          scores: scores,
+          updated_at: new Date().toISOString()
+        });
+      }
+    } catch (err) {
+      console.error("Failed to update DNA in Supabase:", err);
+    }
   }
 
   function showEmpty() {

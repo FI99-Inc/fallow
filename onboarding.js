@@ -1,3 +1,5 @@
+import { supabase, getSession } from './supabase-client.js';
+
 // Data Definition
 const flowSteps = [
   // Phase 1: Pairwise Choices
@@ -478,7 +480,7 @@ function generateInsights(scores) {
   return insights.slice(0, 3); // Guarantee max 3 insights
 }
 
-function saveProfile(scores) {
+async function saveProfile(scores) {
   const constraintsData = [];
   userAnswers.forEach(ans => {
     if (ans && ans.constraints) {
@@ -494,6 +496,24 @@ function saveProfile(scores) {
   };
   
   localStorage.setItem('fallow_profile', JSON.stringify(profile));
+  
+  // Save to Supabase
+  try {
+    const session = await getSession();
+    if (session && session.user) {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: session.user.id,
+          scores: scores,
+          updated_at: new Date().toISOString()
+        });
+        
+      if (error) console.error("Error saving profile to Supabase:", error);
+    }
+  } catch (err) {
+    console.error("Supabase error:", err);
+  }
 }
 
 // Start
