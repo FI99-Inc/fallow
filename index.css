@@ -450,6 +450,7 @@ p {
 .fade-up {
   opacity: 0;
   transform: translateY(20px); clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  will-change: transform, opacity;
   transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
@@ -512,4 +513,21 @@ p {
 *:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #F9F7F3;
+}
+
+@media (min-width: 768px) {
+  .steps-grid .step-card:nth-child(2) {
+    margin-top: 3rem;
+  }
+  .steps-grid .step-card:nth-child(3) {
+    margin-top: 6rem;
+  }
+  .vibe-grid .vibe-card:nth-child(2n) {
+    margin-top: 2rem;
+  }
 }

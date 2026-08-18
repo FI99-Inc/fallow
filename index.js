@@ -70,3 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+// Impeccable Overdrive: Hero Parallax
+document.addEventListener('mousemove', (e) => {
+    const heroTitle = document.querySelector('.hero h1');
+    if (!heroTitle) return;
+    
+    const x = (window.innerWidth / 2 - e.pageX) / 50;
+    const y = (window.innerHeight / 2 - e.pageY) / 50;
+    
+    heroTitle.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${-x}deg) translateZ(10px)`;
+    heroTitle.style.transition = 'transform 0.1s ease-out';
+});

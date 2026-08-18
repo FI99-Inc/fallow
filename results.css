@@ -355,3 +355,8 @@ body::after {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
 }
+
+::selection {
+  background: var(--color-primary);
+  color: #F9F7F3;
+}

@@ -163,3 +163,12 @@ body::after {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
 }
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #F9F7F3;
+}
