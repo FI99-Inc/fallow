@@ -453,14 +453,14 @@ p {
 /* Animations - Slow Editorial Fades */
 .fade-up {
   opacity: 0;
-  transform: translateY(20px); clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transform: translateY(20px); 
   will-change: transform, opacity;
   transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
 .fade-up.visible {
   opacity: 1;
-  transform: translateY(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transform: translateY(0); 
 }
 
 @media (max-width: 600px) {
