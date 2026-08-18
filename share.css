@@ -6,7 +6,7 @@
   --color-text: #1C1A17;
   --color-text-muted: #59544D;
   --color-text-light: #59544D;
-  --color-primary: #8C3B26;
+  --color-primary: #D9532A;
   --color-primary-light: #B07D35;
   --color-primary-hover: #1C1A17;
   --color-secondary: #5F6B5F;
@@ -35,7 +35,7 @@
   --shadow-lg: none;
   --shadow-card: none;
   
-  --transition-fast: 300ms ease;
+  --transition-fast: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
   --transition-normal: 600ms cubic-bezier(0.25, 1, 0.5, 1);
   --transition-slow: 1000ms cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -126,4 +126,9 @@
     font-size: 3.5rem;
     color: #4a6355;
     margin-top: 15px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
 }
