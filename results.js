@@ -1,18 +1,25 @@
+import { shareDNA } from './share.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Read user profile from localStorage (mock if absent)
     let profileData = JSON.parse(localStorage.getItem('fallow_profile'));
-    let userProfile = profileData ? profileData.scores : null;
-    if (!userProfile) {
-        // Mock profile for testing if not reached via onboarding
-        userProfile = {
-            sociality: -0.5,
-            structure: 0.7,
-            physicality: -0.2,
-            expression: 0.1,
-            environment: -0.5,
-            barrier: 0.4
+    if (!profileData || !profileData.scores) {
+        // Fallback for direct linking
+        profileData = {
+            scores: { sociality: 0.2, structure: -0.4, physicality: 0.1, expression: 0.8, environment: 0.3, barrier: -0.5 },
+            insights: ["Creative Maker", "Prefers Unstructured Time", "Low Barrier to Entry"]
         };
-        console.warn("No profile found in localStorage, using mock profile:", userProfile);
+    }
+    const userProfile = profileData.scores;
+    const insights = profileData.insights || ['Curious Explorer', 'Ready for anything'];
+
+    // Share button listener
+    const shareBtn = document.getElementById('share-results-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shareDNA(insights);
+        });
     }
 
     const fallowMode = localStorage.getItem('fallow_mode');

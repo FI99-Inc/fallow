@@ -1,4 +1,5 @@
 import { supabase, getSession } from './supabase-client.js';
+import { shareDNA } from './share.js';
 
 // Data Definition
 const flowSteps = [
@@ -359,6 +360,7 @@ function renderResultsScreen(direction) {
             
             <button type="submit" class="btn-light" data-fs-submit-btn style="border: none; cursor: pointer; margin-top: 10px;">Send me my matches</button>
         </form>
+        <button id="share-dna-btn" class="btn-light" style="border: 2px solid var(--color-primary); background: transparent; color: var(--color-primary); cursor: pointer; margin-top: 10px; width: 100%;">Share my DNA on Social</button>
         <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--color-text-light);">
             Or skip the wait and <a href="results.html" style="color: var(--color-text); text-decoration: underline;">see algorithmic results now</a>.
         </p>
@@ -380,6 +382,14 @@ function renderResultsScreen(direction) {
       window.formspree('initForm', { formElement: '#beta-submit-form', formId: 'myegbnlq' });
     }
   }, 100);
+  
+  // Attach Share listener
+  const shareBtn = newScreen.querySelector('#share-dna-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      shareDNA(insights);
+    });
+  }
   
   // Trigger animations for chart after mounting
   setTimeout(() => {

@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fallow - Your Recommendations</title>
     <link rel="stylesheet" href="results.css">
+    <link rel="stylesheet" href="share.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <div class="logo">Fallow</div>
-        <div class="dna-summary" id="dnaSummary">
-            <!-- DNA summary injected here -->
-        </div>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem;">
+        <div class="logo" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 500; color: #2c3e35;">Fallow</div>
+        <button class="btn btn-outline" id="share-results-btn" style="padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Share DNA
+        </button>
     </header>
 
     <main class="container">
@@ -100,6 +102,7 @@
         </div>
     </template>
 
-    <script src="results.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script type="module" src="results.js"></script>
 </body>
 </html>

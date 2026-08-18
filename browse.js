@@ -1,4 +1,5 @@
 import { supabase, getSession } from './supabase-client.js';
+import { shareDNA } from './share.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // State
@@ -25,6 +26,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     sociality: 0, structure: 0, physicality: 0,
     expression: 0, environment: 0, barrier: 0
   };
+  let userInsights = profileData && profileData.insights ? profileData.insights : ['Curious Explorer', 'Ready for anything'];
+
+  // Attach share listener
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      shareDNA(userInsights);
+    });
+  }
 
   // Load activities and sort by match score
   try {

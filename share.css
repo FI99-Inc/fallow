@@ -1,0 +1,87 @@
+/* Hidden container for the DNA card that will be converted to an image */
+#dna-card-container {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 1080px; /* Instagram Story / Post optimized width */
+    height: 1920px; /* 9:16 aspect ratio */
+    background: linear-gradient(135deg, #e3dfd3 0%, #c8ccbf 100%);
+    color: #2c3e35;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    box-sizing: border-box;
+    z-index: -100;
+}
+
+.dna-card-inner {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 100px 80px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 2px solid rgba(255,255,255,0.6);
+}
+
+.dna-card-header {
+    text-align: center;
+}
+
+.dna-card-header h1 {
+    font-family: 'Lora', serif;
+    font-size: 6rem;
+    margin: 0;
+    color: #2c3e35;
+    font-weight: 400;
+}
+
+.dna-card-header p {
+    font-size: 2.5rem;
+    margin-top: 20px;
+    color: #4a6355;
+    font-style: italic;
+}
+
+.dna-card-traits {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 80px 0;
+}
+
+.trait-badge {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 20px;
+    font-size: 3rem;
+    font-weight: 500;
+    text-align: center;
+    color: #2c3e35;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.dna-card-footer {
+    text-align: center;
+    margin-top: auto;
+}
+
+.dna-card-footer .brand {
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: -1px;
+}
+
+.dna-card-footer .url {
+    font-size: 2rem;
+    color: #4a6355;
+    margin-top: 15px;
+}
