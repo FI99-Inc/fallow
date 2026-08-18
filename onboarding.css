@@ -1,23 +1,45 @@
+
 :root {
-  /* Design System Tokens */
-  --color-primary: hsl(12, 45%, 55%); /* Muted Terracotta */
-  --color-primary-light: hsl(12, 45%, 65%);
-  --color-secondary: hsl(40, 60%, 65%); /* Muted Amber */
-  --color-accent: hsl(110, 15%, 65%); /* Muted Sage */
-  
-  --color-bg: hsl(42, 35%, 96%); /* Warm off-white */
-  --color-bg-alt: hsl(42, 25%, 93%); /* Slightly darker off-white */
-  --color-bg-dark: hsl(42, 20%, 88%); /* For subtle borders/hover states */
-  
-  --color-text: hsl(20, 15%, 25%);
-  --color-text-light: hsl(20, 15%, 45%);
-  
-  --font-body: 'Inter', sans-serif;
+  --color-bg: #EAE5DC;
+  --color-surface: transparent;
+  --color-surface-dim: transparent;
+  --color-text: #1C1A17;
+  --color-text-muted: #59544D;
+  --color-text-light: #59544D;
+  --color-primary: #8C3B26;
+  --color-primary-light: #B07D35;
+  --color-primary-hover: #1C1A17;
+  --color-secondary: #5F6B5F;
+  --color-accent: #B07D35;
+  --color-accent-hover: #1C1A17;
+  --color-border: #1C1A17;
+  --bg-color: #EAE5DC;
+  --text-main: #1C1A17;
+  --card-bg: transparent;
+  --border-color: #1C1A17;
+  --success-color: #5F6B5F;
+  --surprise-color: #8C3B26;
+
   --font-display: 'Fraunces', serif;
+  --font-serif: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
+
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-card: none;
   
-  --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 300ms ease;
+  --transition-normal: 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-slow: 1000ms cubic-bezier(0.25, 1, 0.5, 1);
 }
+
 
 * { 
   box-sizing: border-box; 
@@ -48,7 +70,7 @@ body {
 
 #back-btn {
   background: none; 
-  border: none; 
+  border: 1px solid var(--color-border); 
   cursor: pointer; 
   color: var(--color-text);
   opacity: 1; 
@@ -68,7 +90,7 @@ body {
   height: 4px;
   background: rgba(0,0,0,0.06);
   margin: 0 24px;
-  border-radius: 2px;
+  border-radius: 0;
   overflow: hidden;
 }
 #progress-bar {
@@ -122,7 +144,7 @@ body {
 .question-title {
   text-align: center;
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 500;
   line-height: 1.2;
   color: var(--color-text);
@@ -217,19 +239,19 @@ body {
   background: white; 
   border: 1px solid var(--color-bg-dark);
   padding: 24px; 
-  border-radius: 16px;
+  border-radius: 0;
   font-family: var(--font-body);
   font-size: 1.1rem; 
   color: var(--color-text);
   text-align: left; 
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  box-shadow: none;
 }
 .scenario-btn:hover { 
   border-color: var(--color-primary-light); 
   transform: translateY(-2px); 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06); 
+  box-shadow: none; 
 }
 .scenario-btn.selected {
   background-color: var(--color-primary);
@@ -262,7 +284,7 @@ body {
   border: 2px solid var(--color-bg-dark);
   color: var(--color-text);
   padding: 16px 20px; 
-  border-radius: 30px; 
+  border-radius: 0; 
   font-family: var(--font-body);
   font-size: 1rem; 
   font-weight: 500;
@@ -293,9 +315,9 @@ body {
 .continue-btn {
   background: var(--color-text); 
   color: white; 
-  border: none;
+  border: 1px solid var(--color-border);
   padding: 18px 48px; 
-  border-radius: 30px; 
+  border-radius: 0; 
   font-family: var(--font-body);
   font-size: 1.1rem; 
   font-weight: 500;
@@ -347,12 +369,12 @@ body {
   flex: 1;
   background: white;
   padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border-radius: 0;
+  box-shadow: none;
 }
 .chart-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--color-bg-dark);
   padding-bottom: 16px;
@@ -380,7 +402,7 @@ body {
   flex: 1;
   height: 6px;
   background: var(--color-bg-dark);
-  border-radius: 3px;
+  border-radius: 0;
   position: relative;
 }
 .slider-center {
@@ -397,9 +419,9 @@ body {
   width: 16px;
   height: 16px;
   background: var(--color-primary);
-  border-radius: 50%;
+  border-radius: 0;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: none;
   transition: left 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -410,10 +432,10 @@ body {
 .insight-card {
   background: white;
   padding: 24px;
-  border-radius: 16px;
+  border-radius: 0;
   margin-bottom: 20px;
   border-left: 4px solid var(--color-primary);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+  box-shadow: none;
   font-size: 1.1rem;
   line-height: 1.5;
 }
@@ -424,12 +446,12 @@ body {
   margin-top: 60px;
   padding: 40px;
   background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
-  border-radius: 20px;
+  border-radius: 0;
   color: white;
 }
 .teaser-section h2 {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 3.5rem;
   margin-bottom: 12px;
 }
 .teaser-section p {
@@ -442,7 +464,7 @@ body {
   color: var(--color-primary);
   text-decoration: none;
   padding: 18px 40px;
-  border-radius: 30px;
+  border-radius: 0;
   font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 600;
@@ -452,7 +474,7 @@ body {
 }
 .btn-light:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: none;
 }
 .waitlist-link {
   display: block;
@@ -462,3 +484,15 @@ body {
   font-size: 0.95rem;
 }
 .waitlist-link:hover { opacity: 1; }
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+}
