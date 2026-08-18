@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fallow - Your Recommendations</title>
+    <link rel="stylesheet" href="results.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Fallow</div>
+        <div class="dna-summary" id="dnaSummary">
+            <!-- DNA summary injected here -->
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="intro">
+            <h1>We found your next sparks.</h1>
+            <p>Based on your unique activity DNA, here are 5 recommendations we think you'll love. Some are right up your alley, and some are curveballs.</p>
+        </div>
+
+        <div id="resultsContainer" class="results-container">
+            <!-- Cards will be injected here -->
+        </div>
+
+        <section class="waitlist-section">
+            <h2>Want weekly personalized recommendations?</h2>
+            <p>Join the waitlist for Fallow Early Access.</p>
+            <form class="waitlist-form">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit" class="btn btn-primary">Join Waitlist</button>
+            </form>
+        </section>
+    </main>
+
+    <template id="cardTemplate">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-meta">
+                    <span class="category"></span>
+                    <span class="match-score"></span>
+                    <span class="stretch-badge hidden">Surprise Match</span>
+                </div>
+                <h2 class="activity-name"></h2>
+                <p class="hook-line"></p>
+            </div>
+            
+            <div class="card-body">
+                <div class="rationale-section">
+                    <h3>Why you'll like this</h3>
+                    <p class="why-like-text"></p>
+                    
+                    <h3 class="caveat-title">What might not work</h3>
+                    <p class="caveat-text"></p>
+                </div>
+
+                <div class="experiment-section">
+                    <h3>Your smallest first step</h3>
+                    <p class="experiment-step"></p>
+                    <p class="success-feels-like"><strong>What success feels like:</strong> <span></span></p>
+                </div>
+
+                <div class="logistics">
+                    <div class="logistic-item">
+                        <span class="icon"></span>
+                        <span class="value cost-value"></span>
+                    </div>
+                    <div class="logistic-item">
+                        <span class="icon"></span>
+                        <span class="value time-value"></span>
+                    </div>
+                    <div class="logistic-item">
+                        <span class="icon"></span>
+                        <span class="value equip-value"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn btn-primary btn-commit">I'm doing this</button>
+                <button class="btn btn-secondary btn-save">Save for later</button>
+                <button class="btn btn-outline btn-pass">Not for me</button>
+            </div>
+            
+            <div class="pass-reasons hidden">
+                <p>Why not?</p>
+                <div class="reason-chips">
+                    <button class="chip">Not interested</button>
+                    <button class="chip">Too expensive</button>
+                    <button class="chip">Intimidating</button>
+                    <button class="chip">Bad timing</button>
+                </div>
+            </div>
+            
+            <div class="celebration hidden">
+                 Awesome! We've saved this to your active experiments.
+            </div>
+        </div>
+    </template>
+
+    <script src="results.js"></script>
+</body>
+</html>

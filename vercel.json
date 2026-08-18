@@ -1,0 +1,8 @@
+{
+  "name": "fallow",
+  "version": 2,
+  "public": true,
+  "routes": [
+    { "handle": "filesystem" }
+  ]
+}

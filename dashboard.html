@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fallow - My Commitments</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header container" id="main-header" style="border-bottom: 1px solid var(--color-border); padding: 1.5rem 0;">
+        <div class="logo">Fallow</div>
+        <nav>
+            <a href="index.html" class="btn btn-secondary">Home</a>
+            <a href="results.html" class="btn btn-primary" id="recs-btn">Get Recommendations</a>
+        </nav>
+    </header>
+
+    <main class="container section">
+        <div class="intro fade-up">
+            <h1 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 0.5rem;">Your Commitments</h1>
+            <p class="text-muted">The only way to know what you like is to do it.</p>
+        </div>
+
+        <div id="dashboard-content" class="fade-up" style="transition-delay: 100ms; margin-top: var(--space-xl);">
+            <!-- Dynamic content injected here -->
+        </div>
+    </main>
+
+    <template id="emptyStateTemplate">
+        <div class="empty-state">
+            <p class="text-muted">You have no active commitments.</p>
+            <a href="onboarding.html" class="btn btn-primary" style="margin-top: var(--space-md);">Take the Quiz</a>
+        </div>
+    </template>
+
+    <template id="commitmentTemplate">
+        <div class="commitment-card">
+            <div class="commitment-header">
+                <span class="category"></span>
+                <span class="status-badge">Active Commitment</span>
+            </div>
+            <h2 class="activity-name"></h2>
+            
+            <div class="experiment-box">
+                <h4>Your Next Step:</h4>
+                <p class="experiment-step"></p>
+            </div>
+            
+            <div class="feedback-section">
+                <h3>How did it go?</h3>
+                <div class="feedback-buttons">
+                    <button class="btn btn-feedback" data-feedback="loved">Loved it</button>
+                    <button class="btn btn-feedback" data-feedback="okay">It was okay</button>
+                    <button class="btn btn-feedback" data-feedback="hated">Hated it</button>
+                    <button class="btn btn-feedback btn-cancel" data-feedback="cancel">Cancel Commitment</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
