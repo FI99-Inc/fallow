@@ -192,6 +192,7 @@ Generate exactly {count} NEW activity ideas that are NOT in the list above.
 
 Requirements:
 - Prioritize niche, surprising, or lesser-known activities that most people wouldn't think of on their own.
+- Include a mix of deep solo hobbies AND highly social, high-energy experiences (e.g., underground raves, run clubs, bar trivia, intramural sports) that appeal to adults looking to meet people and get out of the house.
 - Include a mix across these categories: {', '.join(CATEGORIES)}
 - Each activity must be a real, concrete thing a person could start doing.
 - No generic entries like "Volunteering" or "Reading" — be specific (e.g., "Mycology Field Walks" not "Nature Walks").
