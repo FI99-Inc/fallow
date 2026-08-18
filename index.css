@@ -160,6 +160,10 @@ p {
   color: var(--color-text);
 }
 
+.btn:hover {
+  transform: scale(1.02);
+}
+
 .btn-primary {
   background-color: var(--color-text);
   color: var(--color-bg);

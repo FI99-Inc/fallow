@@ -463,3 +463,5 @@ h1, h2, h3, h4 {
   background: var(--color-primary);
   color: #F9F7F3;
 }
+
+.btn:hover { transform: scale(1.02); }

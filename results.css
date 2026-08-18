@@ -360,3 +360,5 @@ body::after {
   background: var(--color-primary);
   color: #F9F7F3;
 }
+
+.btn:hover { transform: scale(1.02); }
