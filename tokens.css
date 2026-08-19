@@ -70,7 +70,7 @@
   /* --- Type -------------------------------------------------- */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-serif: var(--font-display);
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-sans: var(--font-body);
 
   /* --- Space ------------------------------------------------- */

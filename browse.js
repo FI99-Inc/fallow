@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="card-match">
         <span class="match-label">Match</span>
         <div class="match-bar-container">
-          <div class="match-bar-fill" style="width: 0%; background: ${barColor};" data-target="${matchPct}"></div>
+          <div class="match-bar-fill" style="background: ${barColor};" data-target="${matchPct}"></div>
         </div>
         <span class="match-percent">${matchPct}%</span>
       </div>
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const bar = card.querySelector('.match-bar-fill');
-        if (bar) bar.style.width = bar.dataset.target + '%';
+        if (bar) bar.style.transform = `scaleX(${bar.dataset.target / 100})`;
       });
     });
 
