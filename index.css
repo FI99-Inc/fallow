@@ -415,7 +415,7 @@ p {
   font-size: clamp(1.35rem, 2.8vw, 2rem);
   font-style: italic;
   color: var(--color-text);
-  line-height: 1.25;
+  line-height: 1.35;
   margin-bottom: var(--space-sm);
 }
 
@@ -433,6 +433,8 @@ p {
   font-size: clamp(1.75rem, 4.5vw, 3.25rem);
   color: var(--color-text);
   max-width: 22ch;
+  /* Display scale: the manifesto statement runs to 3.25rem over a 22ch
+     measure, where 1.1 is correct leading. Waived in index.html. */
   line-height: 1.1;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-lg);

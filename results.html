@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="share.css">
 </head>
 <body>
+    <!-- impeccable-disable cramped-padding -- the only hit is
+         .results-message, which sets padding: 3rem var(--container-padding).
+         The clamp() inside that token is not statically resolvable; the real
+         inset is 20-40px horizontal and 48px vertical. -->
     <header class="results-header">
         <a class="logo" href="index.html">Fallow</a>
         <nav class="results-nav">

@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!-- impeccable-disable cramped-padding -- .band is a full-bleed colour
+         field and carries no padding by design; the inset lives one level
+         down on .container (padding-inline) and .section/.hero/.header
+         (padding-block). Verified at 390px: nothing sits flush to the
+         viewport edge and there is no horizontal overflow. -->
+    <!-- impeccable-disable tight-leading -- the only hit is
+         .testimonial-quote at up to 3.25rem over a 22ch measure. That is
+         display scale, where 1.1 is correct; the rule targets body copy. -->
 
     <div class="band field-mist">
         <header class="container header" id="main-header">

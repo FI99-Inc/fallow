@@ -84,6 +84,8 @@ h1, h2, h3, .logo {
 /* Loading and error states */
 .results-message {
     text-align: center;
+    /* Real inset is 20-40px horizontal, 48px vertical; the clamp() inside
+       --container-padding is not statically resolvable. Waived in results.html. */
     padding: 3rem var(--container-padding);
     border: var(--border-weight) solid var(--color-border);
     background: var(--color-surface);

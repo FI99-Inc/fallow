@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="share.css">
 </head>
 <body>
+    <!-- impeccable-disable flat-type-hierarchy -- the activity card is cloned
+         from a template by browse.js, so static analysis only sees the header
+         chrome. .card-name is 1.75rem (28px), which makes the real ratio
+         28/10.4 = 2.7:1, not the 1.9:1 reported. -->
     <header class="browse-header">
         <a href="results.html" class="icon-btn" aria-label="Back to results">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>

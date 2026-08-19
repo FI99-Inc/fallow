@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="share.css">
 </head>
 <body>
+    <!-- impeccable-disable flat-type-hierarchy -- every quiz screen is
+         rendered into #screen-container by onboarding.js, so static analysis
+         sees only the header. The question heading and .choice-card (1.75rem)
+         carry the top of the scale. -->
     <header class="app-header">
         <button id="back-btn" class="hidden icon-btn" type="button" aria-label="Go back to the previous question">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
