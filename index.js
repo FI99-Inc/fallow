@@ -1,23 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Intersection Observer for fade-up animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: Stop observing once it's visible to run animation only once
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    const fadeElements = document.querySelectorAll('.fade-up');
-    fadeElements.forEach(el => observer.observe(el));
+    // Scroll reveal lives in reveal.js, shared with the dashboard.
 
     // 2. Waitlist Form Submission Handling
     const waitlistForm = document.getElementById('waitlist-form');
@@ -95,12 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const paint = () => {
         queued = false;
-        // The entrance animation owns .fade-up's transform until it has landed.
-        if (!heroTitle.classList.contains('visible')) return;
-        const x = (window.innerWidth / 2 - px) / 50;
-        const y = (window.innerHeight / 2 - py) / 50;
+        // Skip while an entrance transition still owns the transform.
+        if (heroTitle.classList.contains('fade-up') &&
+            !heroTitle.classList.contains('visible')) return;
+        const x = (window.innerWidth / 2 - px) / 90;
+        const y = (window.innerHeight / 2 - py) / 90;
         heroTitle.style.transform =
-            `perspective(1000px) rotateX(${y}deg) rotateY(${-x}deg) translateZ(10px)`;
+            `perspective(1000px) rotateX(${y}deg) rotateY(${-x}deg) translateZ(6px)`;
     };
 
     heroTitle.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';

@@ -177,7 +177,7 @@ function renderScreen(index, direction) {
   // Update Header UI. Counting completed steps out of flowSteps.length caps the
   // bar at 92% on the final question, so count the current step instead.
   const pct = Math.round(((index + 1) / (flowSteps.length + 1)) * 100);
-  progressBar.style.width = `${pct}%`;
+  progressBar.style.transform = `scaleX(${pct / 100})`;
   if (progressBar.parentElement) {
     progressBar.parentElement.setAttribute('aria-valuenow', String(index + 1));
     progressBar.parentElement.setAttribute('aria-valuemax', String(flowSteps.length + 1));
@@ -310,7 +310,7 @@ function renderScreen(index, direction) {
 
 function renderResultsScreen(direction) {
   isTransitioning = true;
-  progressBar.style.width = `100%`;
+  progressBar.style.transform = 'scaleX(1)';
   backBtn.classList.add('hidden');
 
   const finalScores = calculateScores();
@@ -355,6 +355,7 @@ function renderResultsScreen(direction) {
       <div class="results-header">
         <h1>Your Activity DNA</h1>
         <p>We've analyzed your subtle preferences. Here is your psychological profile.</p>
+        <p class="quiz-tagline">You let your mind lie fallow. Here's what's growing.</p>
       </div>
 
       <div class="results-content">

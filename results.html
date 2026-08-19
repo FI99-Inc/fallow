@@ -17,8 +17,7 @@
         <a class="logo" href="index.html">Fallow</a>
         <nav class="results-nav">
             <a href="dashboard.html" class="btn btn-outline">My commitments</a>
-            <button class="btn btn-outline" id="reset-dna-btn" type="button" style="margin-right: 0.5rem; margin-left: 0.5rem;">Reset DNA</button>
-            <button class="btn btn-outline" id="blend-btn" type="button" style="margin-right: 0.5rem;">
+            <button class="btn btn-outline" id="blend-btn" type="button">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 Blend DNA
             </button>
@@ -26,6 +25,9 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                 Share DNA
             </button>
+            <!-- Destructive, so it is separated from the row of safe actions
+                 and styled as a quiet text action rather than a peer button. -->
+            <button class="btn-danger" id="reset-dna-btn" type="button">Reset DNA</button>
         </nav>
     </header>
 
@@ -50,26 +52,33 @@
             <!-- Cards will be injected here -->
         </div>
 
-        <section class="save-dna-section" style="margin-top: var(--space-2xl); padding: var(--space-lg); border: 2px solid var(--color-border); text-align: center;">
-            <h2>Don't lose your DNA</h2>
-            <p class="text-muted">Get a magic link to save your profile and access your commitments on any device.</p>
-            <form id="magic-link-form" style="display: flex; gap: 0; max-width: 400px; margin: var(--space-md) auto 0; border: 2px solid var(--color-text);">
-                <input type="email" id="magic-link-email" placeholder="your@email.com" required style="flex: 1; padding: 1rem; border: none; background: transparent; color: var(--color-text); outline: none; font-family: var(--font-body);">
-                <button type="submit" class="btn btn-primary" style="border: none; border-left: 2px solid var(--color-text); min-height: 44px; padding: 1rem;">Save</button>
-            </form>
-            <p id="magic-link-msg" style="margin-top: var(--space-sm); font-size: 0.85rem; height: 1rem;"></p>
+        <!-- One closing block, two clearly ranked asks. These used to be two
+             identical bordered panels stacked on top of each other, which made
+             the end of the page a coin-flip between two email fields. -->
+        <section class="closing">
+            <div class="closing-primary">
+                <h2>Keep your DNA</h2>
+                <p class="text-muted">A magic link saves this profile and your commitments to any device.</p>
+                <form id="magic-link-form" class="inline-form">
+                    <label class="visually-hidden" for="magic-link-email">Email address</label>
+                    <input type="email" id="magic-link-email" placeholder="you@email.com" autocomplete="email" required>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+                <p id="magic-link-msg" class="form-msg" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="closing-secondary">
+                <h3>Want new matches each week?</h3>
+                <form class="inline-form inline-form-quiet" id="results-waitlist-form">
+                    <label class="visually-hidden" for="results-waitlist-email">Email address</label>
+                    <input type="email" id="results-waitlist-email" name="email" placeholder="you@email.com" autocomplete="email" required>
+                    <button type="submit" class="btn">Join waitlist</button>
+                </form>
+                <p class="waitlist-message form-msg" id="results-waitlist-message" role="status" aria-live="polite"></p>
+            </div>
         </section>
 
-        <section class="waitlist-section" style="margin-top: var(--space-2xl);">
-            <h2>Want weekly personalized recommendations?</h2>
-            <p>Join the waitlist for Fallow Early Access.</p>
-            <form class="waitlist-form" id="results-waitlist-form">
-                <label class="visually-hidden" for="results-waitlist-email">Email address</label>
-                <input type="email" id="results-waitlist-email" name="email" placeholder="your@email.com" autocomplete="email" required>
-                <button type="submit" class="btn btn-primary">Join Waitlist</button>
-            </form>
-            <p class="waitlist-message" id="results-waitlist-message" role="status" aria-live="polite"></p>
-        </section>
+        <p class="closing-tagline">Let your mind lie fallow. See what grows.</p>
     </main>
 
     <template id="cardTemplate">

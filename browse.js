@@ -25,6 +25,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Every write below goes through these, so a missing element degrades the
   // page instead of throwing and leaving the user a blank screen.
   const setCounter = (text) => { if (counter) counter.textContent = text; };
+
+  // "1 / 578" told people they were on item one of a very long chore.
+  // The deck is endless by design, so report what they have seen instead.
+  const progressLabel = (n) => (n === 1 ? '1st look' : `${n} explored`);
+
+  // Each axis is a pair of real words, not a truncated variable name.
+  // The panel used to read "SOC -40 / STR 50 / PHY -20", which is a debug
+  // readout of the product's signature idea.
+  const DNA_AXES = {
+    sociality:   { low: 'Solo',      high: 'Social' },
+    structure:   { low: 'Freeform',  high: 'Structured' },
+    physicality: { low: 'Still',     high: 'Physical' },
+    expression:  { low: 'Absorbing', high: 'Making' },
+    environment: { low: 'Indoors',   high: 'Outdoors' },
+    barrier:     { low: 'Casual',    high: 'Involved' }
+  };
+
   const announce = (text) => { if (status) status.textContent = text; };
   const show = (el) => { if (el) el.classList.remove('hidden'); };
   const hide = (el) => { if (el) el.classList.add('hidden'); };
@@ -156,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  setCounter(`1 / ${queue.length}`);
+  setCounter(progressLabel(1));
   renderStack();
   announce(`${queue.length} activities to review. Showing the first.`);
 
@@ -216,7 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       show(actions);
       show(hints);
       
-      setCounter(`${currentIndex + 1} / ${queue.length}`);
+      setCounter(progressLabel(currentIndex + 1));
       
       renderStack();
     } catch (err) {
@@ -229,25 +246,62 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderDNATracker(scores) {
     const container = document.getElementById('dna-bars-container');
     if (!container) return;
-    const dims = ['sociality', 'structure', 'physicality', 'expression', 'environment', 'barrier'];
-    const labels = { sociality: 'Soc', structure: 'Str', physicality: 'Phy', expression: 'Exp', environment: 'Env', barrier: 'Bar' };
 
-    let html = '';
-    dims.forEach(d => {
-        const val = scores[d] || 0;
-        const pct = ((val + 1) / 2) * 100;
-        html += `
-        <div style="margin-bottom: 6px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.55rem; color: var(--color-text); text-transform: uppercase;">
-                <span>${labels[d]}</span>
-                <span style="opacity:0.5;">${Math.round(val * 100)}</span>
-            </div>
-            <div style="height: 2px; background: var(--color-border); position: relative; margin-top: 3px;">
-                <div style="position: absolute; width: 4px; height: 6px; background: var(--color-primary); top: -2px; left: calc(${pct}% - 2px); transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
-            </div>
-        </div>`;
+    container.replaceChildren();
+
+    Object.entries(DNA_AXES).forEach(([dim, poles]) => {
+      const val = Math.max(-1, Math.min(1, scores[dim] || 0));
+      const pct = ((val + 1) / 2) * 100;
+
+      const axis = document.createElement('div');
+      axis.className = 'dna-axis';
+
+      const labels = document.createElement('div');
+      labels.className = 'dna-axis-labels';
+
+      const low = document.createElement('span');
+      low.className = 'dna-pole' + (val < -0.15 ? ' is-lean' : '');
+      low.textContent = poles.low;
+
+      const high = document.createElement('span');
+      high.className = 'dna-pole' + (val > 0.15 ? ' is-lean' : '');
+      high.textContent = poles.high;
+
+      labels.append(low, high);
+
+      const track = document.createElement('div');
+      track.className = 'dna-track';
+      const marker = document.createElement('span');
+      marker.className = 'dna-marker';
+      marker.style.left = `calc(${pct}% - 3px)`;
+      track.appendChild(marker);
+
+      axis.append(labels, track);
+      container.appendChild(axis);
     });
-    container.innerHTML = html;
+
+    renderDNAMini(scores);
+  }
+
+  // The narrow-screen form of the same information: name only the axes the
+  // profile actually leans on, strongest first.
+  function renderDNAMini(scores) {
+    const mini = document.getElementById('dna-mini');
+    if (!mini) return;
+
+    const leaning = Object.entries(DNA_AXES)
+      .map(([dim, poles]) => {
+        const val = scores[dim] || 0;
+        return { val, abs: Math.abs(val), word: val > 0 ? poles.high : poles.low };
+      })
+      .filter(d => d.abs > 0.15)
+      .sort((a, b) => b.abs - a.abs)
+      .slice(0, 3)
+      .map(d => d.word);
+
+    mini.textContent = leaning.length
+      ? leaning.join(' · ')
+      : 'Reading your DNA';
   }
 
   function renderStack() {
@@ -431,7 +485,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     announce(`${verb} ${activity.name}. ${Math.max(0, queue.length - currentIndex - 1)} left.`);
 
     currentIndex++;
-    setCounter(`${Math.min(currentIndex + 1, queue.length)} / ${queue.length}`);
+    setCounter(progressLabel(Math.min(currentIndex + 1, queue.length)));
 
     // Wait for animation, then re-render
     setTimeout(() => {

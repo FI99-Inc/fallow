@@ -526,3 +526,74 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .dna-row-dot { transition: none; }
 }
+
+/* ============================================================
+   Pastel refresh — colour ground and the DNA axis panel
+   ============================================================ */
+
+body {
+    background-color: var(--field-sky);
+}
+
+.dna-tracker {
+    background-color: var(--color-surface);
+    /* Wide enough that the longest pole pair ("Freeform / Structured")
+       sits inside the border instead of clipping against it. */
+    min-width: 12.5rem;
+}
+
+.dna-axis {
+    margin-bottom: var(--space-xs);
+}
+
+.dna-axis-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    white-space: nowrap;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+/* The pole the profile actually leans toward is the one that reads. */
+.dna-pole.is-lean {
+    color: var(--color-primary-deep);
+    font-weight: 600;
+}
+
+.dna-track {
+    position: relative;
+    height: 2px;
+    margin-top: 4px;
+    background-color: var(--color-border-soft);
+}
+
+.dna-marker {
+    position: absolute;
+    top: -3px;
+    width: 6px;
+    height: 8px;
+    background-color: var(--color-primary-deep);
+    transition: left var(--transition-normal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dna-marker { transition: none; }
+}
+
+/* Compact DNA readout for screens with no room for the full panel. */
+.dna-mini {
+  display: none;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary-deep);
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 700px), (max-height: 700px) {
+  .dna-mini { display: block; }
+}

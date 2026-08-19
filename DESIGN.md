@@ -1,51 +1,78 @@
 # Fallow Design System
 
-The visual system for Fallow, a psychological activity-discovery product. The
-aesthetic is **High-End Editorial**: a premium print magazine that happens to be
-interactive. This document describes what the code actually does; when the two
-disagree, the code is the bug.
+The visual system for Fallow, a psychological activity-discovery product.
 
-## 1. Core Principles
+The aesthetic is **Pastel Field**: editorial structure on coloured ground. This
+document describes what the code actually does; when the two disagree, the code
+is the bug.
 
-* **Editorial & Graphic.** Content floats in asymmetric space, anchored by stark,
-  deliberate grid lines. Hierarchy is carried by scale and rhythm, not by fills.
-* **Tactile.** The digital space feels physical, via a persistent SVG paper grain
-  overlay declared once in `tokens.css`.
-* **Severe interactions.** No soft, bouncy, playful UI. Interactions are stark
-  and deliberate. Severity applies to the *treatment*, never to the *copy* — the
-  writing stays warm, because the reader is someone embarrassed to be a beginner.
+> A fallow field is land deliberately left to rest so it can grow something
+> better later. The page is that field, seen across a season.
+
+## 1. Core principles
+
+* **Colour carries the rhythm.** The page is a sequence of edge-to-edge pastel
+  bands. A new ground *is* the section break — not a shadow, not a card, not a
+  container. This replaced a single cream ground on which every section had
+  identical weight and the page read as one undifferentiated column.
+* **Editorial and graphic.** Content sits in asymmetric space anchored by 2px
+  ink hairlines. Hierarchy comes from scale and rhythm, never from fills.
+* **Severe treatment, warm copy.** Zero radius, zero shadow, hard rules. The
+  severity is in the *geometry*; the writing stays warm, because the reader is
+  someone embarrassed to be a beginner.
 
 ## 2. Tokens
 
-`tokens.css` is the single source of truth and is loaded first on every page.
-Page stylesheets must not redeclare tokens, the reset, the grain, focus rings,
-or selection colours. A `var()` that resolves to nothing does not fail loudly —
-it silently unsets the property and ships invisible UI, so **every name used
-must be defined in `tokens.css`.**
+`tokens.css` is the single source of truth and loads first on every page. Page
+stylesheets must not redeclare tokens, the reset, the grain, focus rings, or
+selection colours. A `var()` that resolves to nothing does not fail loudly — it
+silently unsets the property and ships invisible UI, so **every name used must
+be defined in `tokens.css`.**
 
 ## 3. Colour
 
+### The fields
+
+Pastel grounds, applied only through the `.field-*` classes. Never hand-write a
+field hex on an element.
+
+| Token | Value | Used for |
+|---|---|---|
+| `--field-mist` | `#E6E9F5` | Pale periwinkle — the default ground |
+| `--field-sprout` | `#D8E8D0` | Pale green — growth, "how it works" |
+| `--field-bloom` | `#F6DCE2` | Pale pink — the human/emotional beat |
+| `--field-sun` | `#F8E9C8` | Pale butter — the payoff and the ask |
+| `--field-sky` | `#D6E4F0` | Pale blue — calm, explanatory |
+| `--field-lilac` | `#E4DBF0` | Pale violet — the odd one out |
+| `--field-ink` | `#241F2E` | The single dark band. Used **once** per page |
+
+Every light field carries `--color-text` at 12:1 or better and
+`--color-text-muted` at 5.5:1 or better. These were measured, not assumed; a new
+field must be measured before it ships.
+
+**`--field-ink` is its own token on purpose.** `.field-ink` redefines
+`--color-text` for its subtree, so painting it with `background: var(--color-text)`
+resolves against the element's *own* new value and renders a pale band with pale
+text on it. A band cannot paint itself with a property it also redefines.
+
+### Ink and accent
+
 | Token | Value | Use |
 |---|---|---|
-| `--color-bg` | `#EAE5DC` | Textured paper base |
-| `--color-bg-alt` | `#E0DACF` | The B side of a pair; second paper tone |
-| `--color-surface` | `#F2EEE7` | **Bounded objects** — cards, decks, panels |
-| `--color-surface-dim` | `#E4DED4` | Recessed wells and tracks |
-| `--color-text` | `#1C1A17` | Deepest charcoal, never pure black |
-| `--color-text-muted` | `#59544D` | 5.98:1 on paper |
-| `--color-primary` | `#D9532A` | Oxidized terracotta — **3.2:1 on paper** |
-| `--color-primary-deep` | `#A63A18` | **5.17:1 both ways** against paper |
-| `--color-secondary` | `#5F6B5F` | Deep sage |
-| `--color-accent` | `#B07D35` | Amber |
-| `--color-border` | `#1C1A17` | Structural borders map to the text colour |
-| `--color-border-soft` | `#C2B9AB` | 3.0:1 hairlines; never a text boundary |
+| `--color-text` | `#241F2E` | Deep aubergine. Inside the pastel hue family, never neutral black |
+| `--color-text-muted` | `#5A5470` | Violet-grey. Tinted, never grey |
+| `--color-surface` | `#FCFAFF` | Bounded objects — cards, panels, decks |
+| `--color-primary` | `#E0512B` | Vermilion. Fills, borders, large display type |
+| `--color-primary-deep` | `#B23A18` | Clears 4.5:1 on **every** field |
+| `--color-secondary` | `#2E6B52` | Deep green — growth, success, done |
+| `--color-accent` | `#6B4FA8` | Violet — surprise, the curveball |
+| `--color-border` | `#241F2E` | Structural hairlines are ink |
 
-**The terracotta rule.** `--color-primary` is 3.2:1 on paper. It is legal for
-large display type, borders, focus rings, and decorative fills. Anything
-carrying body-size text — in either direction — uses `--color-primary-deep`.
-This is why hover inversions land on `#A63A18`, not `#D9532A`.
+**The vermilion rule.** `--color-primary` is legal for large display type,
+borders, focus rings, and decorative fills. Anything carrying body-size text —
+in either direction — uses `--color-primary-deep`. This is load-bearing.
 
-Pure `white` is not in the system. Paper tones only.
+Pure white and pure black are not in the system.
 
 ## 4. Structure
 
@@ -53,64 +80,92 @@ Pure `white` is not in the system. Paper tones only.
 * **Radii:** `0px` globally. No rounded corners, no pill buttons.
 * **Shadows:** `none`.
 
-### 4a. Bounded objects
+### 4a. Bands and containers
 
-Because radii, shadows, and fills are all spent, this system needs one explicit
-mechanism for "this is a discrete thing you can act on." That mechanism is:
+> **`.band` paints the colour. `.container` inside it owns width and inline
+> padding. They are never the same element.**
+
+They used to be. `.section { padding: X 0 Y }` and `.container { padding: 0 X }`
+landed on one element, and the section's shorthand silently zeroed the
+container's horizontal padding — putting body text flush against the screen edge
+on every phone. Vertical rhythm is therefore set with `padding-block`, which
+cannot reach `padding-inline`.
+
+### 4b. Bounded objects
+
+Because radii, shadows, and gradients are all spent, the system needs one
+explicit mechanism for "this is a discrete thing you can act on":
 
 > **`background: var(--color-surface)` + `2px solid var(--color-border)`.**
 
-Apply it to any element the user is meant to read as an object rather than as
-part of the page: swipe cards, recommendation cards, commitment cards, scenario
-and constraint buttons, chart panels, and empty/error states.
-
-This rule exists because its absence was a real defect. Transparent surfaces
-with no border are not restraint — they are missing UI, and they made the swipe
-deck and the DNA chart disappear entirely.
+Applies to swipe cards, recommendation cards, commitment cards, choice buttons,
+chart panels, and empty states. Its absence was a real defect once: transparent
+surfaces with no border are not restraint, they are missing UI.
 
 ## 5. Typography
 
-* **Display:** `Fraunces`, weight 700, tracking `-0.04em` or tighter.
-  Every page that uses it must also *load* it — a page that declares
-  `--font-serif` without the matching `<link>` renders in system Times.
-* **Body:** `Inter`. Buttons and labels are small, uppercase, tracked `0.05em`.
+* **Display:** `Fraunces` 700, tracking `-0.04em` or tighter, capped at `6rem`.
+  Every page using it must also *load* it.
+* **Body:** `Inter`. Buttons and labels small, uppercase, tracked `0.05em`+.
 * **Fluid sizing.** Display type uses `clamp()`. A fixed display size that is
   larger on a phone than on a desktop is a bug.
-* Text is never hidden to make it fit. `nowrap` + `ellipsis` on a real choice
-  removes the choice; wrap and rescale instead.
+* Text is never hidden to make it fit. Wrap and rescale instead.
 
 ## 6. Motion
 
-* **Hover:** buttons invert sharply, using the contrast rule in §3.
-* **Transforms:** `scale(1.02)` on hover, `scale(0.98)` on active, easing
-  `cubic-bezier(0.34, 1.56, 0.64, 1)`. Scale-on-hover applies only under
-  `@media (hover: hover) and (pointer: fine)` — scaling a full-width mobile
-  button reads as a rendering glitch.
-* **`prefers-reduced-motion` is honoured globally** in `tokens.css`, and any
-  pointer-driven effect must check it and coalesce writes to one per frame.
+* **One authored moment per surface,** not the same entrance on every section.
+  On the landing page that moment is the rule growing out from under
+  "See what grows."
+* **Easing** is exponential ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`), not
+  bounce. Hover transitions are colour only.
+* **`prefers-reduced-motion` is honoured globally** in `tokens.css`.
+
+### 6a. Reveal-on-scroll is opt-in
+
+`.fade-up` defaults to **visible**. Hiding happens only under `.js-reveal`,
+which `reveal.js` adds to `<html>` — and only after confirming it can also
+reveal them again. `reveal.js` additionally ships a 3-second dead-man's switch.
+
+This rule exists because the dashboard shipped as a permanently blank page: it
+loaded `index.css` (which hid `.fade-up`) without `index.js` (which held the
+only observer). **A page that never wires an observer must degrade to readable
+content, never to a blank screen.**
 
 ## 7. Interaction floor
 
-* **Focus:** `2px solid var(--color-primary)` with `4px` offset.
-* **Touch targets:** minimum `var(--tap-min)` (44px) on every button and link.
-* **Hit areas match their control.** An overlay above a control must not be the
-  control; a heading that visually sits on a choice card must not select it.
-* **Anything clickable is a `<button>` or `<a>`,** never a `<div>` with a
-  listener.
-* **State changes are announced.** Surfaces that mutate without navigation
-  (swipe deck, dashboard feedback, form submissions) carry an `aria-live`
-  region.
+* **Focus:** `2px solid var(--color-primary-deep)` at `4px` offset.
+* **Touch targets:** minimum `var(--tap-min)` (44px) on every button and link,
+  the logo included when it is a link.
+* **Anything clickable is a `<button>` or `<a>`,** never a `<div>` with a listener.
+* **Destructive actions are not peers of safe ones.** "Reset DNA" is a quiet
+  underlined text action set apart from the button row, and it confirms first.
+* **State changes are announced** via `aria-live`.
 
 ## 8. States
 
-Every data-driven surface ships four: **loading, empty, error, and populated.**
-A blank page is not an empty state. Errors name what failed and what survived,
-and offer a way back.
+Every data-driven surface ships four: **loading, empty, error, populated.**
+A blank page is not an empty state. Errors name what failed and what survived.
 
-Destructive actions confirm first. Reporting success must never delete the
-thing the user succeeded at — it moves to a record instead.
+The empty state is often the most-seen screen on a surface. Write it as an
+invitation, not a dead end — the dashboard's empty state carries the product's
+own line rather than an apology.
 
-## 9. Browser surfaces
+## 9. Copy
+
+The site's line is **"Let your mind lie fallow. See what grows."** It is the
+only copy that explains the product's name, so it opens the landing page as the
+headline, closes it in the footer, and recurs at the payoff moments (quiz
+completion, results footer, empty dashboard).
+
+**Generated copy must vary.** Recommendation rationales are scored per-activity
+against the profile and pick a dimension no other card has claimed, because five
+cards that print one sentence with the name swapped read as a mail-merge and
+disprove the product's central claim. A "what might not work" section that says
+"it hits all your sweet spots" is flattery in a slot reserved for honesty: a
+caveat fires only on genuine *opposition* (opposite signs), not on a magnitude
+gap between two facts that agree.
+
+## 10. Browser surfaces
 
 Selection, caret, scrollbars, focus rings, underline offset, and tabular
 numerals are themed from the palette in `tokens.css`. They ship with the design,
