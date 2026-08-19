@@ -28,7 +28,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_
 if not GEMINI_API_KEY:
     sys.exit("Set GEMINI_API_KEY or GOOGLE_API_KEY environment variable first.")
 
-MODEL = "gemini-3.7-flash"
+MODEL = "gemini-3.5-flash-lite"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={GEMINI_API_KEY}"
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "activities.json")
@@ -196,11 +196,10 @@ We already have these {len(existing_names)} activities in our database:
 Generate exactly {count} NEW activity ideas that are NOT in the list above.
 
 Requirements:
-- Prioritize niche, surprising, or lesser-known activities that most people wouldn't think of on their own.
+- Vary the popularity. Prioritize a mix of normal, extremely common mainstream hobbies alongside some niche/surprising ones.
 - Include a mix of deep solo hobbies AND highly social, high-energy experiences (e.g., underground raves, run clubs, bar trivia, intramural sports) that appeal to adults looking to meet people and get out of the house.
 - Include a mix across these categories: {', '.join(CATEGORIES)}
 - Each activity must be a real, concrete thing a person could start doing.
-- No generic entries like "Volunteering" or "Reading" — be specific (e.g., "Mycology Field Walks" not "Nature Walks").
 - No activities that are just slight variations of ones we already have.
 {cat_clause}
 {audience_clause}
@@ -301,8 +300,8 @@ def run_pipeline(count=20, category_filter=None, target_audience=None, dry_run=F
         new_entries.append(entry)
         print(f"    Valid entry created.")
 
-        # Small delay to avoid rate limits
-        time.sleep(1)
+        # Delay to avoid RPM rate limits (Free tier is often 15 RPM)
+        time.sleep(4)
 
     # Step 3: Report
     print(f"\nGenerated {len(new_entries)} valid entries out of {len(ideas)} ideas.")
