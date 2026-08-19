@@ -84,6 +84,8 @@ h1, h2, h3, .logo {
 /* Loading and error states */
 .results-message {
     text-align: center;
+    /* Real inset is 20-40px horizontal, 48px vertical; the clamp() inside
+       --container-padding is not statically resolvable. Waived in results.html. */
     padding: 3rem var(--container-padding);
     border: var(--border-weight) solid var(--color-border);
     background: var(--color-surface);
@@ -392,4 +394,170 @@ h1, h2, h3, .logo {
 /* Full-width buttons should not scale; on a phone it reads as a glitch. */
 @media (hover: hover) and (pointer: fine) {
     .btn:hover { transform: scale(1.02); }
+}
+
+/* ============================================================
+   Colour fields and closing block
+   Added in the pastel refresh. See tokens.css for the field system.
+   ============================================================ */
+
+body {
+    background-color: var(--field-mist);
+}
+
+.results-header {
+    background-color: var(--field-sun);
+}
+
+/* Cards alternate grounds so five long cards stop reading as one
+   undifferentiated column. The border still does the bounding. */
+.results-container .card:nth-child(4n+1) { background-color: var(--color-surface); }
+.results-container .card:nth-child(4n+2) { background-color: var(--field-sprout); }
+.results-container .card:nth-child(4n+3) { background-color: var(--field-sky); }
+.results-container .card:nth-child(4n+4) { background-color: var(--field-bloom); }
+
+/* Destructive action. Deliberately not a peer of the safe buttons:
+   no border, quiet until you reach for it. */
+.btn-danger {
+    background: none;
+    border: none;
+    padding: 0.6rem 0.4rem;
+    min-height: var(--tap-min);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+    margin-left: var(--space-xs);
+    transition: color var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-danger:hover { color: var(--color-primary-deep); }
+}
+
+/* --- Closing block ------------------------------------------ */
+
+.closing {
+    margin-top: var(--space-2xl);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+}
+
+@media (min-width: 820px) {
+    .closing { grid-template-columns: 1.3fr 1fr; gap: var(--space-2xl); }
+}
+
+.closing-primary {
+    background-color: var(--field-sun);
+    border: var(--border-weight) solid var(--color-border);
+    padding: var(--space-lg);
+}
+
+.closing-primary h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: var(--space-xs);
+}
+
+.closing-secondary {
+    padding-top: var(--space-lg);
+    border-top: var(--border-weight) solid var(--color-border);
+}
+
+.closing-secondary h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+}
+
+.inline-form {
+    display: flex;
+    margin-top: var(--space-md);
+    border: var(--border-weight) solid var(--color-border);
+    background-color: var(--color-surface);
+}
+
+.inline-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.85rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+}
+
+.inline-form input::placeholder { color: var(--color-text-light); }
+
+.inline-form .btn {
+    border: none;
+    border-left: var(--border-weight) solid var(--color-border);
+    min-height: var(--tap-min);
+    padding: 0.85rem 1.4rem;
+    flex-shrink: 0;
+    /* Set explicitly. Without these the button inherited the form's own
+       surface fill and rendered near-white text on near-white: 1.0:1. */
+    background-color: var(--color-text);
+    color: var(--color-surface);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .inline-form .btn:hover {
+        background-color: var(--color-primary-deep);
+        color: var(--color-on-primary);
+    }
+}
+
+.inline-form-quiet { margin-top: 0; }
+
+.form-msg {
+    margin-top: var(--space-xs);
+    min-height: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--color-secondary);
+}
+
+.form-msg[data-state="error"] { color: var(--color-primary-deep); }
+
+@media (max-width: 520px) {
+    .inline-form {
+        flex-direction: column;
+        border: none;
+        gap: var(--space-xs);
+        background: transparent;
+    }
+    .inline-form input {
+        border: var(--border-weight) solid var(--color-border);
+        background-color: var(--color-surface);
+        min-height: var(--tap-min);
+    }
+    /* The stacked button keeps its ink fill. Giving it the surface fill here
+       without also resetting the inherited light text produced 1.0:1. */
+    .inline-form .btn {
+        border: var(--border-weight) solid var(--color-border);
+        background-color: var(--color-text);
+        color: var(--color-surface);
+        min-height: var(--tap-min);
+    }
+}
+
+/* The line the site opens with also closes the payoff. */
+.closing-tagline {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: var(--border-weight) solid var(--color-border);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    max-width: none;
 }

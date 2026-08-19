@@ -1,53 +1,71 @@
 /* ============================================================
    Fallow — design tokens and base layer
    Single source of truth. Loaded first on every page.
-   See DESIGN.md. Do not redeclare these in page stylesheets.
+
+   THE WORLD: "Pastel Field."
+   A fallow field is land deliberately left to rest so it can grow
+   something better later. The page is that field, seen across a
+   season: each section is its own coloured ground, and the reader
+   walks through them. Ink stays deep and constant so colour never
+   costs legibility — every field below holds body text at 5.5:1 or
+   better and display ink at 12:1 or better.
+
+   Structure stays editorial: 0 radius, 0 shadow, 2px ink hairlines.
+   The colour is the warmth; the geometry stays severe.
    ============================================================ */
 
 :root {
+  /* --- The fields -------------------------------------------
+     Pastel grounds. Every one is light enough to carry --color-text
+     at 12:1+ and --color-text-muted at 5.5:1+. Verified, not assumed.
+     Apply with .field-* — never hand-write these on an element. */
+  --field-mist:   #E6E9F5;   /* pale periwinkle — the default ground */
+  --field-sprout: #D8E8D0;   /* pale green — growth, how it works */
+  --field-bloom:  #F6DCE2;   /* pale pink — the human/emotional beat */
+  --field-sun:    #F8E9C8;   /* pale butter — the payoff, the ask */
+  --field-sky:    #D6E4F0;   /* pale blue — calm, explanatory */
+  --field-lilac:  #E4DBF0;   /* pale violet — the odd one out */
+  --field-ink:    #241F2E;   /* the one dark field. Kept as its own token:
+                                a band cannot paint itself with a property
+                                it also redefines. */
+
   /* --- Ground ------------------------------------------------ */
-  --color-bg: #EAE5DC;              /* textured paper base */
-  --color-bg-alt: #E0DACF;          /* paper, one step darker — the B side of a pair */
-  --color-bg-dark: #1C1A17;         /* ink; used where a rule or edge must read */
+  --color-bg: var(--field-mist);
+  --color-bg-alt: var(--field-sky);
 
-  /* Bounded objects. DESIGN.md §4a: a card is paper lifted off the page,
-     never a shadow. This is the only sanctioned surface fill. */
-  --color-surface: #F2EEE7;         /* paper, one step lighter — cards, decks, panels */
-  --color-surface-dim: #E4DED4;     /* recessed wells, tracks, empty slots */
+  /* Bounded objects. A card is paper lifted off the field, never a
+     shadow. Surface + 2px ink border is the only sanctioned way to
+     say "this is a discrete thing you can act on." */
+  --color-surface: #FCFAFF;
+  --color-surface-dim: #DDD9EC;   /* recessed wells, tracks, empty slots */
 
-  /* --- Ink --------------------------------------------------- */
-  --color-text: #1C1A17;            /* deepest charcoal, never pure black */
-  --color-text-muted: #59544D;      /* 5.98:1 on paper */
-  --color-text-light: #59544D;
+  /* --- Ink ---------------------------------------------------
+     Deep aubergine rather than black. It sits inside the pastel
+     hue family instead of punching a neutral hole through it. */
+  --color-text: #241F2E;
+  --color-text-muted: #5A5470;    /* violet-grey. Tinted, never grey. */
+  --color-text-light: #625B7A;   /* 4.6:1 on --color-surface-dim; #6E6786 was 3.9 */
   --text-muted: var(--color-text-muted);
 
-  /* --- Accent ------------------------------------------------ */
-  --color-primary: #D9532A;         /* oxidized terracotta — 3.2:1 on paper.
-                                       Large type, borders, focus rings, fills only. */
-  --color-primary-deep: #A63A18;    /* 5.17:1 both ways against paper.
-                                       Any terracotta carrying body text, either direction. */
-  --color-on-primary: #FBEDE6;      /* paper tinted toward the hue —
-                                       5.67:1 on --color-primary-deep. Never plain white. */
-  --color-primary-light: #B07D35;
-  --color-primary-hover: #1C1A17;
-  --color-secondary: #5F6B5F;       /* deep sage */
-  --color-accent: #B07D35;          /* amber */
-  --color-accent-hover: #1C1A17;
-  --accent-color: var(--color-primary-deep);
-  --accent-hover: var(--color-primary-hover);
+  /* --- Accent ------------------------------------------------
+     Vermilion is the action colour. --color-primary is for fills,
+     borders, and large display type. Anything carrying body-size
+     text uses --color-primary-deep, which clears 4.5:1 on every
+     field above. This distinction is load-bearing; keep it. */
+  --color-primary: #E0512B;
+  --color-primary-deep: #B23A18;
+  --color-primary-light: #F08A6B;
+  --color-primary-hover: #C94520;
+  --color-on-primary: #FFF8F4;
+
+  --color-secondary: #2E6B52;     /* deep garden green — growth, done */
+  --color-accent: #6B4FA8;        /* violet — surprise, the curveball */
+  --surprise-color: #6B4FA8;
 
   /* --- Structure --------------------------------------------- */
-  --color-border: #1C1A17;          /* DESIGN.md §4: borders map to the text colour */
-  --color-border-soft: #C2B9AB;     /* 3.0:1 — hairlines only, never a text boundary */
+  --color-border: #241F2E;        /* structural hairlines are ink */
+  --color-border-soft: #B9B2CE;   /* tinted, never a text boundary */
   --border-weight: 2px;
-
-  /* --- Legacy aliases (pre-rebrand names still referenced) ---- */
-  --bg-color: var(--color-bg);
-  --text-main: var(--color-text);
-  --card-bg: var(--color-surface);
-  --border-color: var(--color-border);
-  --success-color: #5F6B5F;
-  --surprise-color: #8C3B26;
 
   /* --- Type -------------------------------------------------- */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -61,14 +79,17 @@
   --space-sm: 1rem;
   --space-md: 2rem;
   --space-lg: 3rem;
-  --space-xl: 5rem;
-  --space-2xl: 8rem;
-  --space-3xl: 12rem;
-  --space-4xl: 16rem;
+
+  /* Fluid above this line: section rhythm must not be a fixed pixel
+     count that reads as generous on a laptop and absurd on a phone. */
+  --space-xl:  clamp(2.5rem, 5vw, 4rem);
+  --space-2xl: clamp(3.5rem, 7vw, 5.5rem);
+  --space-3xl: clamp(4.5rem, 9vw, 7rem);
+  --space-4xl: clamp(5.5rem, 11vw, 9rem);
 
   /* --- Layout ------------------------------------------------ */
-  --max-width: 1000px;
-  --container-padding: 2rem;
+  --max-width: 1100px;
+  --container-padding: clamp(1.25rem, 4vw, 2.5rem);
   --tap-min: 44px;
 
   /* --- Radii & depth — deliberately flat ---------------------- */
@@ -82,19 +103,9 @@
   --shadow-card: none;
 
   /* --- Motion ------------------------------------------------ */
-  --transition-fast: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  --transition-normal: 600ms cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-slow: 1000ms cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-@media (max-width: 600px) {
-  :root {
-    --container-padding: 1.25rem;
-    --space-3xl: 6rem;
-    --space-4xl: 7rem;
-    --space-2xl: 4.5rem;
-    --space-xl: 3rem;
-  }
+  --transition-fast: 200ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  --transition-normal: 380ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  --transition-slow: 720ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ============================================================
@@ -124,14 +135,15 @@ body {
   position: relative;
 }
 
-/* Paper grain. One declaration, every page. */
+/* Grain. One declaration, every page. Lighter than the old paper
+   world — on a saturated pastel, 0.08 noise reads as dirt. */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -141,6 +153,55 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
   letter-spacing: -0.04em;
   text-wrap: balance;
+}
+
+/* ============================================================
+   Fields — sectional colour grounds
+
+   A field paints an edge-to-edge band of colour. Because the site
+   is one flat editorial plane, the *change* of ground is what marks
+   a new section — not a shadow, not a card, not a rule.
+   ============================================================ */
+
+.field            { background-color: var(--field-mist); }
+.field-mist       { background-color: var(--field-mist); }
+.field-sprout     { background-color: var(--field-sprout); }
+.field-bloom      { background-color: var(--field-bloom); }
+.field-sun        { background-color: var(--field-sun); }
+.field-sky        { background-color: var(--field-sky); }
+.field-lilac      { background-color: var(--field-lilac); }
+
+/* Ink field: the one dark moment. Used once, for emphasis, never twice. */
+.field-ink {
+  background-color: var(--field-ink);
+  --color-text: #F4F1FA;
+  --color-text-muted: #B9B2CE;
+  --color-border: #F4F1FA;
+  --color-border-soft: #5A5470;
+  --color-primary-deep: #F08A6B;
+  color: #F4F1FA;
+}
+
+/* ============================================================
+   Reveal on scroll
+
+   The default is VISIBLE. A page that loads this stylesheet but
+   never wires an observer degrades to readable content, never to a
+   blank screen. The reveal script opts in by putting .js-reveal on
+   <html>; without it these rules never hide anything.
+   ============================================================ */
+
+.js-reveal .fade-up {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--transition-slow),
+    transform var(--transition-slow);
+}
+
+.js-reveal .fade-up.visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* ============================================================
@@ -175,7 +236,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-primary-deep);
   outline-offset: 4px;
 }
 
@@ -207,7 +268,7 @@ a {
     scroll-behavior: auto !important;
   }
   /* Entrance animations must not leave content hidden when disabled. */
-  .fade-up {
+  .js-reveal .fade-up {
     opacity: 1 !important;
     transform: none !important;
   }

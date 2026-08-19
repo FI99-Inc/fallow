@@ -247,3 +247,28 @@ h1, h2, h3, h4 {
     min-height: auto;
     font-size: 0.8rem;
 }
+
+/* ============================================================
+   Pastel refresh
+   ============================================================ */
+
+body {
+    background-color: var(--field-sprout);
+}
+
+.commitment-card,
+.empty-state {
+    background-color: var(--color-surface);
+}
+
+/* The empty state is the most-seen screen on this page, so it carries
+   the line the site opens with rather than reading as a dead end. */
+.empty-tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+    color: var(--color-primary-deep);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+    max-width: none;
+}

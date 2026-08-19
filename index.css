@@ -1,108 +1,99 @@
-/* Base & Noise Texture */
+/* ============================================================
+   Fallow — landing page
+   Tokens, reset, grain, focus rings and .fade-up live in tokens.css.
+   Do not redeclare them here.
+   ============================================================ */
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  background-color: var(--color-bg);
-}
-
-body {
-  font-family: var(--font-body);
-  color: var(--color-text);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: relative;
-}
-
-/* SVG Noise Overlay */
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.05;
-  color: var(--color-text);
-  letter-spacing: -0.04em;
-}
+/* --- Type scale ------------------------------------------- */
 
 h1 {
-  font-size: clamp(2.5rem, 8vw, 6.5rem);
-  text-transform: none;
+  font-size: clamp(2.5rem, 8vw, 6rem);
 }
 
 h2 {
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(1.85rem, 4.5vw, 3.25rem);
+  letter-spacing: -0.035em;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 p {
   font-size: 1rem;
   font-weight: 400;
-  max-width: 55ch;
+  max-width: 68ch;
   letter-spacing: 0.01em;
   color: var(--color-text-muted);
 }
 
-/* Utilities */
+/* --- Layout -----------------------------------------------
+   A band paints an edge-to-edge colour field. The container inside
+   it owns width and horizontal padding.
+
+   These are deliberately two different elements. They used to be the
+   same one, and .section's `padding: X 0 Y` shorthand silently zeroed
+   the container's horizontal padding — which put body text flush
+   against the screen edge on every phone. Vertical rhythm below is
+   set with padding-block so it can never reach padding-inline again.
+   ------------------------------------------------------------ */
+
+.band {
+  width: 100%;
+}
+
+.band + .band {
+  border-top: var(--border-weight) solid var(--color-border);
+}
+
 .container {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--container-padding);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
 }
 
 .section {
-  padding: var(--space-3xl) 0;
-  border-bottom: 2px solid var(--color-border);
-}
-.section:last-of-type {
-  border-bottom: none;
-}
-
-.text-center { text-align: left; } /* Overriding center for editorial asymmetric look */
-@media (min-width: 768px) {
-  .text-center { text-align: center; }
+  padding-block: var(--space-3xl);
 }
 
 .text-muted { color: var(--color-text-muted); }
 
-/* Buttons */
+.hidden { display: none !important; }
+
+/* --- Buttons ----------------------------------------------- */
+
 .btn {
-  min-height: 44px;
+  min-height: var(--tap-min);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2.5rem;
+  padding: 0.9rem 2rem;
   border-radius: 0;
-  font-weight: 400;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all var(--transition-normal);
-  border: 2px solid var(--color-text);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+  border: var(--border-weight) solid var(--color-border);
   text-decoration: none;
   background-color: transparent;
   color: var(--color-text);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn:hover {
-    transform: scale(1.02);
-  }
-}
-
 .btn-primary {
   background-color: var(--color-text);
-  color: var(--color-bg);
+  color: var(--color-surface);
+  border-color: var(--color-text);
 }
 
 .btn-outline {
-  background-color: transparent;
   border-color: var(--color-border-soft);
   color: var(--color-text-muted);
 }
@@ -111,23 +102,24 @@ p {
   .btn-primary:hover {
     background-color: var(--color-primary-deep);
     border-color: var(--color-primary-deep);
-    color: var(--color-bg);
+    color: var(--color-on-primary);
   }
-
   .btn-secondary:hover {
     background-color: var(--color-text);
-    color: var(--color-bg);
+    color: var(--color-surface);
   }
-
   .btn-outline:hover {
     border-color: var(--color-text);
     color: var(--color-text);
   }
 }
 
-/* Header */
+.btn:active { transform: scale(0.98); }
+
+/* --- Header ------------------------------------------------ */
+
 .header {
-  padding: var(--space-lg) 0 var(--space-md);
+  padding-block: var(--space-md) var(--space-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -142,242 +134,342 @@ p {
   flex-wrap: wrap;
 }
 
-@media (max-width: 600px) {
-  .header {
-    padding: var(--space-md) 0 var(--space-sm);
-  }
-  .header nav .btn {
-    padding: 0.75rem 1rem;
-    font-size: 0.75rem;
-  }
-}
-
 .logo {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 400;
   color: var(--color-text);
   letter-spacing: -0.05em;
   font-style: italic;
+  text-decoration: none;
+  /* When the logo is a link it is a tap target like any other. */
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
 }
 
-/* Hero Section */
+@media (max-width: 600px) {
+  .header nav .btn {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* --- Hero --------------------------------------------------
+   Budgeted to land the primary CTA above the fold at 1440x900.
+   The old hero used --space-3xl top plus --space-4xl bottom and
+   pushed "Find Your Spark" 101px past the fold.
+   ------------------------------------------------------------ */
+
 .hero {
-  padding: var(--space-3xl) 0 var(--space-4xl);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5.5rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  border-bottom: none;
 }
 
 .hero-headline {
-  margin-bottom: var(--space-lg);
-  max-width: 14ch;
+  margin-bottom: var(--space-md);
+  max-width: 16ch;
+  line-height: 0.98;
+}
+
+/* The tagline carries the brand idea, so it gets the only two
+   authored typographic gestures on the page. */
+.hero-em,
+.hero-grow {
+  display: block;
+}
+
+.hero-em {
+  font-style: italic;
+  color: var(--color-primary-deep);
+}
+
+.hero-grow {
+  position: relative;
+  display: inline-block;
+}
+
+/* A rule that grows out from under "See what grows." on load. */
+.hero-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.12em;
+  height: 4px;
+  width: 100%;
+  background-color: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: grow-rule 1100ms cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards;
+}
+
+@keyframes grow-rule {
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-grow::after {
+    animation: none;
+    transform: scaleX(1);
+  }
 }
 
 .hero-subhead {
-  font-size: 1.125rem;
-  margin-bottom: var(--space-xl);
-  max-width: 45ch;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  margin-bottom: var(--space-md);
+  max-width: 52ch;
   line-height: 1.6;
+  color: var(--color-text-muted);
 }
 
 .hero-actions {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   flex-wrap: wrap;
+  margin-bottom: var(--space-md);
 }
 
-/* Problem Section */
-.problem {
-  padding: var(--space-2xl) 0;
+.hero-note {
+  font-size: 0.875rem;
+  max-width: 34ch;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  border-top: var(--border-weight) solid var(--color-border);
+  padding-top: var(--space-sm);
 }
+
+/* A filled tag, not a coloured left rule. */
+.hero-note b {
+  display: inline-block;
+  background-color: var(--color-primary-deep);
+  color: var(--color-on-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.35rem;
+}
+
+/* Above 900px the hero becomes two columns so the beta note balances
+   the composition instead of leaving half the canvas empty. */
+@media (min-width: 900px) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    column-gap: var(--space-2xl);
+    align-items: start;
+  }
+  .hero-headline { grid-column: 1 / -1; max-width: 15ch; }
+  .hero-subhead  { grid-column: 1; grid-row: 2; margin-bottom: var(--space-lg); }
+  .hero-actions  { grid-column: 1; grid-row: 3; margin-bottom: 0; }
+  .hero-note     { grid-column: 2; grid-row: 2 / span 2; }
+}
+
+/* --- Shared section heading -------------------------------- */
+
+.section-head {
+  margin-bottom: var(--space-2xl);
+  max-width: 46ch;
+}
+
+.section-head h2 { margin-bottom: var(--space-sm); }
+
+.section-lead {
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  margin-bottom: var(--space-lg);
+  max-width: 24ch;
+}
+
+/* --- Quick discover ---------------------------------------- */
+
+.vibe-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: var(--border-weight) solid var(--color-border);
+}
+
+@media (min-width: 700px) {
+  .vibe-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.vibe-card {
+  background: transparent;
+  border: none;
+  border-bottom: var(--border-weight) solid var(--color-border);
+  border-radius: 0;
+  padding: var(--space-md) var(--space-sm) var(--space-md) 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  min-height: var(--tap-min);
+  text-wrap: balance;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  transition:
+    padding-left var(--transition-normal),
+    color var(--transition-normal);
+}
+
+@media (min-width: 700px) {
+  .vibe-card:nth-child(odd) { padding-right: var(--space-lg); }
+  .vibe-card:nth-child(even) {
+    padding-left: var(--space-lg);
+    border-left: var(--border-weight) solid var(--color-border);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vibe-card:hover {
+    color: var(--color-primary-deep);
+    padding-left: var(--space-md);
+  }
+  .vibe-card:nth-child(even):hover { padding-left: calc(var(--space-lg) + var(--space-sm)); }
+}
+
+/* --- Problem ----------------------------------------------- */
 
 .problem-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-2xl);
+  gap: var(--space-xl);
   align-items: start;
 }
 
-@media (min-width: 768px) {
-  .problem-grid {
-    grid-template-columns: 1.5fr 1fr;
-  }
+@media (min-width: 860px) {
+  .problem-grid { grid-template-columns: 1.35fr 1fr; gap: var(--space-2xl); }
 }
 
-.problem-text h2 {
-  margin-bottom: var(--space-md);
-}
+.problem-text h2 { margin-bottom: var(--space-sm); }
 
 .quote-card {
-  background: transparent;
-  padding: var(--space-md) 0;
-  border-radius: 0;
-  box-shadow: none;
-  margin-bottom: 0;
-  border-left: none;
-  border-top: 2px solid var(--color-border);
+  padding-block: var(--space-sm);
+  border-top: var(--border-weight) solid var(--color-border);
 }
 
 .quote-card p {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.75rem;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
   color: var(--color-text);
-  line-height: 1.2;
+  line-height: 1.35;
+  max-width: none;
 }
 
-/* How It Works */
-#how-it-works-section p.text-muted {
-  margin: var(--space-sm) 0 var(--space-2xl);
-}
-@media (min-width: 768px) {
-  #how-it-works-section p.text-muted {
-    margin: var(--space-sm) auto var(--space-2xl);
-  }
-}
+/* --- How it works ------------------------------------------ */
 
 .steps-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-2xl);
-  margin-top: var(--space-2xl);
+  gap: var(--space-xl);
+  list-style: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 860px) {
   .steps-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-xl);
+    gap: var(--space-lg);
   }
+  /* Staggered baselines — the editorial gesture that keeps three
+     equal columns from reading as a card row. */
+  .steps-grid .step-card:nth-child(2) { margin-top: var(--space-lg); }
+  .steps-grid .step-card:nth-child(3) { margin-top: calc(var(--space-lg) * 2); }
 }
 
 .step-card {
-  text-align: left;
-  border-top: 2px solid var(--color-border);
-  padding-top: var(--space-md);
-}
-
-.step-visual {
-  width: auto;
-  height: auto;
-  background-color: transparent;
-  border-radius: 0;
-  margin: 0 0 var(--space-md) 0;
-  box-shadow: none;
-  display: block;
-}
-
-.step-visual::after {
-  display: none;
+  border-top: var(--border-weight) solid var(--color-border);
+  padding-top: var(--space-sm);
 }
 
 .step-number {
   font-family: var(--font-display);
-  font-size: 3rem;
+  font-size: 2.75rem;
   font-style: italic;
-  color: var(--color-text);
-}
-
-.step-card h3 {
+  line-height: 1;
+  color: var(--color-primary-deep);
+  display: block;
   margin-bottom: var(--space-sm);
-  font-size: 1.5rem;
 }
 
-/* The Difference */
-.difference-content {
-  background: transparent;
-  border: none;
-  padding: var(--space-2xl) 0;
-  text-align: left;
-}
-@media (min-width: 768px) {
-  .difference-content { text-align: center; }
-}
+.step-card h3 { margin-bottom: var(--space-xs); }
+.step-card p { font-size: 0.95rem; }
+
+/* --- The difference ---------------------------------------- */
 
 .difference-example {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-2xl);
-  border-top: none;
+  border-top: var(--border-weight) solid var(--color-border);
+  padding-top: var(--space-lg);
+  max-width: 34ch;
+  margin-left: auto;
 }
 
 .example-text {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
   font-style: italic;
   color: var(--color-text);
-  max-width: 25ch;
-  margin: 0 auto;
-  line-height: 1.2;
+  line-height: 1.35;
+  margin-bottom: var(--space-sm);
 }
 
-/* Testimonial */
-.testimonial {
-  padding: var(--space-3xl) 0;
-  text-align: left;
+.difference-example figcaption {
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  color: var(--color-text-muted);
 }
-@media (min-width: 768px) {
-  .testimonial { text-align: center; }
-}
+
+/* --- Manifesto (the one ink field) -------------------------- */
 
 .testimonial-quote {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
   color: var(--color-text);
-  max-width: 20ch;
-  margin: 0 auto var(--space-xl);
+  max-width: 22ch;
+  /* Display scale: the manifesto statement runs to 3.25rem over a 22ch
+     measure, where 1.1 is correct leading. Waived in index.html. */
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-lg);
+  text-wrap: balance;
 }
 
 .testimonial-author {
   font-family: var(--font-body);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
 }
 
-/* Waitlist Section */
-.waitlist {
-  background-color: transparent;
-  color: var(--color-text);
-  padding: var(--space-2xl) 0;
-  text-align: left;
-  border-top: 2px solid var(--color-border);
-}
-@media (min-width: 768px) {
-  .waitlist { text-align: center; }
-}
+.testimonial-author::before { content: "— "; }
 
-.waitlist h2 {
-  color: var(--color-text);
-  margin-bottom: var(--space-md);
-}
+/* --- Waitlist ----------------------------------------------- */
 
-.waitlist p {
-  color: var(--color-text-muted);
-  margin: 0 auto var(--space-xl);
-}
-@media (min-width: 768px) {
-  .waitlist p { margin: 0 auto var(--space-xl); }
-}
+.waitlist { max-width: 34rem; }
+
+.waitlist h2 { margin-bottom: var(--space-sm); }
+
+.waitlist p { margin-bottom: var(--space-lg); }
 
 .waitlist-form {
-  max-width: 500px;
-  margin: 0;
   display: flex;
   gap: 0;
-  border: 2px solid var(--color-text);
-}
-@media (min-width: 768px) {
-  .waitlist-form { margin: 0 auto; }
+  border: var(--border-weight) solid var(--color-border);
+  background-color: var(--color-surface);
 }
 
 .waitlist-input {
   flex: 1;
-  padding: 1rem 1.5rem;
+  min-width: 0;
+  padding: 0.9rem 1.1rem;
   border: none;
   background: transparent;
   font-family: var(--font-body);
@@ -386,114 +478,80 @@ p {
   color: var(--color-text);
 }
 
+.waitlist-input::placeholder { color: var(--color-text-light); }
+
 .waitlist-form .btn {
-  min-height: 44px;
   border: none;
-  border-left: 2px solid var(--color-text);
-  padding: 1rem 2rem;
+  border-left: var(--border-weight) solid var(--color-border);
+  padding: 0.9rem 1.5rem;
+  background-color: var(--color-text);
+  color: var(--color-surface);
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .waitlist-form .btn:hover {
+    background-color: var(--color-primary-deep);
+    color: var(--color-on-primary);
+  }
 }
 
 .waitlist-message {
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
   font-weight: 500;
   min-height: 24px;
-  color: var(--color-text);
-}
-.waitlist-message[data-state="error"] {
-  color: var(--surprise-color);
+  font-size: 0.9rem;
+  color: var(--color-secondary);
 }
 
-.hidden {
-  display: none !important;
-}
+.waitlist-message[data-state="error"] { color: var(--color-primary-deep); }
 
-/* Footer */
-.footer {
-  padding: var(--space-2xl) 0;
-  border-top: 2px solid var(--color-border);
-  text-align: left;
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Animations - Slow Editorial Fades */
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  will-change: transform, opacity;
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
-}
-
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (max-width: 600px) {
+@media (max-width: 620px) {
   .waitlist-form {
     flex-direction: column;
     border: none;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
+    background: transparent;
   }
-  .waitlist-input, .waitlist-form .btn {
-  min-height: 44px;
-    border: 2px solid var(--color-text);
+  .waitlist-input,
+  .waitlist-form .btn {
+    min-height: var(--tap-min);
+    border: var(--border-weight) solid var(--color-border);
+    background-color: var(--color-surface);
+  }
+  .waitlist-form .btn {
+    background-color: var(--color-text);
+    color: var(--color-surface);
   }
 }
 
-/* Quick Discover */
-.vibe-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-md);
-  max-width: none;
-  margin: 0;
+/* --- Footer ------------------------------------------------- */
+
+.footer {
+  padding-block: var(--space-xl);
 }
-@media (min-width: 600px) {
-  .vibe-grid { grid-template-columns: 1fr 1fr; }
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
 }
-.vibe-card {
-  background: transparent;
-  border: none;
-  border-top: 2px solid var(--color-border);
-  border-radius: 0;
-  padding: var(--space-md) 0;
+
+/* The tagline closes the page as well as opening it. */
+.footer-tagline {
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 4.5vw, 1.5rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  min-height: var(--tap-min);
-  text-wrap: balance;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
   color: var(--color-text);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  box-shadow: none;
-  text-align: left;
-}
-@media (hover: hover) and (pointer: fine) {
-  .vibe-card:hover {
-    border-top-color: var(--color-text);
-    transform: none;
-    padding-left: var(--space-sm);
-    color: var(--color-primary-deep);
-  }
+  letter-spacing: -0.02em;
+  max-width: none;
 }
 
-.btn:active {
-  transform: scale(0.98);
-}
-
-
-@media (min-width: 768px) {
-  .steps-grid .step-card:nth-child(2) {
-    margin-top: 3rem;
-  }
-  .steps-grid .step-card:nth-child(3) {
-    margin-top: 6rem;
-  }
-  .vibe-grid .vibe-card:nth-child(2n) {
-    margin-top: 2rem;
-  }
+.footer-legal {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
 }

@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="share.css">
 </head>
 <body>
+    <!-- impeccable-disable flat-type-hierarchy -- the activity card is cloned
+         from a template by browse.js, so static analysis only sees the header
+         chrome. .card-name is 1.75rem (28px), which makes the real ratio
+         28/10.4 = 2.7:1, not the 1.9:1 reported. -->
     <header class="browse-header">
         <a href="results.html" class="icon-btn" aria-label="Back to results">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -21,6 +25,10 @@
         <div class="header-center">
             <div class="logo">Fallow</div>
             <span class="card-counter" id="card-counter" data-numeric></span>
+            <!-- Compact stand-in for the DNA panel, which has no room below
+                 700px. Without it the product's signature idea is invisible
+                 on the screen size most people use. -->
+            <span class="dna-mini" id="dna-mini" aria-live="polite"></span>
         </div>
         <button class="icon-btn" id="share-btn" aria-label="Share profile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>

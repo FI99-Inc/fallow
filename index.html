@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fallow | Discover What You're Missing</title>
-    <meta name="description" content="A hobby and activity discovery engine that finds what you'll genuinely enjoy based on your underlying psychological drivers.">
+    <title>Fallow | Let your mind lie fallow. See what grows.</title>
+    <meta name="description" content="Let your mind lie fallow. See what grows. A hobby and activity discovery engine that finds what you'll genuinely enjoy based on your underlying psychological drivers.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,139 +13,171 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!-- impeccable-disable cramped-padding -- .band is a full-bleed colour
+         field and carries no padding by design; the inset lives one level
+         down on .container (padding-inline) and .section/.hero/.header
+         (padding-block). Verified at 390px: nothing sits flush to the
+         viewport edge and there is no horizontal overflow. -->
+    <!-- impeccable-disable tight-leading -- the only hit is
+         .testimonial-quote at up to 3.25rem over a 22ch measure. That is
+         display scale, where 1.1 is correct; the rule targets body copy. -->
 
-    <header class="container header" id="main-header">
-        <div class="logo">Fallow</div>
-        <nav>
-            <a href="browse.html" class="btn btn-outline" id="nav-browse-btn">Browse</a>
-            <a href="#waitlist-section" class="btn btn-secondary" id="nav-waitlist-btn">Request Beta Access</a>
-        </nav>
-    </header>
+    <div class="band field-mist">
+        <header class="container header" id="main-header">
+            <div class="logo">Fallow</div>
+            <nav>
+                <a href="browse.html" class="btn btn-outline" id="nav-browse-btn">Browse</a>
+                <a href="#waitlist-section" class="btn btn-secondary" id="nav-waitlist-btn">Request Beta Access</a>
+            </nav>
+        </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="container hero section" id="hero-section">
-            <h1 class="hero-headline fade-up">Find your next favorite thing to do,<br>before you know it exists.</h1>
-            <p class="hero-subhead fade-up" style="transition-delay: 100ms;">
-                <b>Beta Test:</b> Take our psychological assessment and our founders will manually curate 5 activities specifically designed to pull you out of your rut.
-            </p>
-            <div class="hero-actions fade-up" style="transition-delay: 200ms;">
-                <a href="onboarding.html" class="btn btn-primary" id="hero-cta-primary">Find Your Spark</a>
-                <a href="browse.html" class="btn btn-secondary" id="hero-cta-browse">Browse activities</a>
-            </div>
-        </section>
+        <main>
+            <!-- Hero. The tagline is the headline: it is the only line on the
+                 site that explains what "Fallow" means. -->
+            <section class="container hero" id="hero-section">
+                <h1 class="hero-headline">
+                    Let your mind
+                    <span class="hero-em">lie fallow.</span>
+                    <span class="hero-grow">See what grows.</span>
+                </h1>
+                <p class="hero-subhead">
+                    A field rests so it can grow something better. So does a person.
+                    Answer thirteen quick questions about how your brain actually works —
+                    not about what you already like — and we'll find the things
+                    you'd never have thought to search for.
+                </p>
+                <div class="hero-actions">
+                    <a href="onboarding.html" class="btn btn-primary" id="hero-cta-primary">Find Your Spark</a>
+                    <a href="browse.html" class="btn btn-secondary" id="hero-cta-browse">Browse activities</a>
+                </div>
+                <p class="hero-note">
+                    <b>Beta:</b> take the assessment and our founders will hand-curate
+                    five activities designed to pull you out of your rut.
+                    Takes about three minutes.
+                </p>
+            </section>
+        </main>
+    </div>
 
-        <!-- Quick Discover Section -->
-        <section class="container section text-center" id="quick-discover-section" style="padding-top: 0;">
-            <p class="text-muted fade-up" style="margin-bottom: var(--space-md);">Or, skip the deep dive and explore by current mood:</p>
-            <div class="vibe-grid fade-up" style="transition-delay: 100ms;">
+    <!-- Quick Discover -->
+    <section class="band field-lilac section" id="quick-discover-section">
+        <div class="container">
+            <h2 class="section-lead fade-up">Or skip the deep dive. What does today feel like?</h2>
+            <div class="vibe-grid fade-up">
                 <button class="vibe-card" data-vibe="low_energy">No energy. No budget.</button>
                 <button class="vibe-card" data-vibe="get_out">I need to get out of my apartment</button>
                 <button class="vibe-card" data-vibe="use_hands">I want to make something tangible</button>
                 <button class="vibe-card" data-vibe="rabbit_hole">I need a deep rabbit hole</button>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Problem Section -->
-        <section class="container section" id="problem-section">
-            <div class="problem fade-up">
-                <div class="problem-grid">
-                    <div class="problem-text">
-                        <h2>Stuck between unfulfilling passivity and exhausting forced socializing?</h2>
-                        <p class="text-muted" style="margin-top: var(--space-md);">
-                            Life transitions often leave us craving novelty but lacking the energy to find it. You don't need another generic listicle telling you to "try hiking" or "take a pottery class." You need something that actually fits how your brain works.
-                        </p>
-                    </div>
-                    <div class="problem-quotes">
-                        <div class="quote-card">
-                            <p>"I want to do something but nothing sounds fun."</p>
-                        </div>
-                        <div class="quote-card">
-                            <p>"I have a hobby graveyard in my closet."</p>
-                        </div>
-                        <div class="quote-card">
-                            <p>"I don't have the energy to suck at something new."</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works Section -->
-        <section class="container section text-center" id="how-it-works-section">
-            <h2 class="fade-up">How Fallow Works</h2>
-            <p class="text-muted fade-up" style="max-width: 600px; margin: var(--space-sm) auto 0;">We uncover the psychological drivers behind what you already enjoy.</p>
-            
-            <div class="steps-grid">
-                <div class="step-card fade-up" style="transition-delay: 100ms;">
-                    <div class="step-visual">
-                        <span class="step-number">1</span>
-                    </div>
-                    <h3>3 minutes of playful choices</h3>
-                    <p>Visual pairwise choices and scenario tradeoffs reveal your hidden preferences without making you think too hard.</p>
-                </div>
-                <div class="step-card fade-up" style="transition-delay: 200ms;">
-                    <div class="step-visual">
-                        <span class="step-number">2</span>
-                    </div>
-                    <h3>Surprisingly perfect matches</h3>
-                    <p>We map your psychological profile to activities you'd genuinely enjoy, including things you'd never think to search for.</p>
-                </div>
-                <div class="step-card fade-up" style="transition-delay: 300ms;">
-                    <div class="step-visual">
-                        <span class="step-number">3</span>
-                    </div>
-                    <h3>Your smallest first step</h3>
-                    <p>We give you exactly what you need to try it this weekend. No overwhelm, just the smallest, most frictionless entry point.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- The Difference Section -->
-        <section class="container section difference" id="difference-section">
-            <div class="difference-content fade-up">
-                <h2>Why we look at WHY, not WHAT</h2>
-                <p class="text-muted" style="margin: var(--space-md) auto 0;">
-                    Traditional discovery asks what you want to do. But if you knew that, you wouldn't be here. We analyze the underlying mechanics of your satisfaction.
-                </p>
-                
-                <div class="difference-example">
-                    <p class="example-text">
-                        "A person who loves competitive video games might never search for 'bouldering.' But both involve optimization, mechanical mastery, rapid feedback, and satisfying progression. That's the connection we find."
+    <!-- Problem -->
+    <section class="band field-bloom section" id="problem-section">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-text fade-up">
+                    <h2>Stuck between unfulfilling passivity and exhausting forced socializing?</h2>
+                    <p class="text-muted">
+                        Life transitions often leave us craving novelty but lacking the energy to find it. You don't need another generic listicle telling you to "try hiking" or "take a pottery class." You need something that actually fits how your brain works.
                     </p>
                 </div>
+                <div class="problem-quotes fade-up">
+                    <div class="quote-card">
+                        <p>"I want to do something but nothing sounds fun."</p>
+                    </div>
+                    <div class="quote-card">
+                        <p>"I have a hobby graveyard in my closet."</p>
+                    </div>
+                    <div class="quote-card">
+                        <p>"I don't have the energy to suck at something new."</p>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Testimonial Section -->
-        <section class="container section testimonial" id="testimonial-section">
-            <div class="fade-up">
-                <blockquote class="testimonial-quote">
-                    "We don't need more things to do. We need the right things to do — activities that reignite our curiosity and feel like they were made just for us."
+    <!-- How It Works -->
+    <section class="band field-sprout section" id="how-it-works-section">
+        <div class="container">
+            <div class="section-head fade-up">
+                <h2>How Fallow works</h2>
+                <p class="text-muted">We uncover the psychological drivers behind what you already enjoy.</p>
+            </div>
+
+            <ol class="steps-grid">
+                <li class="step-card fade-up">
+                    <span class="step-number">1</span>
+                    <h3>Three minutes of playful choices</h3>
+                    <p>Visual pairwise choices and scenario tradeoffs reveal your hidden preferences without making you think too hard.</p>
+                </li>
+                <li class="step-card fade-up">
+                    <span class="step-number">2</span>
+                    <h3>Surprisingly perfect matches</h3>
+                    <p>We map your psychological profile to activities you'd genuinely enjoy, including things you'd never think to search for.</p>
+                </li>
+                <li class="step-card fade-up">
+                    <span class="step-number">3</span>
+                    <h3>Your smallest first step</h3>
+                    <p>We give you exactly what you need to try it this weekend. No overwhelm, just the smallest, most frictionless entry point.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- The Difference -->
+    <section class="band field-sky section" id="difference-section">
+        <div class="container">
+            <div class="section-head fade-up">
+                <h2>Why we look at why, not what</h2>
+                <p class="text-muted">
+                    Traditional discovery asks what you want to do. But if you knew that, you wouldn't be here. We analyze the underlying mechanics of your satisfaction.
+                </p>
+            </div>
+
+            <figure class="difference-example fade-up">
+                <blockquote class="example-text">
+                    A person who loves competitive video games might never search for "bouldering." But both involve optimization, mechanical mastery, rapid feedback, and satisfying progression.
                 </blockquote>
-                <div class="testimonial-author">— The Fallow Vision</div>
-            </div>
-        </section>
+                <figcaption>That connection is the whole product.</figcaption>
+            </figure>
+        </div>
+    </section>
 
-        <!-- Waitlist Section -->
-        <section class="container section" id="waitlist-section">
+    <!-- Manifesto. The single dark moment on the page. -->
+    <section class="band field-ink section" id="testimonial-section">
+        <div class="container">
+            <blockquote class="testimonial-quote fade-up">
+                We don't need more things to do. We need the right things to do — activities that reignite our curiosity and feel like they were made just for us.
+            </blockquote>
+            <div class="testimonial-author fade-up">The Fallow Vision</div>
+        </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="band field-sun section" id="waitlist-section">
+        <div class="container">
             <div class="waitlist fade-up">
                 <h2>Ready to reignite your free time?</h2>
                 <p>Be among the first to discover what you've been missing.</p>
-                
+
                 <form class="waitlist-form" id="waitlist-form">
-                    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="Enter your email address" required aria-label="Email address">
+                    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="you@email.com" required aria-label="Email address">
                     <button type="submit" class="btn" id="waitlist-submit">Join the Waitlist</button>
                 </form>
                 <p class="waitlist-message" id="waitlist-message" role="status" aria-live="polite"></p>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="footer container" id="main-footer">
-        <p>&copy; 2026 Fallow. Your next favorite thing to do.</p>
+    <footer class="band field-mist footer" id="main-footer">
+        <div class="container footer-inner">
+            <p class="footer-tagline">Let your mind lie fallow. See what grows.</p>
+            <p class="footer-legal">&copy; 2026 Fallow</p>
+        </div>
     </footer>
 
+    <script src="reveal.js"></script>
     <script src="index.js"></script>
     <script src="quick-discover.js"></script>
 </body>

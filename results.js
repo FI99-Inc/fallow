@@ -208,6 +208,9 @@ function renderRecommendations(recs, userProfile) {
     const template = document.getElementById('cardTemplate');
     if (!container || !template) return;
 
+    // One set for the whole batch, so cards can claim different dimensions.
+    const usedDims = new Set();
+
     recs.filter(Boolean).forEach((act, index) => {
         const clone = template.content.cloneNode(true);
         const card = clone.querySelector('.card');
@@ -226,7 +229,7 @@ function renderRecommendations(recs, userProfile) {
         clone.querySelector('.activity-name').textContent = act.name;
         clone.querySelector('.hook-line').textContent = `"${act.hook}"`;
 
-        const rationale = generateRationale(userProfile, act);
+        const rationale = generateRationale(userProfile, act, index, usedDims);
         clone.querySelector('.why-like-text').textContent = rationale.why;
         clone.querySelector('.caveat-text').textContent = rationale.caveat;
 
@@ -302,53 +305,156 @@ function addCommitment(act) {
     localStorage.setItem('fallow_commitments', JSON.stringify(list));
 }
 
-function generateRationale(userProfile, act) {
-    // Simple template logic
-    const dimNames = {
-        sociality: { high: "highly social", low: "deeply solo" },
-        structure: { high: "highly structured and rule-based", low: "freeform and exploratory" },
-        physicality: { high: "physically active", low: "mental and focused" },
-        expression: { high: "creative and expressive", low: "analytical and consuming" },
-        environment: { high: "outdoorsy", low: "indoor-friendly" }
-    };
+// Per-dimension vocabulary. Each entry names the *mechanic* rather than the
+// label, so a rationale can say something true about this specific activity.
+const DIMENSION_COPY = {
+    sociality: {
+        high: { user: "you get your energy from other people", act: "it puts you in a room with other people" },
+        low:  { user: "you recharge on your own",              act: "it is yours alone" }
+    },
+    structure: {
+        high: { user: "you want a clear method to follow",     act: "it has rules, steps and a right answer" },
+        low:  { user: "you would rather improvise",            act: "there is no correct way to do it" }
+    },
+    physicality: {
+        high: { user: "you think better when your body is busy", act: "it is physical" },
+        low:  { user: "you prefer to sit still and go deep",     act: "it is quiet, close work" }
+    },
+    expression: {
+        high: { user: "you need to make something that is yours", act: "you end up holding something you made" },
+        low:  { user: "you would rather absorb than produce",     act: "it rewards study more than output" }
+    },
+    environment: {
+        high: { user: "you want to be outside",            act: "it happens outdoors" },
+        low:  { user: "you want it to work at home",       act: "it fits in a corner of your apartment" }
+    },
+    barrier: {
+        high: { user: "you do not mind a real setup cost", act: "it asks for some commitment up front" },
+        low:  { user: "you want to start without a project", act: "you can start this week with almost nothing" }
+    }
+};
 
-    // Find user's strongest dimension
-    let maxDim = null;
-    let maxVal = 0;
-    for (const [key, val] of Object.entries(userProfile)) {
-        if (key === 'barrier') continue;
-        if (Math.abs(val) > Math.abs(maxVal)) {
-            maxVal = val;
-            maxDim = key;
+const clause = (dim, value) => {
+    const entry = DIMENSION_COPY[dim];
+    if (!entry) return null;
+    return value > 0 ? entry.high : entry.low;
+};
+
+const sentenceCase = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/**
+ * Build the "why" and "what might not work" lines for ONE recommendation.
+ *
+ * This used to lock onto the user's single strongest dimension once and reuse
+ * it for every card, so all five recommendations rendered the same sentence
+ * with the activity name swapped in — which reads as a mail-merge and undoes
+ * the whole premise. It now scores each activity against the profile
+ * separately, so different activities genuinely surface different reasons.
+ *
+ * @param {object} userProfile - dimension -> -1..1
+ * @param {object} act - activity with .dimensions
+ * @param {number} index - position in the list, used only to vary phrasing
+ */
+function generateRationale(userProfile, act, index = 0, usedDims = null) {
+    const dims = act && act.dimensions ? act.dimensions : {};
+
+    const agreements = [];  // dimensions where user and activity pull the same way
+    let worst = null;       // strongest genuine opposition, for an honest caveat
+
+    for (const [key, userVal] of Object.entries(userProfile)) {
+        if (!(key in dims)) continue;
+        const actVal = dims[key];
+        const aligned = userVal * actVal;
+
+        // Agreement: same sign, both far enough from neutral to mean anything.
+        if (aligned > 0 && Math.abs(userVal) > 0.15 && Math.abs(actVal) > 0.15) {
+            agreements.push({ key, userVal, actVal, agreement: aligned });
+        }
+
+        // A caveat is only honest if the two actually pull in OPPOSITE
+        // directions. Ranking by |userVal - actVal| instead produced lines like
+        // "it fits in a corner of your apartment, but you want it to work at
+        // home" — two facts that agree, written as a conflict.
+        if (aligned < 0 && Math.abs(userVal) > 0.15 && Math.abs(actVal) > 0.3) {
+            // Barrier is one-directional: an activity being cheaper and easier
+            // than you'd tolerate is not a drawback, so only warn when it asks
+            // for MORE than the user signalled they want to give.
+            const oneWay = key === 'barrier' && actVal <= userVal;
+            const opposition = Math.abs(userVal - actVal);
+            if (!oneWay && (!worst || opposition > worst.opposition)) {
+                worst = { key, userVal, actVal, opposition };
+            }
         }
     }
 
-    let why = "";
-    if (maxDim) {
-        const isHigh = maxVal > 0;
-        const userTrait = isHigh ? dimNames[maxDim].high : dimNames[maxDim].low;
-
-        // Check if activity matches this
-        const actVal = act.dimensions[maxDim];
-        if ((isHigh && actVal > 0.2) || (!isHigh && actVal < -0.2)) {
-            why = `You lean toward ${userTrait} challenges. ${act.name} is exactly that \u2014 it provides a perfect outlet for this energy.`;
-        } else {
-            why = `While you usually prefer ${userTrait} activities, ${act.name} offers a refreshing change of pace that taps into your other strengths.`;
+    // Dimensions the user cares about that this activity simply does not serve.
+    // Not a conflict, but a real and specific limitation worth naming.
+    const blindSpots = [];
+    for (const [key, userVal] of Object.entries(userProfile)) {
+        if (!(key in dims)) continue;
+        if (Math.abs(userVal) > 0.25 && Math.abs(dims[key]) < 0.3) {
+            blindSpots.push({ key, userVal, slack: Math.abs(userVal) });
         }
+    }
+    blindSpots.sort((a, b) => b.slack - a.slack);
+
+    agreements.sort((a, b) => b.agreement - a.agreement);
+
+    // Prefer a dimension no other card has claimed yet. Five cards that all
+    // happen to share the user's dominant trait would otherwise print five
+    // copies of the same sentence.
+    let best = null;
+    if (agreements.length) {
+        best = (usedDims && agreements.find(c => !usedDims.has(c.key))) || agreements[0];
+        if (usedDims) usedDims.add(best.key);
+    }
+
+    let why;
+    if (best) {
+        const userSide = clause(best.key, best.userVal);
+        const actSide = clause(best.key, best.actVal);
+        // Three frames, rotated by position, so two cards that happen to land on
+        // the same dimension still do not read as the same sentence.
+        const frames = [
+            () => `${sentenceCase(actSide.act)}, and ${userSide.user}.`,
+            () => `Because ${userSide.user}, this one fits: ${actSide.act}.`,
+            () => `${sentenceCase(actSide.act)}. That matters here because ${userSide.user}.`
+        ];
+        // Offset the frame by the dimension name too, so two cards that do
+        // land on the same dimension still do not read identically.
+        const dimOffset = Object.keys(DIMENSION_COPY).indexOf(best.key);
+        why = frames[(index + dimOffset) % frames.length]();
     } else {
-        why = `${act.name} is a balanced activity that fits well with your versatile profile.`;
+        const neutralFrames = [
+            `${act.name} sits near the middle of your profile — nothing about it fights you, which makes it a low-risk place to start.`,
+            `Your profile does not pull hard for or against ${act.name}. It is on the list as a wildcard rather than a match.`,
+            `Nothing in ${act.name} lines up sharply with your profile, which is exactly why it might surprise you.`
+        ];
+        why = neutralFrames[index % neutralFrames.length];
     }
 
-    // Generate caveat (look for a dimension where user and act differ significantly)
-    let caveat = "It hits all your sweet spots.";
-    for (const [key, val] of Object.entries(userProfile)) {
-        if (key === 'barrier') continue;
-        const actVal = act.dimensions[key];
-        if (Math.abs(val - actVal) > 0.8) {
-            const actTrait = actVal > 0 ? dimNames[key].high : dimNames[key].low;
-            caveat = `You might find it unusually ${actTrait} compared to what you're used to \u2014 lean into the discomfort.`;
-            break;
-        }
+    let caveat;
+    if (worst) {
+        const actSide = clause(worst.key, worst.actVal);
+        const userSide = clause(worst.key, worst.userVal);
+        caveat = `${sentenceCase(actSide.act)}, but ${userSide.user}. That is the part you will have to push through.`;
+    } else if (blindSpots.length) {
+        const gap = clause(blindSpots[0].key, blindSpots[0].userVal);
+        caveat = `It will not do much for one thing you clearly want: ${gap.user}. Expect to get that somewhere else.`;
+    } else if (act && act.isStretch) {
+        const stretchFrames = [
+            `Nothing in it fights your profile — it is simply further from your usual territory than the rest of this list.`,
+            `This is the curveball of the set. It does not contradict your profile, it just sits outside the shape of it.`,
+            `We put this in deliberately. It is the least predictable thing on your list, which is the point.`
+        ];
+        caveat = stretchFrames[index % stretchFrames.length];
+    } else {
+        const softFrames = [
+            `Nothing here cuts against your profile. The risk is the opposite — it may feel too safe to hold your attention.`,
+            `No part of this works against you, which also means it will not stretch you much.`,
+            `This one is comfortable on every axis we measured. Comfortable is where hobbies go quiet.`
+        ];
+        caveat = softFrames[index % softFrames.length];
     }
 
     return { why, caveat };
