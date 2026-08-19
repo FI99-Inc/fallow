@@ -28,7 +28,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_
 if not GEMINI_API_KEY:
     sys.exit("Set GEMINI_API_KEY or GOOGLE_API_KEY environment variable first.")
 
-MODEL = "gemini-flash-latest"
+MODEL = "gemini-3.7-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={GEMINI_API_KEY}"
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "activities.json")
@@ -119,24 +119,25 @@ def call_gemini(prompt, temperature=0.8, max_tokens=8192):
             "maxOutputTokens": max_tokens,
         }
     }
-    for attempt in range(3):
+    
+    attempt = 0
+    while True:
         try:
             resp = requests.post(API_URL, json=payload, timeout=120)
-            if resp.status_code == 429:
-                wait = 2 ** (attempt + 1)
-                print(f"  Rate limited, waiting {wait}s...")
+            if resp.status_code in (429, 503):
+                wait = min(2 ** (attempt + 1), 60) # Cap at 60s
+                print(f"  API overloaded (HTTP {resp.status_code}), waiting {wait}s...")
                 time.sleep(wait)
+                attempt += 1
                 continue
             resp.raise_for_status()
             data = resp.json()
             return data["candidates"][0]["content"]["parts"][0]["text"]
         except Exception as e:
-            if attempt < 2:
-                print(f"  Retrying ({attempt+1}/3): {e}")
-                time.sleep(2)
-            else:
-                raise
-    return None
+            wait = min(2 ** (attempt + 1), 60)
+            print(f"  Error: {e}. Retrying in {wait}s...")
+            time.sleep(wait)
+            attempt += 1
 
 
 def extract_json(text):
@@ -177,11 +178,15 @@ CATEGORIES = [
 ]
 
 
-def generate_idea_list(existing_names, count, category_filter=None):
+def generate_idea_list(existing_names, count, category_filter=None, target_audience=None):
     """Ask Gemini to brainstorm activity names we don't already have."""
     cat_clause = ""
     if category_filter:
         cat_clause = f"Focus specifically on the '{category_filter}' category."
+        
+    audience_clause = ""
+    if target_audience:
+        audience_clause = f"CRITICAL REQUIREMENT: These hobbies MUST be highly appealing to this specific demographic/persona: {target_audience}"
 
     prompt = f"""You are a hobby and activity researcher for Fallow, a product that helps people discover activities they'd genuinely enjoy.
 
@@ -198,6 +203,7 @@ Requirements:
 - No generic entries like "Volunteering" or "Reading" — be specific (e.g., "Mycology Field Walks" not "Nature Walks").
 - No activities that are just slight variations of ones we already have.
 {cat_clause}
+{audience_clause}
 
 Return ONLY a JSON array of strings (activity names), nothing else.
 Example: ["Sashiko Stitching", "Competitive Yo-Yo", "Sound Design"]"""
@@ -251,7 +257,7 @@ Return ONLY the JSON object, no markdown wrapping, no explanation."""
     return entry
 
 
-def run_pipeline(count=20, category_filter=None, dry_run=False):
+def run_pipeline(count=20, category_filter=None, target_audience=None, dry_run=False):
     """Main pipeline: brainstorm ideas, generate entries, validate, save."""
     # Load existing database
     with open(DB_PATH, "r", encoding="utf-8") as f:
@@ -264,7 +270,7 @@ def run_pipeline(count=20, category_filter=None, dry_run=False):
     print(f"Database currently has {len(existing)} activities.\n")
 
     # Step 1: Brainstorm ideas
-    ideas = generate_idea_list(existing_names, count, category_filter)
+    ideas = generate_idea_list(existing_names, count, category_filter, target_audience)
     if not ideas:
         print("No new ideas generated. Exiting.")
         return

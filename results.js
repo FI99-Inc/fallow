@@ -1,5 +1,5 @@
 import { shareDNA } from './share.js';
-import { supabase } from './supabase-client.js';
+import { supabase, normalizeActivity } from './supabase-client.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Read user profile from localStorage (mock if absent)
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const { data: acts, error } = await supabase.from('activities').select('*');
         if (error) throw error;
-        activities = acts || [];
+        activities = (acts || []).map(normalizeActivity).filter(Boolean);
     } catch (e) {
         console.error("Failed to load activities", e);
         hide(loadingState);
@@ -230,12 +230,14 @@ function renderRecommendations(recs, userProfile) {
         clone.querySelector('.why-like-text').textContent = rationale.why;
         clone.querySelector('.caveat-text').textContent = rationale.caveat;
 
-        clone.querySelector('.experiment-step').textContent = act.experiment.smallestStep;
-        clone.querySelector('.success-feels-like span').textContent = act.experiment.whatSuccessFeelsLike;
+        const exp = act.experiment || {};
+        const pcv = act.practicalConstraints || {};
+        clone.querySelector('.experiment-step').textContent = exp.smallestStep || 'Just try it once, badly.';
+        clone.querySelector('.success-feels-like span').textContent = exp.whatSuccessFeelsLike || 'You want to do it again.';
 
-        clone.querySelector('.cost-value').textContent = act.practicalConstraints.startCost;
-        clone.querySelector('.time-value').textContent = act.practicalConstraints.timePerSession;
-        clone.querySelector('.equip-value').textContent = act.practicalConstraints.equipmentNeeded;
+        clone.querySelector('.cost-value').textContent = pcv.startCost || 'Not listed';
+        clone.querySelector('.time-value').textContent = pcv.timePerSession || 'Not listed';
+        clone.querySelector('.equip-value').textContent = pcv.equipmentNeeded || 'Nothing to start';
 
         // Interactions
         const btnCommit = clone.querySelector('.btn-commit');

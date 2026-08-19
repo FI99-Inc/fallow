@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fallow | Discover What You're Missing</title>
     <meta name="description" content="A hobby and activity discovery engine that finds what you'll genuinely enjoy based on your underlying psychological drivers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -12,7 +17,7 @@
     <header class="container header" id="main-header">
         <div class="logo">Fallow</div>
         <nav>
-            <a href="browse.html" class="btn btn-outline" id="nav-browse-btn" style="margin-right: 0.5rem;">Browse</a>
+            <a href="browse.html" class="btn btn-outline" id="nav-browse-btn">Browse</a>
             <a href="#waitlist-section" class="btn btn-secondary" id="nav-waitlist-btn">Request Beta Access</a>
         </nav>
     </header>
@@ -116,9 +121,9 @@
         <section class="container section testimonial" id="testimonial-section">
             <div class="fade-up">
                 <blockquote class="testimonial-quote">
-                    "We don't need more things to do. We need the right things to doactivities that reignite our curiosity and feel like they were made just for us."
+                    "We don't need more things to do. We need the right things to do — activities that reignite our curiosity and feel like they were made just for us."
                 </blockquote>
-                <div class="testimonial-author"> The Fallow Vision</div>
+                <div class="testimonial-author">— The Fallow Vision</div>
             </div>
         </section>
 
@@ -132,7 +137,7 @@
                     <input type="email" class="waitlist-input" id="waitlist-email" placeholder="Enter your email address" required aria-label="Email address">
                     <button type="submit" class="btn" id="waitlist-submit">Join the Waitlist</button>
                 </form>
-                <div class="waitlist-message" id="waitlist-message" aria-live="polite"></div>
+                <p class="waitlist-message" id="waitlist-message" role="status" aria-live="polite"></p>
             </div>
         </section>
     </main>

@@ -1,56 +1,6 @@
-
-:root {
-  --color-bg: #EAE5DC;
-  --color-surface: transparent;
-  --color-surface-dim: transparent;
-  --color-text: #1C1A17;
-  --color-text-muted: #59544D;
-  --color-text-light: #59544D;
-  --color-primary: #D9532A;
-  --color-primary-light: #B07D35;
-  --color-primary-hover: #1C1A17;
-  --color-secondary: #5F6B5F;
-  --color-accent: #B07D35;
-  --color-accent-hover: #1C1A17;
-  --color-border: #1C1A17;
-  --bg-color: #EAE5DC;
-  --text-main: #1C1A17;
-  --card-bg: transparent;
-  --border-color: #1C1A17;
-  --success-color: #5F6B5F;
-  --surprise-color: #8C3B26;
-
-  --font-display: 'Fraunces', serif;
-  --font-serif: 'Fraunces', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-sans: 'Inter', sans-serif;
-
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-pill: 0px;
-
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --shadow-card: none;
-  
-  --transition-fast: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  --transition-normal: 600ms cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-slow: 1000ms cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* Results — the reveal. Tokens and base come from tokens.css. */
 
 body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-color);
-    color: var(--text-main);
     line-height: 1.6;
 }
 
@@ -58,34 +8,60 @@ h1, h2, h3, .logo {
     font-family: var(--font-serif);
 }
 
-.header {
+/* Header */
+.results-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
-    border-bottom: 2px solid var(--border-color);
-    background: var(--card-bg);
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.5rem var(--container-padding);
+    border-bottom: var(--border-weight) solid var(--color-border);
 }
 
 .logo {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: var(--accent-color);
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.05em;
+    color: var(--color-text);
+    text-decoration: none;
 }
 
-.dna-summary {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    background: var(--bg-color);
-    padding: 0.5rem 1rem;
-    border-radius: 0;
-    border: 2px solid var(--border-color);
+.results-nav {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
+
+.results-nav .btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* The trait line that explains why these five, and not five others. */
+.dna-summary {
+    display: inline-block;
+    margin: 1.5rem auto 0;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    background: var(--color-surface);
+    padding: 0.6rem 1.1rem;
+    border: var(--border-weight) solid var(--color-border);
+}
+.dna-summary:empty { display: none; }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 3rem 1rem;
+    padding: 3rem var(--container-padding);
 }
 
 .intro {
@@ -94,16 +70,34 @@ h1, h2, h3, .logo {
 }
 
 .intro h1 {
-    font-size: 2.5rem;
+    font-size: clamp(2.25rem, 7vw, 3.5rem);
     margin-bottom: 1rem;
 }
 
 .intro p {
     font-size: 1.1rem;
-    color: var(--text-muted);
-    max-width: 600px;
+    color: var(--color-text-muted);
+    max-width: 60ch;
     margin: 0 auto;
 }
+
+/* Loading and error states */
+.results-message {
+    text-align: center;
+    padding: 3rem var(--container-padding);
+    border: var(--border-weight) solid var(--color-border);
+    background: var(--color-surface);
+}
+.results-message h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 0.75rem;
+}
+.results-message p {
+    color: var(--color-text-muted);
+    max-width: 48ch;
+    margin: 0 auto 1.5rem;
+}
+.results-message p:last-child { margin-bottom: 0; }
 
 .results-container {
     display: flex;
@@ -111,27 +105,20 @@ h1, h2, h3, .logo {
     gap: 2rem;
 }
 
-/* Card Styles */
+/* Card */
 .card {
-    background: var(--card-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 0;
+    background: var(--color-surface);
+    border: var(--border-weight) solid var(--color-border);
     padding: 2rem;
-    box-shadow: none;
     opacity: 0;
     transform: translateY(20px);
-    animation: slideUp 0.6s ease forwards;
-    transition: box-shadow 0.3s ease;
-}
-
-.card:hover {
-    box-shadow: none;
+    animation: slideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 @keyframes slideUp {
     to {
         opacity: 1;
-        transform: translateY(0); 
+        transform: translateY(0);
     }
 }
 
@@ -139,6 +126,7 @@ h1, h2, h3, .logo {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -147,35 +135,46 @@ h1, h2, h3, .logo {
 }
 
 .category {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 .match-score {
-    color: var(--accent-color);
-    background: #FFF3E0;
+    color: var(--color-on-primary);
+    background: var(--color-primary-deep);
     padding: 0.2rem 0.6rem;
-    border-radius: 0;
 }
 
 .stretch-badge {
-    color: var(--surprise-color);
-    background: #F3E5F5;
+    color: var(--color-bg);
+    background: var(--surprise-color);
     padding: 0.2rem 0.6rem;
-    border-radius: 0;
 }
 
 .hidden {
     display: none !important;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
 .activity-name {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 7vw, 3.5rem);
     margin-bottom: 0.5rem;
 }
 
 .hook-line {
     font-size: 1.2rem;
-    color: var(--accent-color);
+    color: var(--color-primary-deep);
     font-style: italic;
     margin-bottom: 2rem;
     font-family: var(--font-serif);
@@ -188,24 +187,40 @@ h1, h2, h3, .logo {
 }
 
 .card-body p {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
     margin-bottom: 1rem;
+    max-width: 70ch;
 }
 
+/* Logistics — labelled, because three bare values are not a communication */
 .logistics {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
+    flex-wrap: wrap;
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 2px solid var(--border-color);
+    border-top: var(--border-weight) solid var(--color-border);
 }
 
 .logistic-item {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.logistic-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+}
+
+.logistic-item .value {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text);
 }
 
 /* Actions */
@@ -217,50 +232,61 @@ h1, h2, h3, .logo {
 }
 
 .btn {
-  min-height: 44px;
+    min-height: var(--tap-min);
     padding: 0.75rem 1.5rem;
     border-radius: 0;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    border: 2px solid var(--color-border);
-    transition: all 0.2s ease;
+    border: var(--border-weight) solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms var(--transition-fast);
     font-family: var(--font-sans);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-primary {
-    background: var(--accent-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: var(--accent-hover);
+    background: var(--color-primary-deep);
+    border-color: var(--color-primary-deep);
+    color: var(--color-on-primary);
 }
 
 .btn-secondary {
-    background: #F0EBE1;
-    color: var(--text-main);
-}
-
-.btn-secondary:hover {
-    background: #E5DED0;
+    background: var(--color-bg-alt);
+    color: var(--color-text);
 }
 
 .btn-outline {
     background: transparent;
-    border: 2px solid var(--border-color);
-    color: var(--text-muted);
+    color: var(--color-text);
 }
 
-.btn-outline:hover {
-    border-color: var(--text-muted);
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+      background: var(--color-primary-hover);
+      border-color: var(--color-primary-hover);
+  }
+
+  .btn-secondary:hover {
+      background: var(--color-text);
+      color: var(--color-bg);
+  }
+
+  .btn-outline:hover {
+      background: var(--color-text);
+      color: var(--color-bg);
+  }
 }
 
 .pass-reasons {
     margin-top: 1rem;
     padding: 1rem;
-    background: var(--bg-color);
-    border-radius: 0;
+    background: var(--color-bg);
+    border: var(--border-weight) solid var(--color-border);
 }
 
 .reason-chips {
@@ -271,25 +297,29 @@ h1, h2, h3, .logo {
 }
 
 .chip {
+    min-height: var(--tap-min);
     padding: 0.4rem 0.8rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0;
-    background: white;
+    border: var(--border-weight) solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
     cursor: pointer;
+    font-family: var(--font-sans);
     font-size: 0.85rem;
-    transition: all 0.2s;
+    transition: background 200ms ease, color 200ms ease;
 }
 
-.chip:hover {
-    border-color: var(--text-main);
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+      background: var(--color-text);
+      color: var(--color-bg);
+  }
 }
 
 .celebration {
     margin-top: 1.5rem;
     padding: 1rem;
-    background: #E8F5E9;
-    color: var(--success-color);
-    border-radius: 0;
+    background: var(--color-secondary);
+    color: var(--color-bg);
     text-align: center;
     font-weight: 500;
 }
@@ -298,10 +328,9 @@ h1, h2, h3, .logo {
 .waitlist-section {
     margin-top: 5rem;
     text-align: center;
-    padding: 3rem;
-    background: var(--card-bg);
-    border-radius: 0;
-    border: 2px solid var(--border-color);
+    padding: 3rem var(--container-padding);
+    background: var(--color-surface);
+    border: var(--border-weight) solid var(--color-border);
 }
 
 .waitlist-form {
@@ -312,11 +341,30 @@ h1, h2, h3, .logo {
 }
 
 .waitlist-form input {
+    min-height: var(--tap-min);
     padding: 0.75rem 1rem;
-    border: 2px solid var(--border-color);
+    border: var(--border-weight) solid var(--color-border);
     border-radius: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
     width: 250px;
     font-family: var(--font-sans);
+    font-size: 1rem;
+}
+
+.waitlist-form input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.waitlist-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+    min-height: 1.2em;
+}
+.waitlist-message[data-state="error"] {
+    color: var(--surprise-color);
 }
 
 @media (max-width: 600px) {
@@ -327,38 +375,21 @@ h1, h2, h3, .logo {
     .card-actions {
         flex-direction: column;
     }
+    .card-actions .btn { width: 100%; }
     .waitlist-form {
         flex-direction: column;
     }
     .waitlist-form input {
         width: 100%;
     }
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    .card { padding: 1.5rem; }
 }
 
 .btn:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
 
-*:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+/* Full-width buttons should not scale; on a phone it reads as a glitch. */
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover { transform: scale(1.02); }
 }
-
-::selection {
-  background: var(--color-primary);
-  color: #F9F7F3;
-}
-
-.btn:hover { transform: scale(1.02); }

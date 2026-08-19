@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Fallow - Discover Your Activity DNA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="onboarding.css">
     <link rel="stylesheet" href="share.css">
 </head>
 <body>
     <header class="app-header">
-        <button id="back-btn" class="hidden" aria-label="Go back">
+        <button id="back-btn" class="hidden icon-btn" type="button" aria-label="Go back to the previous question">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <div class="progress-container">
-            <div id="progress-bar"></div>
+        <div class="progress-group">
+            <div class="progress-container" role="progressbar" aria-label="Quiz progress" aria-valuemin="1" aria-valuenow="1" aria-valuemax="13">
+                <div id="progress-bar"></div>
+            </div>
+            <span class="step-counter" id="step-counter" data-numeric></span>
         </div>
         <div class="logo">Fallow</div>
     </header>
@@ -25,12 +30,11 @@
             <!-- Dynamic screens rendered here via JS -->
         </div>
     </main>
-    <script type="module" src="onboarding.js"></script>
     <script>
       window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-      formspree('initForm', { formElement: '#beta-submit-form', formId: 'myegbnlq' });
     </script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script type="module" src="onboarding.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 </body>
 </html>

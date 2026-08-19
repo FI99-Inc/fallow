@@ -7,12 +7,9 @@ import sys
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_PUBLISHABLE_KEY")
 
-if not SUPABASE_URL or not SUPABASE_KEY:
-    print("Error: SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY environment variables required.")
-    sys.exit(1)
-
 # Ensure URL doesn't end with slash
-SUPABASE_URL = SUPABASE_URL.rstrip('/')
+if SUPABASE_URL:
+    SUPABASE_URL = SUPABASE_URL.rstrip('/')
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "activities.json")
 
