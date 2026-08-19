@@ -29,6 +29,16 @@ p {
   color: var(--color-text-muted);
 }
 
+/* --- Hero ground --------------------------------------------
+   The opening band is the one moment on the page that isn't a flat
+   field — a horizon blend of three pastels the rest of the page
+   uses one at a time. It reads as the field seen at dusk, before
+   the walk through the separate seasons begins. Still only tokens
+   the system already owns; no new colour was introduced. */
+.hero-band {
+  background: linear-gradient(155deg, var(--field-lilac) 0%, var(--field-mist) 45%, var(--field-sky) 100%);
+}
+
 /* --- Layout -----------------------------------------------
    A band paints an edge-to-edge colour field. The container inside
    it owns width and horizontal padding.
