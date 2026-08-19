@@ -30,13 +30,12 @@ p {
 }
 
 /* --- Hero ground --------------------------------------------
-   The opening band is the one moment on the page that isn't a flat
-   field — a horizon blend of three pastels the rest of the page
-   uses one at a time. It reads as the field seen at dusk, before
-   the walk through the separate seasons begins. Still only tokens
-   the system already owns; no new colour was introduced. */
+   Flat field like every other band; the opening band no longer gets
+   a gradient exception. Sky, because the section right after it is
+   already lilac and a flat field is how every other section break
+   on the page reads. */
 .hero-band {
-  background: linear-gradient(155deg, var(--field-lilac) 0%, var(--field-mist) 45%, var(--field-sky) 100%);
+  background-color: var(--field-sky);
 }
 
 /* --- Layout -----------------------------------------------
@@ -126,45 +125,6 @@ p {
 
 .btn:active { transform: scale(0.98); }
 
-/* --- Header ------------------------------------------------ */
-
-.header {
-  padding-block: var(--space-md) var(--space-sm);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.header nav {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: var(--color-text);
-  letter-spacing: -0.05em;
-  font-style: italic;
-  text-decoration: none;
-  /* When the logo is a link it is a tap target like any other. */
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-min);
-}
-
-@media (max-width: 600px) {
-  .header nav .btn {
-    padding: 0.7rem 0.9rem;
-    font-size: 0.7rem;
-  }
-}
-
 /* --- Hero --------------------------------------------------
    Budgeted to land the primary CTA above the fold at 1440x900.
    The old hero used --space-3xl top plus --space-4xl bottom and
@@ -185,46 +145,24 @@ p {
   line-height: 0.98;
 }
 
-/* The tagline carries the brand idea, so it gets the only two
-   authored typographic gestures on the page. */
-.hero-em,
+/* The tagline carries the brand idea, but only the word "fallow"
+   itself gets the one authored typographic gesture; "lie" and "See
+   what grows." stay plain ink at the same weight, so the emphasis
+   lands on the name, not the whole line around it. */
+.hero-line,
 .hero-grow {
   display: block;
 }
 
-.hero-em {
+/* The one typographic gesture for the brand name itself, reused
+   wherever "Fallow" appears in running copy on this page (the hero,
+   "How Fallow works," the manifesto attribution, the footer tagline)
+   so the name always reads as the name, not just here. */
+.hero-em,
+.brand-word {
+  font-family: var(--font-display);
   font-style: italic;
   color: var(--color-primary-deep);
-}
-
-.hero-grow {
-  position: relative;
-  display: inline-block;
-}
-
-/* A rule that grows out from under "See what grows." on load. */
-.hero-grow::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.12em;
-  height: 4px;
-  width: 100%;
-  background-color: var(--color-primary);
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: grow-rule 1100ms cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards;
-}
-
-@keyframes grow-rule {
-  to { transform: scaleX(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-grow::after {
-    animation: none;
-    transform: scaleX(1);
-  }
 }
 
 .hero-subhead {
@@ -242,13 +180,39 @@ p {
   margin-bottom: var(--space-md);
 }
 
+/* Bounded object per the system's card rule: surface + 2px ink border.
+   The flower sits framed on its own field, whole and unclipped, with
+   the note below it on the card's own surface. */
+.hero-card {
+  border: var(--border-weight) solid var(--color-border);
+  background-color: var(--color-surface);
+  margin-top: var(--space-lg);
+}
+
+.hero-card-art {
+  background-color: var(--field-sun);
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  justify-content: center;
+}
+
+/* The source art is black linework on white. mix-blend-mode removes the
+   white rather than cropping it out, so the field colour shows through
+   where the drawing doesn't, instead of introducing pure white, which
+   is not in this system. */
+.hero-card-img {
+  display: block;
+  width: 82%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
 .hero-note {
   font-size: 0.875rem;
-  max-width: 34ch;
   line-height: 1.6;
   color: var(--color-text-muted);
   border-top: var(--border-weight) solid var(--color-border);
-  padding-top: var(--space-sm);
+  padding: var(--space-md);
 }
 
 /* A filled tag, not a coloured left rule. */
@@ -264,29 +228,44 @@ p {
   margin-right: 0.35rem;
 }
 
-/* Above 900px the hero becomes two columns so the beta note balances
-   the composition instead of leaving half the canvas empty. */
+/* Above 900px the hero becomes two columns so the flower card sits
+   beside the headline instead of leaving half the canvas empty. The
+   headline stays strictly inside column 1's own track (never 1/-1) so
+   it can never physically reach into the card's column, whatever the
+   font scales to at a given viewport. "See what grows." breaks onto
+   two lines (in the markup) so no single line is wider than "Let your
+   mind," which keeps column 1 narrow enough to leave the card real
+   room, without shrinking the display type to make that line fit. */
 @media (min-width: 900px) {
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     column-gap: var(--space-2xl);
     align-items: start;
   }
-  .hero-headline { grid-column: 1 / -1; max-width: 15ch; }
+  .hero-headline { grid-column: 1; grid-row: 1; max-width: none; }
   .hero-subhead  { grid-column: 1; grid-row: 2; margin-bottom: var(--space-lg); }
   .hero-actions  { grid-column: 1; grid-row: 3; margin-bottom: 0; }
-  .hero-note     { grid-column: 2; grid-row: 2 / span 2; }
+  .hero-card     { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; }
 }
 
 /* --- Shared section heading -------------------------------- */
 
+/* The reading-measure cap belongs on the paragraph, not this wrapper.
+   It used to sit here, which meant the 16px body-text "ch" also
+   capped the much larger h2 sharing this box, at less than half the
+   width the heading actually needed, so short headings like "How
+   Fallow works" wrapped even though the section had room to spare. */
 .section-head {
   margin-bottom: var(--space-2xl);
-  max-width: 46ch;
 }
 
 .section-head h2 { margin-bottom: var(--space-sm); }
+
+/* The reading-measure cap now lives on whatever layout contains this
+   heading (how-it-works-layout's column, difference-grid's column),
+   sized to that section's own content, instead of one fixed "ch"
+   guess that fit some headings and broke others. */
 
 .section-lead {
   font-size: clamp(1.5rem, 3.2vw, 2.25rem);
@@ -375,6 +354,105 @@ p {
 
 /* --- How it works ------------------------------------------ */
 
+.how-it-works-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .how-it-works-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+    column-gap: var(--space-xl);
+    /* Centered, not top-aligned: the chart is taller than the heading
+       and paragraph beside it, so row 1's height is set by the chart
+       either way. Centering the text splits that leftover space above
+       and below it instead of dumping all of it in one block between
+       the subhead and the first numbered step. */
+    align-items: center;
+  }
+  .section-head          { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+  .how-it-works-visual   { grid-column: 2; grid-row: 1; justify-self: end; }
+  .steps-grid            { grid-column: 1 / -1; grid-row: 2; margin-top: var(--space-2xl); }
+}
+
+/* The six-axis shape the product actually computes (Sociality,
+   Structure, Physicality, Expression, Environment, Barrier), not a
+   stock icon standing in for the idea. The outer hexagon and spokes
+   are the six axes; the filled inner shape is one example profile,
+   named "example" in the caption so it never reads as this visitor's
+   own data. */
+.how-it-works-visual {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+@media (min-width: 860px) {
+  .how-it-works-visual { display: flex; }
+}
+
+.dna-chart {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  cursor: pointer;
+}
+
+.dna-hex {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 2;
+  transition: stroke var(--transition-fast);
+}
+
+.dna-axes line {
+  stroke: var(--color-border-soft);
+  stroke-width: 1;
+  transition: stroke var(--transition-fast);
+}
+
+.dna-profile {
+  fill: var(--color-primary);
+  fill-opacity: 0.16;
+  stroke: var(--color-primary-deep);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  transition: fill-opacity var(--transition-fast), stroke var(--transition-fast);
+}
+
+.dna-dots circle {
+  fill: var(--color-border);
+  transition: fill var(--transition-fast), r var(--transition-fast);
+  outline: none;
+}
+
+/* Hover transitions stay colour-only, per the system's motion rule;
+   the shape doesn't scale or move, it just reads as "live." Focus
+   gets the same treatment so keyboard users reach the same state
+   tabbing through the per-axis labels. */
+@media (hover: hover) and (pointer: fine) {
+  .dna-chart:hover .dna-hex { stroke: var(--color-primary-deep); }
+  .dna-chart:hover .dna-axes line { stroke: var(--color-text-muted); }
+  .dna-chart:hover .dna-profile { fill-opacity: 0.34; stroke: var(--color-primary); }
+  .dna-chart:hover .dna-dots circle { fill: var(--color-primary-deep); }
+}
+
+.dna-dots circle:focus-visible {
+  fill: var(--color-primary-deep);
+  r: 5.5;
+}
+
+.how-it-works-visual figcaption {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
 .steps-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -413,11 +491,52 @@ p {
 
 /* --- The difference ---------------------------------------- */
 
+.difference-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 860px) {
+  /* A narrower gap than the section's other two-column moments,
+     because this is the one place the two sides are one continuous
+     argument (the list is the quote's claim, broken into parts) and
+     a wide gutter read as two unrelated halves. The vertical hairline
+     on .difference-example does the actual separating now.
+
+     The intro column is much shorter than the quote (just a heading
+     and a line of copy), so it centers against the quote's height
+     instead of pinning to the top and leaving a block of dead field
+     colour underneath it. */
+  .difference-grid {
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+}
+
 .difference-example {
   border-top: var(--border-weight) solid var(--color-border);
   padding-top: var(--space-lg);
   max-width: 34ch;
   margin-left: auto;
+}
+
+@media (min-width: 860px) {
+  /* On desktop the divider moves from above the quote to between the
+     columns, so the two halves read as one composition split by a
+     hairline instead of a heading on one side and a quote floating
+     on the other with nothing tying them together. Measure widens
+     with the column (see .difference-grid) instead of staying capped
+     at 34ch, so the quote wraps into fewer lines and the section
+     stops running so tall. */
+  .difference-example {
+    border-top: none;
+    border-left: var(--border-weight) solid var(--color-border);
+    padding-top: 0;
+    padding-left: var(--space-lg);
+    max-width: 46ch;
+  }
 }
 
 .example-text {
@@ -440,11 +559,11 @@ p {
 
 .testimonial-quote {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+  font-size: clamp(1.75rem, 5.4vw, 3.75rem);
   color: var(--color-text);
-  max-width: 22ch;
-  /* Display scale: the manifesto statement runs to 3.25rem over a 22ch
-     measure, where 1.1 is correct leading. Waived in index.html. */
+  max-width: 40ch;
+  /* Display scale: the manifesto statement runs up to 3.75rem over a
+     40ch measure, where 1.1 is correct leading. Waived in index.html. */
   line-height: 1.1;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-lg);
@@ -457,9 +576,10 @@ p {
   letter-spacing: 0.12em;
   font-size: 0.75rem;
   color: var(--color-text-muted);
+  border-top: var(--border-weight) solid var(--color-border);
+  padding-top: var(--space-xs);
+  display: inline-block;
 }
-
-.testimonial-author::before { content: "— "; }
 
 /* --- Waitlist ----------------------------------------------- */
 
@@ -468,6 +588,22 @@ p {
 .waitlist h2 { margin-bottom: var(--space-sm); }
 
 .waitlist p { margin-bottom: var(--space-lg); }
+
+/* Above 700px the form sits beside the copy instead of stacked under
+   it, so the ask ("join the waitlist") reads as one wide composition
+   with the copy rather than a headline followed by a separate block. */
+@media (min-width: 700px) {
+  .waitlist {
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+  }
+  .waitlist-text { max-width: 26rem; }
+  .waitlist p { margin-bottom: 0; }
+  .waitlist-form-wrap { flex: 1 1 auto; max-width: 30rem; }
+}
 
 .waitlist-form {
   display: flex;

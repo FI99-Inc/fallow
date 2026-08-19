@@ -40,13 +40,12 @@ field hex on an element.
 |---|---|---|
 | `--field-mist` | `#E6E9F5` | Pale periwinkle — the default ground |
 
-**Exception — the opening band.** The landing page's first band (`.hero-band`
-in `index.css`) is the one place a field is not flat: a diagonal blend of
-`--field-lilac` → `--field-mist` → `--field-sky`, still built only from
-tokens above. `--field-mist` alone read as near-white at first paint, the
-worst possible first impression for a site whose whole idea is colour. This
-is the page's one deliberate exception to "one flat field per band" — it
-does not license gradients elsewhere.
+The landing page's opening band (`.hero-band` in `index.css`) briefly carried
+a gradient blend of `--field-lilac` → `--field-mist` → `--field-sky` as an
+exception to flat fields, meant to keep `--field-mist` (which reads as
+near-white alone) from being the first thing a visitor sees. It now uses
+`--field-sky` flat, like every other band — gradients are not part of this
+system.
 | `--field-sprout` | `#D8E8D0` | Pale green — growth, "how it works" |
 | `--field-bloom` | `#F6DCE2` | Pale pink — the human/emotional beat |
 | `--field-sun` | `#F8E9C8` | Pale butter — the payoff and the ask |
@@ -125,8 +124,11 @@ surfaces with no border are not restraint, they are missing UI.
 ## 6. Motion
 
 * **One authored moment per surface,** not the same entrance on every section.
-  On the landing page that moment is the rule growing out from under
-  "See what grows."
+  On the landing page that moment is the hero flower card: the illustration
+  bleeds off the top of its bounded box, which is a static compositional
+  gesture rather than an animated one. A previous version grew a coloured
+  rule out from under "See what grows"; it read as template noise on the
+  page's brand line and was removed.
 * **Easing** is exponential ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`), not
   bounce. Hover transitions are colour only.
 * **`prefers-reduced-motion` is honoured globally** in `tokens.css`.

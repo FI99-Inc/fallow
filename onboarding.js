@@ -541,13 +541,13 @@ function generateInsights(scores) {
   if (scores.sociality < -0.2) {
     insights.push("You lean toward solo activities where you can focus deeply and dictate your own pace without social friction.");
   } else if (scores.sociality > 0.2) {
-    insights.push("Community is key for you — an activity isn't fully engaging unless it involves sharing the experience with others.");
+    insights.push("Community is key for you: an activity isn't fully engaging unless it involves sharing the experience with others.");
   }
 
   if (scores.physicality > 0.2) {
     insights.push("You need activities that get you moving or actively engaging with the physical world, not just staring at a screen.");
   } else if (scores.physicality < -0.2) {
-    insights.push("You find your flow state in mental engagement — analyzing, reading, and diving deep into rabbit holes of information.");
+    insights.push("You find your flow state in mental engagement: analyzing, reading, and diving deep into rabbit holes of information.");
   }
 
   return insights.slice(0, 3); // Guarantee max 3 insights

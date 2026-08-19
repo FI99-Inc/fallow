@@ -426,7 +426,7 @@ function generateRationale(userProfile, act, index = 0, usedDims = null) {
         why = frames[(index + dimOffset) % frames.length]();
     } else {
         const neutralFrames = [
-            `${act.name} sits near the middle of your profile — nothing about it fights you, which makes it a low-risk place to start.`,
+            `${act.name} sits near the middle of your profile. Nothing about it fights you, which makes it a low-risk place to start.`,
             `Your profile does not pull hard for or against ${act.name}. It is on the list as a wildcard rather than a match.`,
             `Nothing in ${act.name} lines up sharply with your profile, which is exactly why it might surprise you.`
         ];
@@ -443,14 +443,14 @@ function generateRationale(userProfile, act, index = 0, usedDims = null) {
         caveat = `It will not do much for one thing you clearly want: ${gap.user}. Expect to get that somewhere else.`;
     } else if (act && act.isStretch) {
         const stretchFrames = [
-            `Nothing in it fights your profile — it is simply further from your usual territory than the rest of this list.`,
+            `Nothing in it fights your profile. It is simply further from your usual territory than the rest of this list.`,
             `This is the curveball of the set. It does not contradict your profile, it just sits outside the shape of it.`,
             `We put this in deliberately. It is the least predictable thing on your list, which is the point.`
         ];
         caveat = stretchFrames[index % stretchFrames.length];
     } else {
         const softFrames = [
-            `Nothing here cuts against your profile. The risk is the opposite — it may feel too safe to hold your attention.`,
+            `Nothing here cuts against your profile. The risk is the opposite: it may feel too safe to hold your attention.`,
             `No part of this works against you, which also means it will not stretch you much.`,
             `This one is comfortable on every axis we measured. Comfortable is where hobbies go quiet.`
         ];

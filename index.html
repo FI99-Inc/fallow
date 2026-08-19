@@ -19,42 +19,41 @@
          (padding-block). Verified at 390px: nothing sits flush to the
          viewport edge and there is no horizontal overflow. -->
     <!-- impeccable-disable tight-leading -- the only hit is
-         .testimonial-quote at up to 3.25rem over a 22ch measure. That is
+         .testimonial-quote at up to 3.75rem over a 40ch measure. That is
          display scale, where 1.1 is correct; the rule targets body copy. -->
 
     <div class="band hero-band">
-        <header class="container header" id="main-header">
-            <div class="logo">Fallow</div>
-            <nav>
-                <a href="browse.html" class="btn btn-outline" id="nav-browse-btn">Browse</a>
-                <a href="#waitlist-section" class="btn btn-secondary" id="nav-waitlist-btn">Request Beta Access</a>
-            </nav>
-        </header>
-
         <main>
             <!-- Hero. The tagline is the headline: it is the only line on the
-                 site that explains what "Fallow" means. -->
+                 site that explains what "Fallow" means. Only the word "fallow"
+                 itself carries the brand's one typographic gesture; "lie" and
+                 the rest of the line stay plain ink. -->
             <section class="container hero" id="hero-section">
                 <h1 class="hero-headline">
                     Let your mind
-                    <span class="hero-em">lie fallow.</span>
-                    <span class="hero-grow">See what grows.</span>
+                    <span class="hero-line">lie <em class="hero-em">fallow.</em></span>
+                    <span class="hero-grow">See what<br>grows.</span>
                 </h1>
                 <p class="hero-subhead">
                     A field rests so it can grow something better. So does a person.
-                    Answer thirteen quick questions about how your brain actually works —
-                    not about what you already like — and we'll find the things
+                    Answer thirteen quick questions about how your brain actually works,
+                    not about what you already like, and we'll find the things
                     you'd never have thought to search for.
                 </p>
                 <div class="hero-actions">
                     <a href="onboarding.html" class="btn btn-primary" id="hero-cta-primary">Find Your Spark</a>
                     <a href="browse.html" class="btn btn-secondary" id="hero-cta-browse">Browse activities</a>
                 </div>
-                <p class="hero-note">
-                    <b>Beta:</b> take the assessment and our founders will hand-curate
-                    five activities designed to pull you out of your rut.
-                    Takes about three minutes.
-                </p>
+                <aside class="hero-card fade-up">
+                    <div class="hero-card-art" aria-hidden="true">
+                        <img src="flower.png" alt="" class="hero-card-img">
+                    </div>
+                    <p class="hero-note">
+                        <b>Beta:</b> take the assessment and get five activities
+                        matched to your profile, picked to pull you out of your rut.
+                        Takes about three minutes.
+                    </p>
+                </aside>
             </section>
         </main>
     </div>
@@ -78,9 +77,6 @@
             <div class="problem-grid">
                 <div class="problem-text fade-up">
                     <h2>Stuck between unfulfilling passivity and exhausting forced socializing?</h2>
-                    <p class="text-muted">
-                        Life transitions often leave us craving novelty but lacking the energy to find it. You don't need another generic listicle telling you to "try hiking" or "take a pottery class." You need something that actually fits how your brain works.
-                    </p>
                 </div>
                 <div class="problem-quotes fade-up">
                     <div class="quote-card">
@@ -99,11 +95,38 @@
 
     <!-- How It Works -->
     <section class="band field-sprout section" id="how-it-works-section">
-        <div class="container">
+        <div class="container how-it-works-layout">
             <div class="section-head fade-up">
-                <h2>How Fallow works</h2>
+                <h2>How <em class="brand-word">Fallow</em> works</h2>
                 <p class="text-muted">We uncover the psychological drivers behind what you already enjoy.</p>
             </div>
+
+            <!-- The six-axis Activity DNA shape the product actually computes,
+                 not decoration borrowed from elsewhere. Each vertex names its
+                 dimension on hover/focus; the whole shape is a hover target. -->
+            <figure class="how-it-works-visual fade-up">
+                <svg class="dna-chart" viewBox="0 0 200 200" role="img" aria-label="An example Activity DNA profile across six dimensions: Sociality, Structure, Physicality, Expression, Environment, Barrier">
+                    <polygon class="dna-hex" points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
+                    <g class="dna-axes">
+                        <line x1="100" y1="100" x2="100" y2="20" />
+                        <line x1="100" y1="100" x2="169.3" y2="60" />
+                        <line x1="100" y1="100" x2="169.3" y2="140" />
+                        <line x1="100" y1="100" x2="100" y2="180" />
+                        <line x1="100" y1="100" x2="30.7" y2="140" />
+                        <line x1="100" y1="100" x2="30.7" y2="60" />
+                    </g>
+                    <polygon class="dna-profile" points="100,45 130.3,82.5 156.3,132.5 100,145 74,115 48,70" />
+                    <g class="dna-dots">
+                        <circle cx="100" cy="20" r="4" tabindex="0"><title>Sociality</title></circle>
+                        <circle cx="169.3" cy="60" r="4" tabindex="0"><title>Structure</title></circle>
+                        <circle cx="169.3" cy="140" r="4" tabindex="0"><title>Physicality</title></circle>
+                        <circle cx="100" cy="180" r="4" tabindex="0"><title>Expression</title></circle>
+                        <circle cx="30.7" cy="140" r="4" tabindex="0"><title>Environment</title></circle>
+                        <circle cx="30.7" cy="60" r="4" tabindex="0"><title>Barrier</title></circle>
+                    </g>
+                </svg>
+                <figcaption>Example Activity DNA profile</figcaption>
+            </figure>
 
             <ol class="steps-grid">
                 <li class="step-card fade-up">
@@ -127,7 +150,7 @@
 
     <!-- The Difference -->
     <section class="band field-sky section" id="difference-section">
-        <div class="container">
+        <div class="container difference-grid">
             <div class="section-head fade-up">
                 <h2>Why we look at why, not what</h2>
                 <p class="text-muted">
@@ -148,9 +171,9 @@
     <section class="band field-ink section" id="testimonial-section">
         <div class="container">
             <blockquote class="testimonial-quote fade-up">
-                We don't need more things to do. We need the right things to do — activities that reignite our curiosity and feel like they were made just for us.
+                We don't need more things to do. We need the right things to do: activities that reignite our curiosity and feel like they were made just for us.
             </blockquote>
-            <div class="testimonial-author fade-up">The Fallow Vision</div>
+            <div class="testimonial-author fade-up">The <em class="brand-word">Fallow</em> Vision</div>
         </div>
     </section>
 
@@ -158,22 +181,26 @@
     <section class="band field-sun section" id="waitlist-section">
         <div class="container">
             <div class="waitlist fade-up">
-                <h2>Ready to reignite your free time?</h2>
-                <p>Be among the first to discover what you've been missing.</p>
+                <div class="waitlist-text">
+                    <h2>Ready to reignite your free time?</h2>
+                    <p>Be among the first to discover what you've been missing.</p>
+                </div>
 
-                <form class="waitlist-form" id="waitlist-form">
-                    <input type="email" class="waitlist-input" id="waitlist-email" placeholder="you@email.com" required aria-label="Email address">
-                    <button type="submit" class="btn" id="waitlist-submit">Join the Waitlist</button>
-                </form>
-                <p class="waitlist-message" id="waitlist-message" role="status" aria-live="polite"></p>
+                <div class="waitlist-form-wrap">
+                    <form class="waitlist-form" id="waitlist-form">
+                        <input type="email" class="waitlist-input" id="waitlist-email" placeholder="you@email.com" required aria-label="Email address">
+                        <button type="submit" class="btn" id="waitlist-submit">Join the Waitlist</button>
+                    </form>
+                    <p class="waitlist-message" id="waitlist-message" role="status" aria-live="polite"></p>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="band field-mist footer" id="main-footer">
         <div class="container footer-inner">
-            <p class="footer-tagline">Let your mind lie fallow. See what grows.</p>
-            <p class="footer-legal">&copy; 2026 Fallow</p>
+            <p class="footer-tagline">Let your mind lie <em class="brand-word">fallow.</em> See what grows.</p>
+            <p class="footer-legal">&copy; 2026 FI99 Inc.</p>
         </div>
     </footer>
 
