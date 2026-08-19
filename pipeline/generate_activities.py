@@ -28,7 +28,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_
 if not GEMINI_API_KEY:
     sys.exit("Set GEMINI_API_KEY or GOOGLE_API_KEY environment variable first.")
 
-MODEL = "gemini-flash-latest"
+MODEL = "gemini-1.5-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={GEMINI_API_KEY}"
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "activities.json")
@@ -177,11 +177,15 @@ CATEGORIES = [
 ]
 
 
-def generate_idea_list(existing_names, count, category_filter=None):
+def generate_idea_list(existing_names, count, category_filter=None, target_audience=None):
     """Ask Gemini to brainstorm activity names we don't already have."""
     cat_clause = ""
     if category_filter:
         cat_clause = f"Focus specifically on the '{category_filter}' category."
+        
+    audience_clause = ""
+    if target_audience:
+        audience_clause = f"CRITICAL REQUIREMENT: These hobbies MUST be highly appealing to this specific demographic/persona: {target_audience}"
 
     prompt = f"""You are a hobby and activity researcher for Fallow, a product that helps people discover activities they'd genuinely enjoy.
 
@@ -198,6 +202,7 @@ Requirements:
 - No generic entries like "Volunteering" or "Reading" — be specific (e.g., "Mycology Field Walks" not "Nature Walks").
 - No activities that are just slight variations of ones we already have.
 {cat_clause}
+{audience_clause}
 
 Return ONLY a JSON array of strings (activity names), nothing else.
 Example: ["Sashiko Stitching", "Competitive Yo-Yo", "Sound Design"]"""
@@ -251,7 +256,7 @@ Return ONLY the JSON object, no markdown wrapping, no explanation."""
     return entry
 
 
-def run_pipeline(count=20, category_filter=None, dry_run=False):
+def run_pipeline(count=20, category_filter=None, target_audience=None, dry_run=False):
     """Main pipeline: brainstorm ideas, generate entries, validate, save."""
     # Load existing database
     with open(DB_PATH, "r", encoding="utf-8") as f:
@@ -264,7 +269,7 @@ def run_pipeline(count=20, category_filter=None, dry_run=False):
     print(f"Database currently has {len(existing)} activities.\n")
 
     # Step 1: Brainstorm ideas
-    ideas = generate_idea_list(existing_names, count, category_filter)
+    ideas = generate_idea_list(existing_names, count, category_filter, target_audience)
     if not ideas:
         print("No new ideas generated. Exiting.")
         return

@@ -90,3 +90,15 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- 4. Waitlist Table
+create table public.waitlist (
+    id uuid primary key default uuid_generate_v4(),
+    email text not null,
+    profile_data jsonb,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.waitlist enable row level security;
+create policy "Anyone can insert into waitlist." 
+on public.waitlist for insert with check (true);
