@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import os
 import sys
 import time
@@ -14,7 +14,7 @@ except ImportError as e:
 
 def main():
     parser = argparse.ArgumentParser(description="End-to-End: Generate activities and sync to Supabase")
-    parser.add_argument("--count", type=int, default=500, help="Total number of activities to generate (default: 500 with demographic splits)")
+    parser.add_argument("--count", type=int, default=150, help="Total number of activities to generate")
     args = parser.parse_args()
 
     gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
@@ -31,10 +31,7 @@ def main():
 
     # Demographics definition
     batches = [
-        {"count": 150, "audience": "young (18-22), highly social, extraverted people looking for group activities and high-energy environments"},
-        {"count": 100, "audience": "young (18-22), quieter, social, introverted people looking for relaxed, low-pressure group or parallel-play activities"},
-        {"count": 100, "audience": "young (18-22) people who want to do deep, engaging solo hobbies by themselves"},
-        {"count": 150, "audience": "a broad, evenly spread out general audience with diverse interests and varied demographics"}
+        {"count": 150, "audience": "highly common, mainstream, everyday normal hobbies that are very popular and accessible (e.g., gym workouts, popular team sports, standard video gaming, casual reading, baking, painting, hiking, cycling, watching movies, etc.). Focus ONLY on extremely standard, popular hobbies that millions of people do."}
     ]
 
     print(f"🚀 Starting Auto-Populate Pipeline with Demographic Splits")
