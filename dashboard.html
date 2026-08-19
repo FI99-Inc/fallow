@@ -4,34 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fallow - My Commitments</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="dashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header container" id="main-header" style="border-bottom: 1px solid var(--color-border); padding: 1.5rem 0;">
-        <div class="logo">Fallow</div>
+    <header class="header container" id="main-header">
+        <a class="logo" href="index.html">Fallow</a>
         <nav>
-            <a href="index.html" class="btn btn-secondary">Home</a>
+            <a href="browse.html" class="btn btn-outline">Browse</a>
             <a href="results.html" class="btn btn-primary" id="recs-btn">Get Recommendations</a>
         </nav>
     </header>
 
     <main class="container section">
         <div class="intro fade-up">
-            <h1 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 0.5rem;">Your Commitments</h1>
+            <h1 class="dashboard-title">Your Commitments</h1>
             <p class="text-muted">The only way to know what you like is to do it.</p>
         </div>
 
-        <div id="dashboard-content" class="fade-up" style="transition-delay: 100ms; margin-top: var(--space-xl);">
-            <!-- Dynamic content injected here -->
+        <div id="dashboard-content" class="fade-up">
+            <!-- Active commitments injected here -->
         </div>
+
+        <section class="dash-section hidden" id="completed-section" aria-labelledby="completed-heading">
+            <h2 class="dash-heading" id="completed-heading">Things you actually tried</h2>
+            <p class="text-muted">Evidence against the hobby graveyard.</p>
+            <div id="completed-content" class="tried-list"></div>
+        </section>
+
+        <section class="dash-section hidden" id="saved-section" aria-labelledby="saved-heading">
+            <h2 class="dash-heading" id="saved-heading">Saved while browsing</h2>
+            <p class="text-muted">Everything you swiped up on, waiting for a better week.</p>
+            <div id="saved-content" class="saved-list"></div>
+        </section>
+
+        <p class="visually-hidden" id="dashboard-status" role="status" aria-live="polite"></p>
     </main>
 
     <template id="emptyStateTemplate">
         <div class="empty-state">
-            <p class="text-muted">You have no active commitments.</p>
-            <a href="onboarding.html" class="btn btn-primary" style="margin-top: var(--space-md);">Take the Quiz</a>
+            <h2>Nothing in progress yet.</h2>
+            <p class="text-muted">A commitment is one activity you've decided to actually try, with a first step small enough to do this week.</p>
+            <div class="empty-actions">
+                <a href="results.html" class="btn btn-primary">See my recommendations</a>
+                <a href="browse.html" class="btn btn-outline">Browse activities</a>
+            </div>
         </div>
     </template>
 
@@ -42,24 +64,41 @@
                 <span class="status-badge">Active Commitment</span>
             </div>
             <h2 class="activity-name"></h2>
-            
+
             <div class="experiment-box">
                 <h4>Your Next Step:</h4>
                 <p class="experiment-step"></p>
             </div>
-            
+
             <div class="feedback-section">
                 <h3>How did it go?</h3>
                 <div class="feedback-buttons">
-                    <button class="btn btn-feedback" data-feedback="loved">Loved it</button>
-                    <button class="btn btn-feedback" data-feedback="okay">It was okay</button>
-                    <button class="btn btn-feedback" data-feedback="hated">Hated it</button>
-                    <button class="btn btn-feedback btn-cancel" data-feedback="cancel">Cancel Commitment</button>
+                    <button class="btn btn-feedback" type="button" data-feedback="loved">Loved it</button>
+                    <button class="btn btn-feedback" type="button" data-feedback="okay">It was okay</button>
+                    <button class="btn btn-feedback" type="button" data-feedback="hated">Hated it</button>
+                    <button class="btn btn-feedback btn-cancel" type="button" data-feedback="cancel">Drop this one</button>
                 </div>
+                <p class="feedback-result" hidden></p>
             </div>
         </div>
     </template>
 
-    <script src="dashboard.js"></script>
+    <template id="triedTemplate">
+        <div class="tried-card">
+            <span class="tried-verdict"></span>
+            <h3 class="tried-name"></h3>
+            <span class="tried-date"></span>
+        </div>
+    </template>
+
+    <template id="savedTemplate">
+        <div class="saved-card">
+            <span class="category"></span>
+            <h3 class="saved-name"></h3>
+            <p class="saved-hook"></p>
+        </div>
+    </template>
+
+    <script type="module" src="dashboard.js"></script>
 </body>
 </html>

@@ -1,19 +1,19 @@
 export async function shareDNA(insights) {
   // If insights aren't passed directly, try to compute them or pull from somewhere
   // For the prototype, we expect an array of string descriptions or labels
-  
+
   // 1. Create the DOM element
   const container = document.createElement('div');
   container.id = 'dna-card-container';
-  
+
   // Extract just the bolded titles from the insights array (e.g. "Structured Maker")
   const shortTraits = insights.map(text => {
     const match = text.match(/<strong>(.*?)<\/strong>/);
     return match ? match[1] : text.split(' ')[0];
   }).filter(t => t);
-  
+
   const traitHtml = shortTraits.map(t => `<div class="trait-badge">${t}</div>`).join('');
-  
+
   container.innerHTML = `
     <div class="dna-card-inner">
       <div class="dna-card-header">
@@ -29,9 +29,9 @@ export async function shareDNA(insights) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(container);
-  
+
   try {
     // 2. Render to Canvas
     // Ensure html2canvas is loaded globally
@@ -40,15 +40,15 @@ export async function shareDNA(insights) {
       document.body.removeChild(container);
       return;
     }
-    
+
     // Slight delay to ensure fonts/CSS are applied
     await new Promise(r => setTimeout(r, 100));
-    
+
     const canvas = await html2canvas(container, {
       scale: 2, // High res for sharing
       backgroundColor: null
     });
-    
+
     // 3. Convert to Blob
     canvas.toBlob(async (blob) => {
       if (!blob) {
@@ -56,9 +56,9 @@ export async function shareDNA(insights) {
         document.body.removeChild(container);
         return;
       }
-      
+
       const file = new File([blob], 'my_fallow_dna.png', { type: 'image/png' });
-      
+
       // 4. Try native Web Share API
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
@@ -78,11 +78,11 @@ export async function shareDNA(insights) {
         // Fallback for desktop / browsers without file share support
         triggerDownload(blob);
       }
-      
+
       // Cleanup
       document.body.removeChild(container);
     }, 'image/png');
-    
+
   } catch (err) {
     console.error("Error generating share image:", err);
     if (document.body.contains(container)) {

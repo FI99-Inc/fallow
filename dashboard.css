@@ -1,45 +1,3 @@
-
-:root {
-  --color-bg: #EAE5DC;
-  --color-surface: transparent;
-  --color-surface-dim: transparent;
-  --color-text: #1C1A17;
-  --color-text-muted: #59544D;
-  --color-text-light: #59544D;
-  --color-primary: #D9532A;
-  --color-primary-light: #B07D35;
-  --color-primary-hover: #1C1A17;
-  --color-secondary: #5F6B5F;
-  --color-accent: #B07D35;
-  --color-accent-hover: #1C1A17;
-  --color-border: #1C1A17;
-  --bg-color: #EAE5DC;
-  --text-main: #1C1A17;
-  --card-bg: transparent;
-  --border-color: #1C1A17;
-  --success-color: #5F6B5F;
-  --surprise-color: #8C3B26;
-
-  --font-display: 'Fraunces', serif;
-  --font-serif: 'Fraunces', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-sans: 'Inter', sans-serif;
-
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-pill: 0px;
-
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --shadow-card: none;
-  
-  --transition-fast: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  --transition-normal: 600ms cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-slow: 1000ms cubic-bezier(0.25, 1, 0.5, 1);
-}
-
 .commitment-card {
     background: var(--color-surface);
     border: 2px solid var(--color-border);
@@ -61,12 +19,12 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-primary);
+    color: var(--color-primary-deep);
 }
 
 .status-badge {
     background-color: var(--color-secondary);
-    color: var(--color-surface);
+    color: var(--color-bg);
     padding: 0.25rem 0.75rem;
     border-radius: 0;
     font-size: 0.75rem;
@@ -75,7 +33,7 @@
 }
 
 .activity-name {
-    font-size: 3.5rem;
+    font-size: clamp(1.9rem, 6vw, 3.5rem);
     color: var(--color-text);
     margin-bottom: var(--space-lg);
     font-family: var(--font-display);
@@ -86,7 +44,7 @@
     padding: var(--space-md);
     border-radius: 0;
     margin-bottom: var(--space-xl);
-    border-left: 4px solid var(--color-accent);
+    border: var(--border-weight) solid var(--color-border);
 }
 
 .experiment-box h4 {
@@ -122,9 +80,17 @@
     transition: all var(--transition-fast);
 }
 
-.btn-feedback:hover {
-    border-color: var(--color-primary);
-    background: var(--color-bg);
+@media (hover: hover) and (pointer: fine) {
+  .btn-feedback:hover {
+      border-color: var(--color-text);
+      background: var(--color-text);
+      color: var(--color-bg);
+  }
+}
+.btn-feedback:disabled {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
 }
 
 .btn-cancel {
@@ -132,45 +98,152 @@
     border-color: transparent;
     color: var(--color-text-muted);
 }
-.btn-cancel:hover {
-    color: #d32f2f;
-    border-color: transparent;
-    background: transparent;
-    text-decoration: underline;
+@media (hover: hover) and (pointer: fine) {
+  .btn-cancel:hover {
+      color: var(--surprise-color);
+      border-color: transparent;
+      background: transparent;
+      text-decoration: underline;
+  }
+}
+
+.feedback-result {
+    margin-top: var(--space-md);
+    padding: var(--space-sm) 0 0;
+    border-top: var(--border-weight) solid var(--color-border);
+    font-weight: 500;
+    color: var(--color-text);
+}
+.feedback-result[hidden] { display: none; }
+
+.commitment-card.is-resolved {
+    opacity: 0.75;
+    transition: opacity var(--transition-normal);
 }
 
 .empty-state {
     text-align: center;
-    padding: var(--space-4xl) 0;
+    padding: var(--space-xl) var(--container-padding);
     background: var(--color-surface);
     border-radius: 0;
-    border: 1px dashed var(--color-border);
+    border: var(--border-weight) solid var(--color-border);
+    max-width: 700px;
+}
+.empty-state h2 {
+    font-size: clamp(1.5rem, 5vw, 2.25rem);
+    margin-bottom: var(--space-sm);
+}
+.empty-state p {
+    margin: 0 auto var(--space-md);
+    max-width: 46ch;
+}
+.empty-actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+.dashboard-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    margin-bottom: 0.5rem;
 }
 
-*:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+#dashboard-content {
+    margin-top: var(--space-xl);
 }
+
+/* Sections below the active commitments */
+.dash-section {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: var(--border-weight) solid var(--color-border);
+}
+.dash-section.hidden { display: none; }
+
+.dash-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+    margin-bottom: 0.35rem;
+}
+
+.tried-list,
+.saved-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+.tried-card,
+.saved-card {
+    background: var(--color-surface);
+    border: var(--border-weight) solid var(--color-border);
+    padding: var(--space-sm) var(--space-md);
+}
+
+.tried-verdict {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.5rem;
+    color: var(--color-on-primary);
+    background: var(--color-text-muted);
+}
+.tried-verdict[data-verdict="loved"] { background: var(--color-secondary); }
+.tried-verdict[data-verdict="hated"] { background: var(--surprise-color); }
+
+.tried-name,
+.saved-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    margin: 0.5rem 0 0.25rem;
+}
+
+.tried-date {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.saved-hook {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: 0;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
 
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
 
-::selection {
-  background: var(--color-primary);
-  color: #F9F7F3;
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover { transform: scale(1.02); }
 }
 
-.btn:hover { transform: scale(1.02); }
+/* Outbound "do it now" link inside a commitment's next step */
+.experiment-action {
+    margin-top: var(--space-sm);
+    padding: 0.5rem 1rem;
+    min-height: auto;
+    font-size: 0.8rem;
+}

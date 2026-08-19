@@ -4,36 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fallow - Your Recommendations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="results.css">
     <link rel="stylesheet" href="share.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem;">
-        <div class="logo" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 500; color: #2c3e35;">Fallow</div>
-        <button class="btn btn-outline" id="share-results-btn" style="padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            Share DNA
-        </button>
+    <header class="results-header">
+        <a class="logo" href="index.html">Fallow</a>
+        <nav class="results-nav">
+            <a href="dashboard.html" class="btn btn-outline">My commitments</a>
+            <button class="btn btn-outline" id="reset-dna-btn" type="button" style="margin-right: 0.5rem; margin-left: 0.5rem;">Reset DNA</button>
+            <button class="btn btn-outline" id="blend-btn" type="button" style="margin-right: 0.5rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Blend DNA
+            </button>
+            <button class="btn btn-outline" id="share-results-btn" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                Share DNA
+            </button>
+        </nav>
     </header>
 
     <main class="container">
         <div class="intro">
             <h1>We found your next sparks.</h1>
             <p>Based on your unique activity DNA, here are 5 recommendations we think you'll love. Some are right up your alley, and some are curveballs.</p>
+            <p class="dna-summary" id="dnaSummary"></p>
+        </div>
+
+        <div class="results-message" id="loadingState">
+            <p>Matching activities to your DNA.</p>
+        </div>
+
+        <div class="results-message hidden" id="errorState">
+            <h2>We couldn't load your recommendations.</h2>
+            <p>The connection dropped on the way to the activity library. Your DNA profile is safe.</p>
+            <button class="btn btn-primary" id="retryBtn" type="button">Try again</button>
         </div>
 
         <div id="resultsContainer" class="results-container">
             <!-- Cards will be injected here -->
         </div>
 
-        <section class="waitlist-section">
+        <section class="save-dna-section" style="margin-top: var(--space-2xl); padding: var(--space-lg); border: 2px solid var(--color-border); text-align: center;">
+            <h2>Don't lose your DNA</h2>
+            <p class="text-muted">Get a magic link to save your profile and access your commitments on any device.</p>
+            <form id="magic-link-form" style="display: flex; gap: 0; max-width: 400px; margin: var(--space-md) auto 0; border: 2px solid var(--color-text);">
+                <input type="email" id="magic-link-email" placeholder="your@email.com" required style="flex: 1; padding: 1rem; border: none; background: transparent; color: var(--color-text); outline: none; font-family: var(--font-body);">
+                <button type="submit" class="btn btn-primary" style="border: none; border-left: 2px solid var(--color-text); min-height: 44px; padding: 1rem;">Save</button>
+            </form>
+            <p id="magic-link-msg" style="margin-top: var(--space-sm); font-size: 0.85rem; height: 1rem;"></p>
+        </section>
+
+        <section class="waitlist-section" style="margin-top: var(--space-2xl);">
             <h2>Want weekly personalized recommendations?</h2>
             <p>Join the waitlist for Fallow Early Access.</p>
-            <form class="waitlist-form">
-                <input type="email" placeholder="your@email.com" required>
+            <form class="waitlist-form" id="results-waitlist-form">
+                <label class="visually-hidden" for="results-waitlist-email">Email address</label>
+                <input type="email" id="results-waitlist-email" name="email" placeholder="your@email.com" autocomplete="email" required>
                 <button type="submit" class="btn btn-primary">Join Waitlist</button>
             </form>
+            <p class="waitlist-message" id="results-waitlist-message" role="status" aria-live="polite"></p>
         </section>
     </main>
 
@@ -42,18 +77,18 @@
             <div class="card-header">
                 <div class="card-meta">
                     <span class="category"></span>
-                    <span class="match-score"></span>
+                    <span class="match-score" data-numeric></span>
                     <span class="stretch-badge hidden">Surprise Match</span>
                 </div>
                 <h2 class="activity-name"></h2>
                 <p class="hook-line"></p>
             </div>
-            
+
             <div class="card-body">
                 <div class="rationale-section">
                     <h3>Why you'll like this</h3>
                     <p class="why-like-text"></p>
-                    
+
                     <h3 class="caveat-title">What might not work</h3>
                     <p class="caveat-text"></p>
                 </div>
@@ -64,45 +99,45 @@
                     <p class="success-feels-like"><strong>What success feels like:</strong> <span></span></p>
                 </div>
 
-                <div class="logistics">
+                <dl class="logistics">
                     <div class="logistic-item">
-                        <span class="icon"></span>
-                        <span class="value cost-value"></span>
+                        <dt class="logistic-label">Cost</dt>
+                        <dd class="value cost-value"></dd>
                     </div>
                     <div class="logistic-item">
-                        <span class="icon"></span>
-                        <span class="value time-value"></span>
+                        <dt class="logistic-label">Time</dt>
+                        <dd class="value time-value"></dd>
                     </div>
                     <div class="logistic-item">
-                        <span class="icon"></span>
-                        <span class="value equip-value"></span>
+                        <dt class="logistic-label">Gear</dt>
+                        <dd class="value equip-value"></dd>
                     </div>
-                </div>
+                </dl>
             </div>
 
             <div class="card-actions">
-                <button class="btn btn-primary btn-commit">I'm doing this</button>
-                <button class="btn btn-secondary btn-save">Save for later</button>
-                <button class="btn btn-outline btn-pass">Not for me</button>
+                <button class="btn btn-primary btn-commit" type="button">I'm doing this</button>
+                <button class="btn btn-secondary btn-save" type="button">Save for later</button>
+                <button class="btn btn-outline btn-pass" type="button">Not for me</button>
             </div>
-            
+
             <div class="pass-reasons hidden">
                 <p>Why not?</p>
                 <div class="reason-chips">
-                    <button class="chip">Not interested</button>
-                    <button class="chip">Too expensive</button>
-                    <button class="chip">Intimidating</button>
-                    <button class="chip">Bad timing</button>
+                    <button class="chip" type="button">Not interested</button>
+                    <button class="chip" type="button">Too expensive</button>
+                    <button class="chip" type="button">Intimidating</button>
+                    <button class="chip" type="button">Bad timing</button>
                 </div>
             </div>
-            
+
             <div class="celebration hidden">
-                 Awesome! We've saved this to your active experiments.
+                Saved to your commitments. We'll ask how it went.
             </div>
         </div>
     </template>
 
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
     <script type="module" src="results.js"></script>
 </body>
 </html>

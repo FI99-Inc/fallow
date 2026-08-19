@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const vibeCards = document.querySelectorAll('.vibe-card');
-    
+
     const vibeProfiles = {
         'low_energy': {
             scores: {
@@ -49,6 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const vibe = card.getAttribute('data-vibe');
             const profile = vibeProfiles[vibe];
             if (profile) {
+                // A single idle tap used to overwrite a completed 13-question
+                // profile with a synthetic 4-value one, silently. Ask first.
+                let existing = null;
+                try {
+                    existing = JSON.parse(localStorage.getItem('fallow_profile'));
+                } catch (e) { /* nothing usable stored */ }
+
+                const hasRealProfile = existing
+                    && Array.isArray(existing.rawAnswers)
+                    && existing.rawAnswers.length > 0;
+
+                if (hasRealProfile && !confirm(
+                    'This replaces your Activity DNA with a quick mood-based profile. '
+                    + 'Your quiz answers will be lost. Continue?'
+                )) {
+                    return;
+                }
+
                 // Save synthetic profile for this constraint
                 localStorage.setItem('fallow_profile', JSON.stringify({
                     timestamp: new Date().toISOString(),
