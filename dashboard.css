@@ -2,7 +2,7 @@
     background: var(--color-surface);
     border: 2px solid var(--color-border);
     border-radius: 0;
-    padding: var(--space-xl);
+    padding: var(--space-md) var(--container-padding);
     box-shadow: none;
     max-width: 700px;
 }

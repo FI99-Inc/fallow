@@ -28,7 +28,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_
 if not GEMINI_API_KEY:
     sys.exit("Set GEMINI_API_KEY or GOOGLE_API_KEY environment variable first.")
 
-MODEL = "gemini-1.5-flash"
+MODEL = "gemini-3.7-flash"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={GEMINI_API_KEY}"
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "activities.json")
@@ -119,24 +119,25 @@ def call_gemini(prompt, temperature=0.8, max_tokens=8192):
             "maxOutputTokens": max_tokens,
         }
     }
-    for attempt in range(3):
+    
+    attempt = 0
+    while True:
         try:
             resp = requests.post(API_URL, json=payload, timeout=120)
-            if resp.status_code == 429:
-                wait = 2 ** (attempt + 1)
-                print(f"  Rate limited, waiting {wait}s...")
+            if resp.status_code in (429, 503):
+                wait = min(2 ** (attempt + 1), 60) # Cap at 60s
+                print(f"  API overloaded (HTTP {resp.status_code}), waiting {wait}s...")
                 time.sleep(wait)
+                attempt += 1
                 continue
             resp.raise_for_status()
             data = resp.json()
             return data["candidates"][0]["content"]["parts"][0]["text"]
         except Exception as e:
-            if attempt < 2:
-                print(f"  Retrying ({attempt+1}/3): {e}")
-                time.sleep(2)
-            else:
-                raise
-    return None
+            wait = min(2 ** (attempt + 1), 60)
+            print(f"  Error: {e}. Retrying in {wait}s...")
+            time.sleep(wait)
+            attempt += 1
 
 
 def extract_json(text):

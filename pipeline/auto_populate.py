@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 import os
 import sys
 import time
@@ -45,7 +45,7 @@ def main():
         audience = b['audience']
         print(f"\n🎯 Processing Demographic: {audience} (Target: {target_count} activities)")
         
-        BATCH_SIZE = 50
+        BATCH_SIZE = 10
         remaining = target_count
         
         while remaining > 0:
