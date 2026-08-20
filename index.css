@@ -7,7 +7,7 @@
 /* --- Type scale ------------------------------------------- */
 
 h1 {
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: clamp(2.25rem, 7vw, 5.5rem);
 }
 
 h2 {
@@ -141,7 +141,7 @@ p {
 
 .hero-headline {
   margin-bottom: var(--space-md);
-  max-width: 16ch;
+  max-width: 20ch;
   line-height: 0.98;
 }
 
@@ -160,9 +160,12 @@ p {
    so the name always reads as the name, not just here. */
 .hero-em,
 .brand-word {
-  font-family: var(--font-display);
-  font-style: italic;
-  color: var(--color-primary-deep);
+  font-family: 'Luckiest Guy', cursive;
+  font-style: normal;
+  color: var(--color-surface);
+  -webkit-text-stroke: 1px var(--color-text);
+  letter-spacing: 0.05em;
+  margin-left: 0.2em;
 }
 
 .hero-subhead {
