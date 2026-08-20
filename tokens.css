@@ -171,6 +171,7 @@ h1, h2, h3, h4, h5, h6 {
 .field-bloom      { background-color: var(--field-bloom); }
 .field-sun        { background-color: var(--field-sun); }
 .field-sky        { background-color: var(--field-sky); }
+.field-peach      { background-color: var(--field-peach); }
 .field-lilac      { background-color: var(--field-lilac); }
 
 /* Ink field: the one dark moment. Used once, for emphasis, never twice. */
@@ -182,6 +183,22 @@ h1, h2, h3, h4, h5, h6 {
   --color-border-soft: #5A5470;
   --color-primary-deep: #F08A6B;
   color: #F4F1FA;
+  position: relative;
+}
+
+/* Extra grain for the dark purple field */
+.field-ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+}
+
+.field-ink > .container {
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================================

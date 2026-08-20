@@ -560,19 +560,16 @@ p {
 .difference-glyph {
   display: none;
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 6px;
-  font-weight: bold;
-  line-height: 1.05;
-  color: var(--color-text-muted);
-  opacity: 0.4;
-  white-space: pre;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 1;
+  color: var(--color-primary-deep);
   user-select: none;
   -webkit-user-select: none;
 }
 
 @media (min-width: 860px) {
-  .difference-glyph { display: block; justify-self: center; }
+  .difference-glyph { display: block; justify-self: center; align-self: center; }
 }
 
 .difference-example {
@@ -633,8 +630,9 @@ p {
 .testimonial-author {
   font-family: var(--font-body);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--color-text-muted);
   border-top: var(--border-weight) solid var(--color-border);
   padding-top: var(--space-xs);
@@ -693,6 +691,7 @@ p {
   background-color: var(--color-text);
   color: var(--color-surface);
   flex-shrink: 0;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 @media (hover: hover) and (pointer: fine) {
