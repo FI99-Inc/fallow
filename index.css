@@ -321,7 +321,7 @@ p {
 @media (hover: hover) and (pointer: fine) {
   .vibe-card:hover {
     color: var(--color-primary-deep);
-    padding-left: var(--space-md);
+    padding-left: calc(var(--space-md) + var(--space-sm));
   }
   .vibe-card:nth-child(even):hover { padding-left: calc(var(--space-lg) + var(--space-sm)); }
 }
