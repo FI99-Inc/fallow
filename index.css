@@ -818,16 +818,16 @@ p {
 
 .ascii-ornament {
   position: absolute;
-  top: -4rem;
-  right: -4rem;
+  top: -1.5rem;
+  right: -2rem;
   font-family: "Courier New", Courier, monospace;
-  font-size: 2rem;
-  line-height: 0.9;
+  font-size: 10px;
+  line-height: 1;
   color: var(--color-primary-deep);
-  opacity: 0.06;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-  transform: rotate(15deg);
+  transform: rotate(5deg);
   user-select: none;
 }
 
