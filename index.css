@@ -365,6 +365,14 @@ p {
   padding-block: var(--space-xl);
 }
 
+#how-it-works-section .section-head h2 {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+}
+#how-it-works-section .section-head p {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  max-width: 26ch;
+}
+
 .how-it-works-layout {
   display: grid;
   grid-template-columns: 1fr;
