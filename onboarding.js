@@ -242,6 +242,7 @@ function renderScreen(index, direction) {
     const priorScenario = userAnswers[index];
     if (priorScenario && typeof priorScenario.optionIndex === 'number' && btns[priorScenario.optionIndex]) {
       btns[priorScenario.optionIndex].classList.add('previously-chosen');
+      btns[priorScenario.optionIndex].setAttribute('aria-pressed', 'true');
     }
     btns.forEach(btn => {
       btn.addEventListener('click', function() {
