@@ -26,6 +26,7 @@
   --field-bloom:  #F6DCE2;   /* pale pink — the human/emotional beat */
   --field-sun:    #F8E9C8;   /* pale butter — the payoff, the ask */
   --field-sky:    #D6E4F0;   /* pale blue — calm, explanatory */
+  --field-peach:  #F5DCC6;   /* pale peach — why it works, the reasoning */
   --field-lilac:  #E4DBF0;   /* pale violet — the odd one out */
   --field-ink:    #241F2E;   /* the one dark field. Kept as its own token:
                                 a band cannot paint itself with a property
@@ -144,7 +145,7 @@ body::after {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 10;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
 }
 
@@ -305,7 +306,7 @@ a {
   text-decoration: none;
   display: inline-block;
   line-height: 1;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform var(--transition-fast);
 }
 
 a.logo:hover {
