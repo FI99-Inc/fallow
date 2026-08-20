@@ -515,28 +515,57 @@ p {
      The intro column is much shorter than the quote (just a heading
      and a line of copy), so it centers against the quote's height
      instead of pinning to the top and leaving a block of dead field
-     colour underneath it. A third, content-sized track holds the
-     glyph in the leftover width inside the intro column's own track,
-     which is where the empty space actually was. */
+     colour underneath it.
+
+     Column 1 is a fixed width matching what the copy actually needs,
+     not a fraction of the row: an fr share left slack inside the
+     column itself (the text doesn't fill it), so the glyph column
+     next to it sat closer to the copy than to the quote even though
+     it looked like it should split the gap evenly. A fixed width
+     means no slack, and gap is one value on both sides of the glyph,
+     so it now actually centers between the two text edges. */
   .difference-grid {
-    grid-template-columns: 0.6fr auto 1.16fr;
-    gap: var(--space-md);
+    grid-template-columns: 26rem auto 1fr;
+    gap: var(--space-lg);
     align-items: center;
   }
+  .difference-grid > .difference-intro { max-width: none; }
 }
 
-/* Decorative braille-glyph filler for the gutter beside the intro
-   copy. Purely visual, hidden from assistive tech and on narrow
-   screens where there's no spare width for it. */
+.difference-intro {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Solid ink, not a hairline: brackets the intro copy top and bottom
+   the same way the border-left brackets the quote, but as a filled
+   bar rather than a rule, since a 2px line that thin would have
+   vanished against this much surrounding field colour. */
+.difference-bar {
+  height: 2.25rem;
+  background-color: var(--color-border);
+}
+
+.difference-bar:first-child { margin-bottom: var(--space-lg); }
+.difference-bar:last-child { margin-top: var(--space-lg); }
+
+/* Decorative braille-glyph filler for the gutter between the intro
+   copy and the quote. Purely visual: hidden from assistive tech, not
+   selectable (it's noise, not content, so it shouldn't end up in a
+   copy-paste), and on narrow screens where there's no spare width
+   for it at all. */
 .difference-glyph {
   display: none;
   margin: 0;
   font-family: 'Courier New', Courier, monospace;
   font-size: 6px;
+  font-weight: bold;
   line-height: 1.05;
   color: var(--color-text-muted);
-  opacity: 0.6;
+  opacity: 0.4;
   white-space: pre;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @media (min-width: 860px) {
