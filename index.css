@@ -545,7 +545,7 @@ p {
    bar rather than a rule, since a 2px line that thin would have
    vanished against this much surrounding field colour. */
 .difference-bar {
-  height: 2.25rem;
+  height: var(--border-weight);
   background-color: var(--color-border);
 }
 
@@ -560,12 +560,13 @@ p {
 .difference-glyph {
   display: none;
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(4rem, 10vw, 8rem);
   line-height: 1;
   color: var(--color-primary-deep);
   user-select: none;
   -webkit-user-select: none;
+  font-weight: 300;
 }
 
 @media (min-width: 860px) {
