@@ -808,3 +808,26 @@ p {
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
 }
+
+
+/* ASCII art ornament */
+#quick-discover-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.ascii-ornament {
+  position: absolute;
+  top: -4rem;
+  right: -4rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 2rem;
+  line-height: 0.9;
+  color: var(--color-primary-deep);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(15deg);
+  user-select: none;
+}
+
