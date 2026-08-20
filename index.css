@@ -818,10 +818,10 @@ p {
 
 .ascii-ornament {
   position: absolute;
-  top: -1.5rem;
-  right: -2rem;
+  top: 1rem;
+  right: 1rem;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 8px;
   line-height: 1;
   color: var(--color-primary-deep);
   opacity: 0.15;
