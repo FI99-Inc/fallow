@@ -441,6 +441,26 @@ p {
   transition: fill-opacity var(--transition-fast), stroke var(--transition-fast);
 }
 
+
+.dna-label-name {
+  font-family: var(--font-body);
+  font-size: 8px;
+  font-weight: 600;
+  fill: var(--color-text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.dna-label-score {
+  font-family: var(--font-display);
+  font-size: 11px;
+  fill: var(--color-primary-deep);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.dna-chart:hover .dna-label-score {
+  opacity: 1;
+}
+
 .dna-dots circle {
   fill: var(--color-border);
   transition: fill var(--transition-fast), r var(--transition-fast);
@@ -455,7 +475,27 @@ p {
   .dna-chart:hover .dna-hex { stroke: var(--color-primary-deep); }
   .dna-chart:hover .dna-axes line { stroke: var(--color-text-muted); }
   .dna-chart:hover .dna-profile { fill-opacity: 0.34; stroke: var(--color-primary); }
-  .dna-chart:hover .dna-dots circle { fill: var(--color-primary-deep); }
+  .dna-chart:hover 
+.dna-label-name {
+  font-family: var(--font-body);
+  font-size: 8px;
+  font-weight: 600;
+  fill: var(--color-text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.dna-label-score {
+  font-family: var(--font-display);
+  font-size: 11px;
+  fill: var(--color-primary-deep);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.dna-chart:hover .dna-label-score {
+  opacity: 1;
+}
+
+.dna-dots circle { fill: var(--color-primary-deep); }
 }
 
 .dna-dots circle:focus-visible {

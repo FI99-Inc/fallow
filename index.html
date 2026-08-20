@@ -105,7 +105,7 @@
                  not decoration borrowed from elsewhere. Each vertex names its
                  dimension on hover/focus; the whole shape is a hover target. -->
             <figure class="how-it-works-visual fade-up">
-                <svg class="dna-chart" viewBox="0 0 200 200" role="img" aria-label="An example Activity DNA profile across six dimensions: Sociality, Structure, Physicality, Expression, Environment, Barrier">
+                <svg class="dna-chart" viewBox="-30 -30 260 260" role="img" aria-label="An example Activity DNA profile across six dimensions">
                     <polygon class="dna-hex" points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
                     <g class="dna-axes">
                         <line x1="100" y1="100" x2="100" y2="20" />
@@ -116,13 +116,39 @@
                         <line x1="100" y1="100" x2="30.7" y2="60" />
                     </g>
                     <polygon class="dna-profile" points="100,45 130.3,82.5 156.3,132.5 100,145 74,115 48,70" />
+                    <g class="dna-labels">
+                        <g class="dna-label-group">
+                            <text x="100" y="7" text-anchor="middle" class="dna-label-name">Sociality</text>
+                            <text x="100" y="22" text-anchor="middle" class="dna-label-score">69</text>
+                        </g>
+                        <g class="dna-label-group">
+                            <text x="175" y="56" text-anchor="start" class="dna-label-name">Structure</text>
+                            <text x="175" y="71" text-anchor="start" class="dna-label-score">44</text>
+                        </g>
+                        <g class="dna-label-group">
+                            <text x="175" y="146" text-anchor="start" class="dna-label-name">Physicality</text>
+                            <text x="175" y="161" text-anchor="start" class="dna-label-score">81</text>
+                        </g>
+                        <g class="dna-label-group">
+                            <text x="100" y="198" text-anchor="middle" class="dna-label-name">Expression</text>
+                            <text x="100" y="213" text-anchor="middle" class="dna-label-score">56</text>
+                        </g>
+                        <g class="dna-label-group">
+                            <text x="25" y="146" text-anchor="end" class="dna-label-name">Environment</text>
+                            <text x="25" y="161" text-anchor="end" class="dna-label-score">38</text>
+                        </g>
+                        <g class="dna-label-group">
+                            <text x="25" y="56" text-anchor="end" class="dna-label-name">Barrier</text>
+                            <text x="25" y="71" text-anchor="end" class="dna-label-score">75</text>
+                        </g>
+                    </g>
                     <g class="dna-dots">
-                        <circle cx="100" cy="20" r="4" tabindex="0"><title>Sociality</title></circle>
-                        <circle cx="169.3" cy="60" r="4" tabindex="0"><title>Structure</title></circle>
-                        <circle cx="169.3" cy="140" r="4" tabindex="0"><title>Physicality</title></circle>
-                        <circle cx="100" cy="180" r="4" tabindex="0"><title>Expression</title></circle>
-                        <circle cx="30.7" cy="140" r="4" tabindex="0"><title>Environment</title></circle>
-                        <circle cx="30.7" cy="60" r="4" tabindex="0"><title>Barrier</title></circle>
+                        <circle cx="100" cy="20" r="4" tabindex="0"><title>Sociality: 69</title></circle>
+                        <circle cx="169.3" cy="60" r="4" tabindex="0"><title>Structure: 44</title></circle>
+                        <circle cx="169.3" cy="140" r="4" tabindex="0"><title>Physicality: 81</title></circle>
+                        <circle cx="100" cy="180" r="4" tabindex="0"><title>Expression: 56</title></circle>
+                        <circle cx="30.7" cy="140" r="4" tabindex="0"><title>Environment: 38</title></circle>
+                        <circle cx="30.7" cy="60" r="4" tabindex="0"><title>Barrier: 75</title></circle>
                     </g>
                 </svg>
                 <figcaption>Example Activity DNA profile</figcaption>

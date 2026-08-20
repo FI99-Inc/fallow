@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hide = (el) => { if (el) el.classList.add('hidden'); };
 
     renderDNASummary(userProfile, fallowMode);
+    drawDNAChart(userProfile);
 
     // 2. Load activities
     let activities = [];
@@ -534,4 +535,93 @@ if (magicForm) {
             magicForm.reset();
         }
     });
+}
+
+
+function drawDNAChart(scores) {
+    const container = document.getElementById('dna-chart-container');
+    if (!container) return;
+    
+    // scores are between -1 and 1
+    const getVal = (s) => {
+        if (s === undefined) return 0.5;
+        // Map -1..1 to 0..1 (min radius 10% to look good, max 100%)
+        return 0.1 + ((s + 1) / 2) * 0.9;
+    };
+    
+    const s = getVal(scores.sociality);
+    const st = getVal(scores.structure);
+    const p = getVal(scores.physicality);
+    const ex = getVal(scores.expression);
+    const env = getVal(scores.environment);
+    const b = getVal(scores.barrier);
+    
+    // Angles and points
+    // 1: Top (Sociality), angle = -pi/2
+    const p1x = 100, p1y = 100 - 80 * s;
+    // 2: Top Right (Structure), angle = -pi/6
+    const p2x = 100 + 80 * st * Math.cos(Math.PI/6), p2y = 100 - 80 * st * Math.sin(Math.PI/6);
+    // 3: Bottom Right (Physicality), angle = pi/6
+    const p3x = 100 + 80 * p * Math.cos(Math.PI/6), p3y = 100 + 80 * p * Math.sin(Math.PI/6);
+    // 4: Bottom (Expression), angle = pi/2
+    const p4x = 100, p4y = 100 + 80 * ex;
+    // 5: Bottom Left (Environment), angle = 5pi/6
+    const p5x = 100 - 80 * env * Math.cos(Math.PI/6), p5y = 100 + 80 * env * Math.sin(Math.PI/6);
+    // 6: Top Left (Barrier), angle = 7pi/6 (or -5pi/6)
+    const p6x = 100 - 80 * b * Math.cos(Math.PI/6), p6y = 100 - 80 * b * Math.sin(Math.PI/6);
+    
+    const polyPoints = ${p1x}, , , , , ,;
+    
+    // To 100 scale scores for labels
+    const pct = (val) => Math.round(((val + 1) / 2) * 100);
+
+    const svg = 
+        <svg class="dna-chart" viewBox="-30 -30 260 260" role="img" aria-label="Your Activity DNA profile">
+            <polygon class="dna-hex" points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
+            <g class="dna-axes">
+                <line x1="100" y1="100" x2="100" y2="20" />
+                <line x1="100" y1="100" x2="169.3" y2="60" />
+                <line x1="100" y1="100" x2="169.3" y2="140" />
+                <line x1="100" y1="100" x2="100" y2="180" />
+                <line x1="100" y1="100" x2="30.7" y2="140" />
+                <line x1="100" y1="100" x2="30.7" y2="60" />
+            </g>
+            <polygon class="dna-profile" points="" />
+            <g class="dna-labels">
+                <g class="dna-label-group">
+                    <text x="100" y="7" text-anchor="middle" class="dna-label-name">Sociality</text>
+                    <text x="100" y="21" text-anchor="middle" class="dna-label-score"></text>
+                </g>
+                <g class="dna-label-group">
+                    <text x="175" y="56" text-anchor="start" class="dna-label-name">Structure</text>
+                    <text x="175" y="70" text-anchor="start" class="dna-label-score"></text>
+                </g>
+                <g class="dna-label-group">
+                    <text x="175" y="146" text-anchor="start" class="dna-label-name">Physicality</text>
+                    <text x="175" y="160" text-anchor="start" class="dna-label-score"></text>
+                </g>
+                <g class="dna-label-group">
+                    <text x="100" y="200" text-anchor="middle" class="dna-label-name">Expression</text>
+                    <text x="100" y="214" text-anchor="middle" class="dna-label-score"></text>
+                </g>
+                <g class="dna-label-group">
+                    <text x="25" y="146" text-anchor="end" class="dna-label-name">Environment</text>
+                    <text x="25" y="160" text-anchor="end" class="dna-label-score"></text>
+                </g>
+                <g class="dna-label-group">
+                    <text x="25" y="56" text-anchor="end" class="dna-label-name">Barrier</text>
+                    <text x="25" y="70" text-anchor="end" class="dna-label-score"></text>
+                </g>
+            </g>
+            <g class="dna-dots">
+                <circle cx="" cy="" r="4"><title>Sociality: </title></circle>
+                <circle cx="" cy="" r="4"><title>Structure: </title></circle>
+                <circle cx="" cy="" r="4"><title>Physicality: </title></circle>
+                <circle cx="" cy="" r="4"><title>Expression: </title></circle>
+                <circle cx="" cy="" r="4"><title>Environment: </title></circle>
+                <circle cx="" cy="" r="4"><title>Barrier: </title></circle>
+            </g>
+        </svg>
+    ;
+    container.innerHTML = svg;
 }
