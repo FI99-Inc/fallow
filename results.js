@@ -576,7 +576,7 @@ function drawDNAChart(scores) {
     const pct = (val) => Math.round(((val + 1) / 2) * 100);
 
     const svg = 
-        <svg class="dna-chart" viewBox="-60 -40 320 280" role="img" aria-label="Your Activity DNA profile">
+        <svg class="dna-chart" viewBox="-50 -15 300 240" role="img" aria-label="Your Activity DNA profile">
             <polygon class="dna-hex" points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
             <g class="dna-axes">
                 <line x1="100" y1="100" x2="100" y2="20" />
