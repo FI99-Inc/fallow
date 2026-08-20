@@ -810,24 +810,5 @@ p {
 }
 
 
-/* ASCII art ornament */
-#quick-discover-section {
-  position: relative;
-  overflow: hidden;
-}
 
-.ascii-ornament {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 8px;
-  line-height: 1;
-  color: var(--color-primary-deep);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-  transform: rotate(5deg);
-  user-select: none;
-}
 
