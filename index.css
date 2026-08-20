@@ -294,7 +294,7 @@ p {
   border: none;
   border-bottom: var(--border-weight) solid var(--color-border);
   border-radius: 0;
-  padding: var(--space-md) var(--space-sm) var(--space-md) 0;
+  padding: var(--space-lg) var(--space-md);
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 2.4vw, 1.5rem);
   line-height: 1.2;
