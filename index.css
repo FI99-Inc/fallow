@@ -354,6 +354,14 @@ p {
 
 /* --- How it works ------------------------------------------ */
 
+/* Shorter than the shared .section padding-block: the DNA chart
+   already gives this band a tall, airy right side, so the section's
+   own top/bottom breathing room can be tighter than the rest of the
+   page without reading as cramped. */
+#how-it-works-section {
+  padding-block: var(--space-xl);
+}
+
 .how-it-works-layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -507,12 +515,32 @@ p {
      The intro column is much shorter than the quote (just a heading
      and a line of copy), so it centers against the quote's height
      instead of pinning to the top and leaving a block of dead field
-     colour underneath it. */
+     colour underneath it. A third, content-sized track holds the
+     glyph in the leftover width inside the intro column's own track,
+     which is where the empty space actually was. */
   .difference-grid {
-    grid-template-columns: 0.72fr 1.28fr;
-    gap: var(--space-lg);
+    grid-template-columns: 0.6fr auto 1.16fr;
+    gap: var(--space-md);
     align-items: center;
   }
+}
+
+/* Decorative braille-glyph filler for the gutter beside the intro
+   copy. Purely visual, hidden from assistive tech and on narrow
+   screens where there's no spare width for it. */
+.difference-glyph {
+  display: none;
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 6px;
+  line-height: 1.05;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  white-space: pre;
+}
+
+@media (min-width: 860px) {
+  .difference-glyph { display: block; justify-self: center; }
 }
 
 .difference-example {
