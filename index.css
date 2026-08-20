@@ -476,10 +476,6 @@ p {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
   }
-  /* Staggered baselines — the editorial gesture that keeps three
-     equal columns from reading as a card row. */
-  .steps-grid .step-card:nth-child(2) { margin-top: var(--space-lg); }
-  .steps-grid .step-card:nth-child(3) { margin-top: calc(var(--space-lg) * 2); }
 }
 
 .step-card {
