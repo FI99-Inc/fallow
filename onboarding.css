@@ -633,3 +633,91 @@ body {
   max-width: 24ch;
   margin: var(--space-md) auto 0;
 }
+
+/* Phone layouts retain the same two-colour quiz treatment, but spend less of
+   the fixed viewport on chrome and keep the denser result controls fluid. */
+@media (max-width: 767px) {
+  .app-header {
+    height: 64px;
+    padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  }
+
+  .progress-group {
+    gap: 8px;
+    margin-inline: 10px;
+  }
+
+  .step-counter {
+    font-size: 0.65rem;
+  }
+
+  .pairwise-title-container {
+    padding: 20px 16px 16px;
+  }
+
+  .choice-card {
+    padding: var(--space-md);
+  }
+
+  .scenario-screen,
+  .constraints-screen {
+    padding: var(--space-xl) 16px max(24px, env(safe-area-inset-bottom));
+  }
+
+  .scenario-options {
+    gap: 12px;
+    margin-top: var(--space-md);
+  }
+
+  .scenario-btn {
+    padding: 16px;
+  }
+
+  .tags-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    gap: 12px;
+    margin-top: var(--space-md);
+  }
+
+  .continue-wrapper {
+    margin-top: var(--space-lg);
+  }
+
+  .continue-btn {
+    width: 100%;
+  }
+
+  .results-screen {
+    padding: var(--space-lg) 16px max(var(--space-2xl), env(safe-area-inset-bottom));
+  }
+
+  .results-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .results-content {
+    gap: var(--space-lg);
+  }
+
+  .chart-section {
+    min-width: 0;
+    padding: var(--space-md);
+  }
+
+  .dim-label {
+    flex-basis: clamp(3.25rem, 22vw, 6rem);
+    font-size: 0.7rem;
+  }
+
+  .teaser-section {
+    margin-top: var(--space-xl);
+    padding: var(--space-xl) 16px;
+  }
+
+  .teaser-actions .btn-light,
+  .optin-form input[type="email"],
+  .optin-form .btn-light {
+    width: 100%;
+    min-width: 0;
+  }
+}

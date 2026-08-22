@@ -272,3 +272,64 @@ body {
     margin-bottom: var(--space-sm);
     max-width: none;
 }
+
+/* The commitments header intentionally remains stacked on desktop. On phones,
+   make that stack explicit and let every action use the available measure. */
+@media (max-width: 767px) {
+    #main-header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-xs);
+        padding-block: var(--space-sm);
+    }
+
+    #main-header .logo {
+        align-self: flex-start;
+    }
+
+    #main-header nav {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+    }
+
+    #main-header nav .btn,
+    .empty-actions .btn,
+    .feedback-buttons .btn-feedback {
+        width: 100%;
+    }
+
+    main.container.section {
+        padding-block: var(--space-xl);
+    }
+
+    .commitment-card,
+    .empty-state {
+        padding: var(--space-md);
+    }
+
+    .commitment-header {
+        align-items: flex-start;
+        gap: var(--space-xs);
+        flex-wrap: wrap;
+    }
+
+    .feedback-buttons,
+    .empty-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel {
+        margin-left: 0;
+    }
+
+    .experiment-action {
+        min-height: var(--tap-min);
+    }
+
+    .tried-list,
+    .saved-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

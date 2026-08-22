@@ -313,3 +313,14 @@ a.logo:hover {
   color: var(--color-surface);
   transform: scale(1.05);
 }
+
+/* Keep the logo visually unchanged while giving the link a complete touch
+   target on devices where taps, rather than a pointer, drive navigation. */
+@media (max-width: 767px) {
+  a.logo {
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    display: inline-flex;
+    align-items: center;
+  }
+}

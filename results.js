@@ -570,12 +570,12 @@ function drawDNAChart(scores) {
     // 6: Top Left (Barrier), angle = 7pi/6 (or -5pi/6)
     const p6x = 100 - 80 * b * Math.cos(Math.PI/6), p6y = 100 - 80 * b * Math.sin(Math.PI/6);
     
-    const polyPoints = ${p1x}, , , , , ,;
+    const polyPoints = `${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y} ${p4x},${p4y} ${p5x},${p5y} ${p6x},${p6y}`;
     
     // To 100 scale scores for labels
-    const pct = (val) => Math.round(((val + 1) / 2) * 100);
+    const pct = (val) => Math.round((((Number.isFinite(val) ? val : 0) + 1) / 2) * 100);
 
-    const svg = 
+    const svg = `
         <svg class="dna-chart" viewBox="-50 -15 300 240" role="img" aria-label="Your Activity DNA profile">
             <polygon class="dna-hex" points="100,20 169.3,60 169.3,140 100,180 30.7,140 30.7,60" />
             <g class="dna-axes">
@@ -586,42 +586,42 @@ function drawDNAChart(scores) {
                 <line x1="100" y1="100" x2="30.7" y2="140" />
                 <line x1="100" y1="100" x2="30.7" y2="60" />
             </g>
-            <polygon class="dna-profile" points="" />
+            <polygon class="dna-profile" points="${polyPoints}" />
             <g class="dna-labels">
                 <g class="dna-label-group">
                     <text x="100" y="-3" text-anchor="middle" class="dna-label-name">Sociality</text>
-                    <text x="100" y="11" text-anchor="middle" class="dna-label-score"></text>
+                    <text x="100" y="11" text-anchor="middle" class="dna-label-score">${pct(scores.sociality)}</text>
                 </g>
                 <g class="dna-label-group">
                     <text x="180" y="58" text-anchor="start" class="dna-label-name">Structure</text>
-                    <text x="180" y="72" text-anchor="start" class="dna-label-score"></text>
+                    <text x="180" y="72" text-anchor="start" class="dna-label-score">${pct(scores.structure)}</text>
                 </g>
                 <g class="dna-label-group">
                     <text x="180" y="142" text-anchor="start" class="dna-label-name">Physicality</text>
-                    <text x="180" y="156" text-anchor="start" class="dna-label-score"></text>
+                    <text x="180" y="156" text-anchor="start" class="dna-label-score">${pct(scores.physicality)}</text>
                 </g>
                 <g class="dna-label-group">
                     <text x="100" y="200" text-anchor="middle" class="dna-label-name">Expression</text>
-                    <text x="100" y="214" text-anchor="middle" class="dna-label-score"></text>
+                    <text x="100" y="214" text-anchor="middle" class="dna-label-score">${pct(scores.expression)}</text>
                 </g>
                 <g class="dna-label-group">
                     <text x="20" y="142" text-anchor="end" class="dna-label-name">Environment</text>
-                    <text x="20" y="156" text-anchor="end" class="dna-label-score"></text>
+                    <text x="20" y="156" text-anchor="end" class="dna-label-score">${pct(scores.environment)}</text>
                 </g>
                 <g class="dna-label-group">
                     <text x="20" y="58" text-anchor="end" class="dna-label-name">Barrier</text>
-                    <text x="20" y="72" text-anchor="end" class="dna-label-score"></text>
+                    <text x="20" y="72" text-anchor="end" class="dna-label-score">${pct(scores.barrier)}</text>
                 </g>
             </g>
             <g class="dna-dots">
-                <circle cx="" cy="" r="4"><title>Sociality: </title></circle>
-                <circle cx="" cy="" r="4"><title>Structure: </title></circle>
-                <circle cx="" cy="" r="4"><title>Physicality: </title></circle>
-                <circle cx="" cy="" r="4"><title>Expression: </title></circle>
-                <circle cx="" cy="" r="4"><title>Environment: </title></circle>
-                <circle cx="" cy="" r="4"><title>Barrier: </title></circle>
+                <circle cx="${p1x}" cy="${p1y}" r="4"><title>Sociality: ${pct(scores.sociality)}</title></circle>
+                <circle cx="${p2x}" cy="${p2y}" r="4"><title>Structure: ${pct(scores.structure)}</title></circle>
+                <circle cx="${p3x}" cy="${p3y}" r="4"><title>Physicality: ${pct(scores.physicality)}</title></circle>
+                <circle cx="${p4x}" cy="${p4y}" r="4"><title>Expression: ${pct(scores.expression)}</title></circle>
+                <circle cx="${p5x}" cy="${p5y}" r="4"><title>Environment: ${pct(scores.environment)}</title></circle>
+                <circle cx="${p6x}" cy="${p6y}" r="4"><title>Barrier: ${pct(scores.barrier)}</title></circle>
             </g>
         </svg>
-    ;
+    `;
     container.innerHTML = svg;
 }

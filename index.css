@@ -757,6 +757,24 @@ p {
     background-color: var(--color-text);
     color: var(--color-surface);
   }
+
+  .hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .hero-actions,
+  .hero-actions .btn,
+  .hero-card {
+    width: 100%;
+  }
+
+  .section {
+    padding-block: var(--space-2xl);
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+  }
 }
 
 /* --- Footer ------------------------------------------------- */
